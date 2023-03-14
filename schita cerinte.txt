@@ -7,7 +7,7 @@ cerinte functionale
 - meniu principal
 - al doilea jucator se poate conecta oricand ( nu trebuie sa se astepte dupa el )
 - creare cont in baza de date
-- salvare HIGH SCORE
+- salvare HIGH SCORE ( wins | losses )
 - optiune singleplayer/ multiplayer
 - super puteri ascunse in structurile breakable
 
