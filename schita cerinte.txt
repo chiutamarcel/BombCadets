@@ -1,0 +1,23 @@
+cerinte functionale
+- 2 playeri
+- miscare in 4 directii ( sus, jos, stanga, dreapta )
+- abilitatea de a pune bomba
+- structuri breakable
+- structuri unbreakable
+- meniu principal
+- al doilea jucator se poate conecta oricand ( nu trebuie sa se astepte dupa el )
+- creare cont in baza de date
+- salvare HIGH SCORE
+- optiune singleplayer/ multiplayer
+
+cerinte non-functionale
+- arhitectura client-server
+- meniu de conectare simplu ( se insereaza adresa ip -> se apasa buton connect )
+- serverul trebuie sa consume < 512MB RAM
+- clientul trebuie sa consume < 512MB RAM
+- jurnalizare evenimente in consola
+- server CLI
+- daca unul din jucatori are ping > 1000ms ar trebui dat afara
+- comenzi admin server ( kick / ban, restart runda )
+- baze de date ce stocheaza utilizatorii si high score
+- utilizatorul cand intra in aplicatie se conecteaza automat la "master server" (daca are acces la internet- nu are optiunea de multiplayer in caz contrar)
