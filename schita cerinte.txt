@@ -9,6 +9,7 @@ cerinte functionale
 - creare cont in baza de date
 - salvare HIGH SCORE
 - optiune singleplayer/ multiplayer
+- super puteri ascunse in structurile breakable
 
 cerinte non-functionale
 - arhitectura client-server
@@ -21,3 +22,5 @@ cerinte non-functionale
 - comenzi admin server ( kick / ban, restart runda )
 - baze de date ce stocheaza utilizatorii si high score
 - utilizatorul cand intra in aplicatie se conecteaza automat la "master server" (daca are acces la internet- nu are optiunea de multiplayer in caz contrar)
+- sustinerea a mai multe meciuri 1v1 simultan
+- stocarea high-score-urilor fiecarui player
