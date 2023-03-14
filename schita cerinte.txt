@@ -1,0 +1,22 @@
+cerinte functionale
+- 2 playeri
+- miscare in 4 directii ( sus, jos, stanga, dreapta )
+- abilitatea de a pune bomba
+- structuri breakable
+- structuri unbreakable
+- meniu principal
+- al doilea jucator se poate conecta oricand ( nu trebuie sa se astepte dupa el )
+- super puteri ascunse in structurile breakable
+
+
+cerinte non-functionale
+- arhitectura client-server
+- meniu de conectare simplu ( se insereaza adresa ip -> se apasa buton connect )
+- serverul trebuie sa consume < 512MB RAM
+- clientul trebuie sa consume < 512MB RAM
+- jurnalizare evenimente in consola
+- server CLI
+- daca unul din jucatori are ping > 1000ms ar trebui dat afara
+- comenzi admin server ( kick / ban, restart runda )
+- sustinerea a mai multe meciuri 1v1 simultan
+- stocarea high-score-urilor fiecarui player
