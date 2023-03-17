@@ -1,3 +1,6 @@
-	Acesta este un proiect ce are ca scop crearea unui joc Boomberman conectat la retea. Acest joc are o multitudine de "features" ce ofera jucatorului o multitudine de optiuni pentru a se bucura de joc.
-	Utilizatorul are posibilitatea de a se juca single-player contra unui bot creat cu inteligenta aritificala(e bine?) sau are posibilitatea de a-si crea un cont (username, email-reprezinta id-ul unic? , si parola) date ce vor fi criptate(pentru securitate) si salvate intr-o baza de date complexa folosind SQL Server Management Studio.
-	Utilizatorul poate sa isi adauge prieteni pentru a se juca online cu ei. De asemenea jocul dispune de 5(?) harti unice precum si de diferite power-ups/power-downs care ii modifica abilitatile jucatorului dar si de diferite bombe interactive ce se spawneaza random pe harta. 
+	Acest proiect consta in clasicul joc Bomberman pentru NES. 
+	Jocul poate fi jucat fie single-player ( contra A.I. ), fie multi-player.
+	Pentru a se juca multi-player, este necesara o conexiune la internet.
+	Player-ul poate provoca pe oricine din lista de playeri online.
+	2 playeri pot pune bombe pe o harta cu pereti destructibili sau nedestructibili.
+	Daca unul din playeri se afla in raza bombei, pierde.
