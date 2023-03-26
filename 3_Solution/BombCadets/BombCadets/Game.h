@@ -6,10 +6,13 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 
+#include "Entity.h"
+
 class Game
 {
 	sf::RenderWindow* window;
-	sf::CircleShape* circle;
+
+	Entity entity;
 
 public:
 
