@@ -12,19 +12,16 @@ void Game::pollEvents()
 	}
 }
 
-Game::Game()
+Game::Game() : 
+	entity(sf::Vector2f(0.0f, 0.0f), 50.0f, sf::Color::Blue)
 {
 	window = nullptr;
-	circle = nullptr;
 }
 
 Game::~Game()
 {
 	if (window != nullptr)
 		delete window;
-
-	if (circle != nullptr)
-		delete circle;
 }
 
 void Game::start()
@@ -33,23 +30,22 @@ void Game::start()
 		sf::VideoMode(800, 600), 
 		"SFML window"
 	);
-
-	circle = new sf::CircleShape();
-	circle->setFillColor(sf::Color::Red);
-	circle->setRadius(100.0f);
-	circle->setScale(sf::Vector2f(1.0f, 1.0f));
 }
 
 void Game::update()
 {
+	entity.update();
 }
 
 void Game::draw()
 {
+	// Clear screen
 	window->clear();
 
-	window->draw(*circle);
+	// Draw
+	window->draw(entity.getShape());
 
+	// Display what has been drawn
 	window->display();
 }
 
