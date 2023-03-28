@@ -4,9 +4,10 @@
 
 class Entity
 {
+protected:
 	sf::RectangleShape shape;
-
 	Entity(sf::Vector2f position, sf::Vector2f size);
+
 public:
 	
 	// Constructors / Destructors
@@ -17,7 +18,7 @@ public:
 	~Entity();
 
 	// Functions
-	virtual void update();
+	virtual void update(float deltaTime);
 
 	// Getters / Setters
 	const sf::RectangleShape& getShape();

@@ -33,7 +33,7 @@ Entity::~Entity()
 {
 }
 
-void Entity::update()
+void Entity::update(float deltaTime)
 {
 }
 

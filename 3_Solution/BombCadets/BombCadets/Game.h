@@ -7,12 +7,16 @@
 #include "SFML/Window.hpp"
 
 #include "Entity.h"
+#include "Character.h"
 
 class Game
 {
 	sf::RenderWindow* window;
 
-	Entity entity;
+	Character character;
+
+	sf::Clock deltaClock;
+	sf::Time deltaTime;
 
 public:
 

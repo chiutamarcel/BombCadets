@@ -1,5 +1,8 @@
 #include "Game.h"
 
+#define PLAYERSIZE 50.0f
+#define PLAYERSPEED 100.0f
+
 void Game::pollEvents()
 {
 	// Process events
@@ -13,7 +16,7 @@ void Game::pollEvents()
 }
 
 Game::Game() : 
-	entity(sf::Vector2f(0.0f, 0.0f), 50.0f, sf::Color::Blue)
+	character(sf::Vector2f(0.0f, 0.0f), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED)
 {
 	window = nullptr;
 }
@@ -34,7 +37,9 @@ void Game::start()
 
 void Game::update()
 {
-	entity.update();
+	character.update(deltaTime.asSeconds());
+
+	deltaTime = deltaClock.restart();
 }
 
 void Game::draw()
@@ -43,7 +48,7 @@ void Game::draw()
 	window->clear();
 
 	// Draw
-	window->draw(entity.getShape());
+	window->draw(character.getShape());
 
 	// Display what has been drawn
 	window->display();
