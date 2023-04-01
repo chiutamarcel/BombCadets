@@ -1,5 +1,16 @@
 #include "Player.h"
 
+void Player::movement(float deltaTime)
+{
+	input.y = sf::Keyboard::isKeyPressed(sf::Keyboard::S) -
+		sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+
+	input.x = sf::Keyboard::isKeyPressed(sf::Keyboard::D) -
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+
+	velocity = input * speed * deltaTime;
+}
+
 Player::Player(sf::Vector2f position, sf::Vector2f size, float speed) :
 	Character(position, size, speed)
 {
@@ -33,11 +44,5 @@ void Player::update(float deltaTime)
 {
 	Character::update(deltaTime);
 
-	input.y = sf::Keyboard::isKeyPressed(sf::Keyboard::S) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-
-	input.x = sf::Keyboard::isKeyPressed(sf::Keyboard::D) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-
-	velocity = input * speed * deltaTime;
+	movement(deltaTime);
 }

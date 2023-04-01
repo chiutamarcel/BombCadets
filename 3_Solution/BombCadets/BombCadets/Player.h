@@ -4,6 +4,8 @@ class Player : public Character
 {
 	sf::Vector2f input;
 
+	void movement(float deltaTime);
+
 	Player(sf::Vector2f position, sf::Vector2f size, float speed = 0);
 public:
 	Player(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture, float speed = 0);
