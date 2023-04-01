@@ -9,8 +9,6 @@ Character::Character
 ) :
 	Entity(position, size)
 {
-	input = sf::Vector2f(0.0f, 0.0f);
-	velocity = sf::Vector2f(0.0f, 0.0f);
 	speed = _speed;
 }
 
@@ -50,7 +48,7 @@ Character::Character
 ) : 
 	Character(position, size, _speed)
 {
-	speed = _speed;
+	shape.setFillColor(color);
 }
 
 Character::Character
@@ -72,14 +70,6 @@ Character::~Character()
 void Character::update(float deltaTime)
 {
 	Entity::update(deltaTime);
-
-	input.y =	sf::Keyboard::isKeyPressed(sf::Keyboard::S) -
-				sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-
-	input.x =	sf::Keyboard::isKeyPressed(sf::Keyboard::D) -
-				sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-
-	velocity = input * speed * deltaTime;
 
 	shape.move(velocity);
 }

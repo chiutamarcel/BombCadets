@@ -7,13 +7,13 @@
 #include "SFML/Window.hpp"
 
 #include "Entity.h"
-#include "Character.h"
+#include "Player.h"
 
 class Game
 {
 	sf::RenderWindow* window;
 
-	Character character;
+	Player player;
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;

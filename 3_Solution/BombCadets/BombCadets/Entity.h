@@ -15,7 +15,7 @@ public:
 	Entity(sf::Vector2f position, float length, sf::Texture* texture);
 	Entity(sf::Vector2f position, sf::Vector2f size, sf::Color color);
 	Entity(sf::Vector2f position, float length, sf::Color color);
-	~Entity();
+	virtual ~Entity();
 
 	// Functions
 	virtual void update(float deltaTime);
