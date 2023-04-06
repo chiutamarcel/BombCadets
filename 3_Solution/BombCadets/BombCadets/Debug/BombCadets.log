@@ -1,0 +1,17 @@
+﻿  Character.cpp
+  Entity.cpp
+  Game.cpp
+  Player.cpp
+D:\School\Anul 2\Semestrul 2\POO - Proiect\BombCadets\3_Solution\BombCadets\BombCadets\Player.cpp(5,56): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\School\Anul 2\Semestrul 2\POO - Proiect\BombCadets\3_Solution\BombCadets\BombCadets\Player.cpp(8,56): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Source.cpp
+  Generating Code...
+  BombCadets.vcxproj -> D:\School\Anul 2\Semestrul 2\POO - Proiect\BombCadets\3_Solution\BombCadets\Debug\BombCadets.exe
