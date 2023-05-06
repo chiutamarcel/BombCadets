@@ -9,9 +9,25 @@
 #include "Entity.h"
 #include "Character.h"
 
+#include "MainMenu.h"
+#include "PlayMode.h"
+#include "AboutMode.h"
+
 class Game
 {
 	sf::RenderWindow* window;
+	sf::RenderWindow* MENU;
+
+	RectangleShape background;
+	Texture Maintexture;
+	RectangleShape playBackground;
+	Texture play_texture;
+	RectangleShape aboutBackground;
+	Texture about_texture;
+
+	MainMenu* mainMenu;
+	PlayMode* playMode;
+	AboutMode* about;
 
 	Character character;
 

@@ -1,10 +1,18 @@
 #include <iostream>
 
 #include "Game.h"
+//#include "MainMenu.h"
+//#include "PlayMode.h"
+//#include "AboutMode.h"
+
+using namespace sf;
+
+#define HEIGHT 832
+#define WIDTH 1344
 
 using namespace std;
 
-int main()
+void main(int argc, char* argv[])
 {
     Game game;
     game.start();
@@ -17,5 +25,5 @@ int main()
         game.draw();
     }
 
-    return EXIT_SUCCESS;
+    
 }
