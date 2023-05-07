@@ -1,53 +1,52 @@
+#include "Server.h"
+
 #include <iostream>
-#include "SFML/Network.hpp"
 
 #define CLIENT_PORT 54001
 #define SERVER_PORT 54000
 
-int main()
+void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
 {
-
-    try
+    if (strcmp(indata, "connect") == 0)
     {
-        sf::UdpSocket socket;
-
-        std::cout << "Binding socket.." << std::endl;
-
-        // Binding socket
-        if(socket.bind(SERVER_PORT) != sf::Socket::Done)
-        {
-            throw std::string("Could not bind socket!");
+        if (connected_clients.count(sender.toString()) == 0) {
+            char outdata[100] = "connected";
+            socket.send(outdata, 100, sender, CLIENT_PORT) != sf::Socket::Done;
+            connected_clients.insert(sender.toString());
         }
-
-        std::cout << "Socket bound successfully on port " << SERVER_PORT << std::endl;
-
-        //  Receiving data
-        char indata[100];
-        std::size_t received;
-
-        sf::IpAddress sender;
-        unsigned short port = CLIENT_PORT;
-
-        while (true)
-        {
-            if (socket.receive(indata, 100, received, sender, port) != sf::Socket::Done)
-            {
-                throw std::string("Could not receive data from port ") + std::string(std::to_string(CLIENT_PORT));
-            }
-            std::cout << "Received " << received << " bytes from " << sender << " on port " << port << std::endl;
-            std::cout << indata << std::endl;
-
-            if (strcmp(indata, "connect") == 0)
-            {
-                char outdata[100] = "connected";
-                socket.send(outdata, 100, sender, port) != sf::Socket::Done;
-            }
-
-        }
-
     }
-    catch (std::string error)
+}
+
+void Server::start()
+{
+    std::cout << "Starting server..." << std::endl;
+
+    // Binding socket
+    if(socket.bind(SERVER_PORT) != sf::Socket::Done)
     {
-        std::cout << error << std::endl;
+        throw std::string("Could not bind socket!");
     }
+
+    std::cout << "Server started successfully on port " << SERVER_PORT << std::endl;
+}
+
+void Server::update()
+{
+    char indata[100];
+    std::size_t received;
+    sf::IpAddress sender;
+    unsigned short port;
+
+    sf::Socket::Status status;
+
+    status = socket.receive(indata, 100, received, sender, port);
+
+    if (status != sf::Socket::Done)
+    {
+        throw std::string("Could not receive data from port ") + std::string(std::to_string(port));
+    }
+    std::cout << "Received " << received << " bytes from " << sender << " on port " << port << std::endl;
+    std::cout << indata << std::endl;
+
+    listenForConnections(indata, sender);
 }
