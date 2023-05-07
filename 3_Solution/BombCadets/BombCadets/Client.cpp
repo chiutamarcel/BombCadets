@@ -34,9 +34,6 @@ void Client::connect()
         exit(1);
     }
 
-    // NOTE: Debug purposes only, delete this later!
-    std::cout << indata << std::endl;
-
     // NOTE: here I should first check if the port is the server's
     if (strcmp(indata, "connected") != 0)
     {
@@ -69,5 +66,17 @@ void Client::start()
 
 void Client::update()
 {
+    char indata[100];
+    std::size_t received;
+    unsigned short port;
+
+    if (socket.receive(indata, 100, received, sv_address, port) != sf::Socket::Done)
+    {
+        std::cout << "ERROR!" << std::endl;
+        exit(1);
+    }
+    else {
+        std::cout << indata << std::endl;
+    }
     //chatPrompt();
 }

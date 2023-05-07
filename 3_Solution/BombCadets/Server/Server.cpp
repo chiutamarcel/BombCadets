@@ -34,7 +34,8 @@ void Server::spawnPlayer(std::string player_ip)
     const char data[100] = "spawn_player";
 
     for (auto client : connected_clients) {
-        socket.send(data, 100, client, CLIENT_PORT);
+        if (client != player_ip)
+            socket.send(data, 100, client, CLIENT_PORT);
     }
 }
 
