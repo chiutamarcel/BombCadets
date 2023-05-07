@@ -6,14 +6,14 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 
-#include "Entity.h"
-#include "Player.h"
+//#include "Entity.h"
+//#include "Player.h"
 
 class Game
 {
 	sf::RenderWindow* window;
 
-	Player player;
+	//Player player;
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;

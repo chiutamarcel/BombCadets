@@ -15,8 +15,8 @@ void Game::pollEvents()
 	}
 }
 
-Game::Game() : 
-	player(sf::Vector2f(0.0f, 0.0f), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED)
+Game::Game() //: 
+	//player(sf::Vector2f(0.0f, 0.0f), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED)
 {
 	window = nullptr;
 }
@@ -37,7 +37,7 @@ void Game::start()
 
 void Game::update()
 {
-	player.update(deltaTime.asSeconds());
+	//player.update(deltaTime.asSeconds());
 
 	deltaTime = deltaClock.restart();
 }
@@ -48,7 +48,7 @@ void Game::draw()
 	window->clear();
 
 	// Draw
-	window->draw(player.getShape());
+	//window->draw(player.getShape());
 
 	// Display what has been drawn
 	window->display();
