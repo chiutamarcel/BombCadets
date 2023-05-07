@@ -4,16 +4,37 @@
 
 #define CLIENT_PORT 54001
 #define SERVER_PORT 54000
+#define MAX_CLIENTS 4
 
 void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
 {
-    if (strcmp(indata, "connect") == 0)
-    {
-        if (connected_clients.count(sender.toString()) == 0) {
-            char outdata[100] = "connected";
-            socket.send(outdata, 100, sender, CLIENT_PORT) != sf::Socket::Done;
-            connected_clients.insert(sender.toString());
-        }
+    if (strcmp(indata, "connect") != 0) {
+        return;
+    }
+
+    if (connected_clients.size() >= 4) {
+        std::cout << "Maximum nr of players reached!" << std::endl;
+        return;
+    }
+
+    if (connected_clients.count(sender.toString()) == 0) {
+        char outdata[100] = "connected";
+        socket.send(outdata, 100, sender, CLIENT_PORT) != sf::Socket::Done;
+        connected_clients.insert(sender.toString());
+    }
+    else {
+        std::cout << "Player already connected!" << std::endl;
+    }
+
+    spawnPlayer(sender.toString());
+}
+
+void Server::spawnPlayer(std::string player_ip)
+{
+    const char data[100] = "spawn_player";
+
+    for (auto client : connected_clients) {
+        socket.send(data, 100, client, CLIENT_PORT);
     }
 }
 
