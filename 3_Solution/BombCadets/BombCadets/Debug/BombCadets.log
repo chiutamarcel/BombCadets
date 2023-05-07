@@ -1,3 +1,4 @@
 ﻿  Game.cpp
+D:\Academie\Anul 2\Barar\Sem 2\Proiect POO\BombCadets\3_Solution\BombCadets\BombCadets\Game.cpp(75,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\Academie\Anul 2\Barar\Sem 2\Proiect POO\BombCadets\3_Solution\BombCadets\BombCadets\Game.cpp(138,20): warning C4018: '<': signed/unsigned mismatch
   BombCadets.vcxproj -> D:\Academie\Anul 2\Barar\Sem 2\Proiect POO\BombCadets\3_Solution\BombCadets\Debug\BombCadets.exe

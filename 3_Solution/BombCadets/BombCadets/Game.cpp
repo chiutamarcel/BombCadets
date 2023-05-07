@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <utility>
 #include <fstream>
 
 #define ENTITYSIZE 64.0f
@@ -6,7 +7,7 @@
 #define PLAYERSPEED 100.0f
 #define WINDOWXSIZE 1344
 #define WINDOWYSIZE 832
-#define NRBREAKABLEWALLS 70
+#define NRBREAKABLEWALLS 75
 
 void Game::pollEvents()
 {
@@ -55,6 +56,7 @@ void Game::generateMap()
 		mapMatrix[i] = new char[(int)(WINDOWXSIZE / ENTITYSIZE) + 1];
 	}
 
+	std::vector<std::pair<int, int>> breakableWalls;
 	// read the map
 	char type;
 	for (int i = 0; i < WINDOWYSIZE / ENTITYSIZE; i++)
@@ -62,21 +64,19 @@ void Game::generateMap()
 		{
 			map.get(type);
 			mapMatrix[i][j] = type;
-			
+			if (type == '0')
+				breakableWalls.push_back(std::make_pair(i, j));
 		}
 	map.close();
 	// randomly generate the breakable walls
 	int numberOfBreakableWalls = NRBREAKABLEWALLS;
-	while (numberOfBreakableWalls)
+	while (numberOfBreakableWalls )
 	{
-		//srand(time(NULL));
-		int i = (rand() % ((int)(WINDOWYSIZE / ENTITYSIZE) - 4)) + 3;
-		int j = (rand() % ((int)(WINDOWXSIZE / ENTITYSIZE) - 2)) + 1;
-		if (mapMatrix[i][j] == '0')
-		{
-			mapMatrix[i][j] = '2';
-			numberOfBreakableWalls--;
-		}
+		srand(time(NULL));
+		int index = rand() % breakableWalls.size();
+		mapMatrix[breakableWalls[index].first][breakableWalls[index].second] = '2';
+		breakableWalls.erase(breakableWalls.begin() + index);
+		numberOfBreakableWalls--;
 	}
 	
 	// generate the map

@@ -13,6 +13,7 @@ public:
 
 	virtual void update(float deltaTime);
 	void explode();
+	sf::Vector2f getPositionExplosion();
 
 	virtual ~Bomb();
 private:
