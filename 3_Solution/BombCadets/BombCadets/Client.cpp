@@ -34,6 +34,9 @@ void Client::connect()
         exit(1);
     }
 
+    // NOTE: Debug purposes only, delete this later!
+    std::cout << indata << std::endl;
+
     // NOTE: here I should first check if the port is the server's
     if (strcmp(indata, "connected") != 0)
     {
