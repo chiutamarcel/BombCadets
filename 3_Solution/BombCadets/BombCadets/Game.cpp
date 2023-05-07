@@ -69,6 +69,7 @@ void Game::generateMap()
 	int numberOfBreakableWalls = NRBREAKABLEWALLS;
 	while (numberOfBreakableWalls)
 	{
+		//srand(time(NULL));
 		int i = (rand() % ((int)(WINDOWYSIZE / ENTITYSIZE) - 4)) + 3;
 		int j = (rand() % ((int)(WINDOWXSIZE / ENTITYSIZE) - 2)) + 1;
 		if (mapMatrix[i][j] == '0')
