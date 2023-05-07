@@ -5,6 +5,7 @@ class Character : public Entity
 	sf::Vector2f velocity;
 	sf::Vector2f input;
 	float speed;
+	sf::Clock planted;
 
 	Character(sf::Vector2f position, sf::Vector2f size, float _speed = 0);
 public:
@@ -16,5 +17,7 @@ public:
 
 	virtual void update(float deltaTime);
 	virtual void die();
+	
+	void checkCollision(sf::Vector2f& velocity);
 };
 

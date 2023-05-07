@@ -1,13 +1,15 @@
 #pragma once
 
+#include <fstream>
+#include <iostream>
 #include "SFML/Graphics.hpp"
+
 
 class Entity
 {
 protected:
 	sf::RectangleShape shape;
 	Entity(sf::Vector2f position, sf::Vector2f size);
-
 public:
 	
 	// Constructors / Destructors
@@ -15,7 +17,7 @@ public:
 	Entity(sf::Vector2f position, float length, sf::Texture* texture);
 	Entity(sf::Vector2f position, sf::Vector2f size, sf::Color color);
 	Entity(sf::Vector2f position, float length, sf::Color color);
-	~Entity();
+	virtual ~Entity();
 
 	// Functions
 	virtual void update(float deltaTime);
@@ -24,3 +26,4 @@ public:
 	const sf::RectangleShape& getShape();
 };
 
+//static std::vector<Entity*> entities;

@@ -8,12 +8,14 @@
 
 #include "Entity.h"
 #include "Character.h"
+#include "Block.h"
+#include "Entities.h"
 
 class Game
 {
 	sf::RenderWindow* window;
-
-	Character character;
+	
+	//Character character;
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
@@ -25,6 +27,9 @@ public:
 
 	// Initializes game variables
 	void start();
+
+	// Generates the map
+	void generateMap();
 
 	// Polls events
 	void pollEvents();
