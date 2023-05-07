@@ -25,7 +25,7 @@ int main()
         char indata[100];
         std::size_t received;
 
-        sf::IpAddress sender("127.0.0.1");
+        sf::IpAddress sender;
         unsigned short port = CLIENT_PORT;
 
         while (true)

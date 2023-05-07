@@ -12,6 +12,8 @@ void connectToSv(sf::IpAddress& sv_address, unsigned short& port, sf::UdpSocket&
     char outdata[100] = "connect";
     char indata[100] = "";
     std::size_t received;
+
+    std::cout << "Trying to connect to server..." << std::endl;
     
     if (socket.send(outdata, 100, sv_address, port) != sf::Socket::Done)
     {
@@ -36,13 +38,18 @@ void connectToSv(sf::IpAddress& sv_address, unsigned short& port, sf::UdpSocket&
 
 int main()
 {
-    Game game;
-    game.start();
+    //Game game;
+    //game.start();
 
     sf::UdpSocket socket;
     socket.setBlocking(true);
 
-    sf::IpAddress sv_address("127.0.0.1");
+    std::string sv_addr_str;
+
+    std::cout << "Enter server address: " << std::endl;
+    std::cin >> sv_addr_str;
+
+    sf::IpAddress sv_address(sv_addr_str);
     unsigned short sv_port = SERVER_PORT;
 
     // bind the socket to a port
@@ -54,13 +61,20 @@ int main()
 
     connectToSv(sv_address, sv_port, socket);
 
-    // Game Loop
-    while (game.getWindow().isOpen())
+    while (true)
     {
-        game.pollEvents();
-        game.update();
-        game.draw();
+        std::string text;
+        cin >> text;
+        socket.send(text.c_str(), 100, sv_address, sv_port);
     }
+
+    // Game Loop
+    //while (game.getWindow().isOpen())
+    //{
+    //    game.pollEvents();
+    //    game.update();
+    //    game.draw();
+    //}
 
     return EXIT_SUCCESS;
 }
