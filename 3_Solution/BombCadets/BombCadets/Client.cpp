@@ -5,6 +5,13 @@
 #define CLIENT_PORT 54001
 #define SERVER_PORT 54000
 
+void Client::chatPrompt()
+{
+    std::string text;
+    std::cin >> text;
+    socket.send(text.c_str(), 100, sv_address, SERVER_PORT);
+}
+
 void Client::connect()
 {
     char outdata[100] = "connect";
@@ -59,7 +66,5 @@ void Client::start()
 
 void Client::update()
 {
-    std::string text;
-    std::cin >> text;
-    socket.send(text.c_str(), 100, sv_address, SERVER_PORT);
+    //chatPrompt();
 }
