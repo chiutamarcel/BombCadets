@@ -1,13 +1,15 @@
 #pragma once
 
+#include <fstream>
+#include <iostream>
 #include "SFML/Graphics.hpp"
+
 
 class Entity
 {
 protected:
 	sf::RectangleShape shape;
 	Entity(sf::Vector2f position, sf::Vector2f size);
-
 public:
 	
 	// Constructors / Destructors
@@ -24,3 +26,4 @@ public:
 	const sf::RectangleShape& getShape();
 };
 
+//static std::vector<Entity*> entities;

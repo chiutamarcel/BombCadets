@@ -6,14 +6,16 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 
-//#include "Entity.h"
-//#include "Player.h"
+#include "Entity.h"
+#include "Character.h"
+#include "Block.h"
+#include "Entities.h"
 
 class Game
 {
 	sf::RenderWindow* window;
-
-	//Player player;
+	
+	//Character character;
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
@@ -25,6 +27,9 @@ public:
 
 	// Initializes game variables
 	void start();
+
+	// Generates the map
+	void generateMap();
 
 	// Polls events
 	void pollEvents();
