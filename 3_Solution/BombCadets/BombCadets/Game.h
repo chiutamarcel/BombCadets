@@ -22,8 +22,6 @@ class Game
 
 	std::string mapFileName;
 
-	//void generateMapFromFile(std::string filename);
-
 public:
 
 	Game();
@@ -31,10 +29,6 @@ public:
 
 	// Initializes game variables
 	void start();
-
-	// Generates the map
-	//void generateMapFromString(std::vector<std::string> mapText);
-	
 
 	// Polls events
 	void pollEvents();
