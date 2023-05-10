@@ -1,34 +1,34 @@
 #include "Client.h"
+#include "Common/Common.h"
 
 #include <iostream>
 
-#define CLIENT_PORT 54001
-#define SERVER_PORT 54000
+
 
 void Client::chatPrompt()
 {
     std::string text;
     std::cin >> text;
-    socket.send(text.c_str(), 100, sv_address, SERVER_PORT);
+    socket.send(text.c_str(), PACKETDATASIZE, sv_address, SERVER_PORT);
 }
 
 void Client::connect()
 {
-    char outdata[100] = "connect";
-    char indata[100] = "";
+    char outdata[PACKETDATASIZE] = "connect";
+    char indata[PACKETDATASIZE] = "";
     std::size_t received;
     unsigned short port;
 
     std::cout << "Trying to connect to server..." << std::endl;
 
-    if (socket.send(outdata, 100, sv_address, SERVER_PORT) != sf::Socket::Done)
+    if (socket.send(outdata, PACKETDATASIZE, sv_address, SERVER_PORT) != sf::Socket::Done)
     {
         std::cout << "ERROR!" << std::endl;
         exit(1);
     }
 
     // NOTE: here the port is used to save the port!
-    if (socket.receive(indata, 100, received, sv_address, port) != sf::Socket::Done)
+    if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
     {
         std::cout << "ERROR!" << std::endl;
         exit(1);
@@ -66,11 +66,11 @@ void Client::start()
 
 void Client::update()
 {
-    char indata[100];
+    char indata[PACKETDATASIZE];
     std::size_t received;
     unsigned short port;
 
-    if (socket.receive(indata, 100, received, sv_address, port) != sf::Socket::Done)
+    if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
     {
         std::cout << "ERROR!" << std::endl;
         exit(1);

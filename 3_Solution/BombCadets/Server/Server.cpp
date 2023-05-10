@@ -1,10 +1,9 @@
 #include "Server.h"
+#include "Common/Common.h"
 
 #include <iostream>
 
-#define CLIENT_PORT 54001
-#define SERVER_PORT 54000
-#define MAX_CLIENTS 4
+
 
 void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
 {
@@ -12,14 +11,14 @@ void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
         return;
     }
 
-    if (connected_clients.size() >= 4) {
+    if (connected_clients.size() >= MAX_CLIENTS) {
         std::cout << "Maximum nr of players reached!" << std::endl;
         return;
     }
 
     if (connected_clients.count(sender.toString()) == 0) {
-        char outdata[100] = "connected";
-        socket.send(outdata, 100, sender, CLIENT_PORT) != sf::Socket::Done;
+        char outdata[PACKETDATASIZE] = "connected";
+        socket.send(outdata, PACKETDATASIZE, sender, CLIENT_PORT) != sf::Socket::Done;
         connected_clients.insert(sender.toString());
     }
     else {
@@ -31,11 +30,11 @@ void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
 
 void Server::spawnPlayer(std::string player_ip)
 {
-    const char data[100] = "spawn_player";
+    const char data[PACKETDATASIZE] = "spawn_player";
 
     for (auto client : connected_clients) {
         if (client != player_ip)
-            socket.send(data, 100, client, CLIENT_PORT);
+            socket.send(data, PACKETDATASIZE, client, CLIENT_PORT);
     }
 }
 
@@ -61,7 +60,7 @@ void Server::update()
 
     sf::Socket::Status status;
 
-    status = socket.receive(indata, 100, received, sender, port);
+    status = socket.receive(indata, PACKETDATASIZE, received, sender, port);
 
     if (status != sf::Socket::Done)
     {
