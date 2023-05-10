@@ -20,6 +20,10 @@ class Game
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
 
+	std::string mapFileName;
+
+	//void generateMapFromFile(std::string filename);
+
 public:
 
 	Game();
@@ -29,7 +33,8 @@ public:
 	void start();
 
 	// Generates the map
-	void generateMap();
+	//void generateMapFromString(std::vector<std::string> mapText);
+	
 
 	// Polls events
 	void pollEvents();

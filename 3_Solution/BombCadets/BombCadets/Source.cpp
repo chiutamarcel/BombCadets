@@ -8,17 +8,17 @@ using namespace std;
 int main()
 {
     Game game;
-    Client client;
+    //Client client;
 
     game.start();
-    client.start();
+    //client.start();
 
     // Game Loop
     while (game.getWindow().isOpen())
     {
         game.pollEvents();
         game.update();
-        client.update();
+        //client.update();
         game.draw();
     }
 
