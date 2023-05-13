@@ -12,6 +12,8 @@
 #include "MainMenu.h"
 #include "PlayMode.h"
 #include "AboutMode.h"
+#include "HighScore.h"
+#include "Options.h"
 
 class Game
 {
@@ -24,10 +26,16 @@ class Game
 	Texture play_texture;
 	RectangleShape aboutBackground;
 	Texture about_texture;
+	RectangleShape highBackground;
+	Texture high_texture;
+	RectangleShape optionsBackground;
+	Texture options_texture;
 
 	MainMenu* mainMenu;
 	PlayMode* playMode;
 	AboutMode* about;
+	HighScore* highScore;
+	Options* options;
 
 	Character character;
 

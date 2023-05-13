@@ -42,9 +42,11 @@ void Game::pollEvents()
                         curMenu = PLAY;
                         break;
                     case 1:
+                        options = new Options(WIDTH, HEIGTH);
                         curMenu = OPTIONS;
                         break;
                     case 2:
+                        highScore = new HighScore(WIDTH, HEIGTH);
                         curMenu = HIGHSCORES;
                         break;
                     case 3:
@@ -144,7 +146,97 @@ void Game::pollEvents()
             }
 
             break;
+        case HIGHSCORES:
 
+            if (event.type == Event::Closed) {
+                curMenu = MAINMENU;
+                break;
+            }
+
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Escape) {
+                    curMenu = MAINMENU;
+                    break;
+                }
+            }
+
+            if (event.type == Event::KeyReleased) {
+                if (event.key.code == Keyboard::Up) {
+                    highScore->MoveUp();
+                    break;
+                }
+
+                if (event.key.code == Keyboard::Down) {
+                    highScore->MoveDown();
+                    break;
+                }
+
+                if (event.key.code == Keyboard::Return) {
+
+                    int y = highScore->HighPressed();
+
+                    if (y == 0)
+                    {
+                        //local
+                    }
+
+                    if (y == 1)
+                    {
+                        //regional
+                    }
+                }
+
+            }
+
+            break;
+        case OPTIONS:
+
+            if (event.type == Event::Closed) {
+                curMenu = MAINMENU;
+                break;
+            }
+
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Escape) {
+                    curMenu = MAINMENU;
+                    break;
+                }
+            }
+
+            if (event.type == Event::KeyReleased) {
+                if (event.key.code == Keyboard::Up) {
+                    options->MoveUp();
+                    break;
+                }
+
+                if (event.key.code == Keyboard::Down) {
+                    options->MoveDown();
+                    break;
+                }
+
+                if (event.key.code == Keyboard::Return) {
+
+                    int y = options->OptionsPressed();
+
+                    if (y == 0)
+                    {
+                        //player skin
+                    }
+
+                    if (y == 1)
+                    {
+                        //bomb skin
+                    }
+
+                    if (y == 2)
+                    {
+                        //sound
+                    }
+                }
+
+            }
+
+            break;
         default:
 
             if (event.type == Event::Closed) {
@@ -162,7 +254,6 @@ void Game::pollEvents()
             break;
 
         }
-    
     }
 }
 Game::Game() : 
@@ -198,6 +289,16 @@ void Game::start()
 	aboutBackground.setSize(Vector2f(WIDTH, HEIGTH));
 	about_texture.loadFromFile("Textures\\about.png");
 	aboutBackground.setTexture(&about_texture);
+
+    //highscores bacc
+    highBackground.setSize(Vector2f(WIDTH, HEIGTH));
+    high_texture.loadFromFile("Textures\\highsc.png");
+    highBackground.setTexture(&high_texture);
+
+    //options bacc
+    optionsBackground.setSize(Vector2f(WIDTH, HEIGTH));
+    options_texture.loadFromFile("Textures\\optionen.png");
+    optionsBackground.setTexture(&options_texture);
 }
 
 void Game::update()
@@ -228,13 +329,19 @@ void Game::draw()
         window->draw(aboutBackground);
         about->draw(*window);
         break;
+    case HIGHSCORES:
+        window->draw(highBackground);
+        highScore->draw(*window);
+        break;
+    case OPTIONS:
+        window->draw(optionsBackground);
+        options->draw(*window);
+        break;
     }
 
     if (curMenu == NOMENU) {
         window->draw(character.getShape());
     }
-
-	
 
 	// Display what has been drawn
 	window->display();
