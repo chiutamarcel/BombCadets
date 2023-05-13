@@ -2,6 +2,14 @@
 
 #include "Game.h"
 #include "Client.h"
+//#include "MainMenu.h"
+//#include "PlayMode.h"
+//#include "AboutMode.h"
+
+using namespace sf;
+
+#define HEIGHT 832
+#define WIDTH 1344
 
 using namespace std;
 

@@ -11,9 +11,33 @@
 #include "Block.h"
 #include "Entities.h"
 
+#include "MainMenu.h"
+#include "PlayMode.h"
+#include "AboutMode.h"
+#include "HighScore.h"
+#include "Options.h"
+
 class Game
 {
 	sf::RenderWindow* window;
+	sf::RenderWindow* MENU;
+
+	RectangleShape background;
+	Texture Maintexture;
+	RectangleShape playBackground;
+	Texture play_texture;
+	RectangleShape aboutBackground;
+	Texture about_texture;
+	RectangleShape highBackground;
+	Texture high_texture;
+	RectangleShape optionsBackground;
+	Texture options_texture;
+
+	MainMenu* mainMenu;
+	PlayMode* playMode;
+	AboutMode* about;
+	HighScore* highScore;
+	Options* options;
 	
 	//Character character;
 
