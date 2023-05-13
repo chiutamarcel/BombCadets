@@ -54,6 +54,8 @@ public:
 	// Initializes game variables
 	void start();
 
+	void startSinglePlayer();
+
 	// Polls events
 	void pollEvents();
 

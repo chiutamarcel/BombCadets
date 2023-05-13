@@ -1,0 +1,36 @@
+#include <iostream>
+
+#include "Game.h"
+<<<<<<< HEAD
+#include "Client.h"
+=======
+//#include "MainMenu.h"
+//#include "PlayMode.h"
+//#include "AboutMode.h"
+
+using namespace sf;
+
+#define HEIGHT 832
+#define WIDTH 1344
+>>>>>>> marian
+
+using namespace std;
+
+void main(int argc, char* argv[])
+{
+    Game game;
+    //Client client;
+
+    game.start();
+    //client.start();
+
+    // Game Loop
+    while (game.getWindow().isOpen())
+    {
+        game.pollEvents();
+        game.update();
+        //client.update();
+        game.draw();
+    }
+
+}
