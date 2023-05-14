@@ -7,6 +7,37 @@
 
 using namespace GameConfig;
 
+namespace Map {
+	std::vector<std::pair<int, int>> spawnPoints;
+	
+	int maxPlayers = 2;
+	int curPlayers = 0;
+}
+
+
+void Map::spawnCharacter()
+{
+	if (curPlayers >= maxPlayers)
+		return;
+
+	int x = spawnPoints[curPlayers].second;
+	int y = spawnPoints[curPlayers].first;
+
+	Entities::getInstance().getCharacters().push_back
+	(
+		new Character
+		(
+			sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+		)
+	);
+	curPlayers++;
+}
+
+void Map::addSpawnPoint(int x, int y)
+{
+	spawnPoints.push_back(std::make_pair(x, y));
+}
+
 void Map::readFromFile(std::string filename)
 {
 	std::ifstream map(filename);
@@ -51,8 +82,8 @@ void stringToEntities(char** mapMatrix) {
 				Entities::getInstance().getBreakableBlocks().push_back(new BreakableBlock(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Red));
 				break;
 			case '3':
-				//create player
-				Entities::getInstance().getCharacters().push_back(new Character(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED));
+				// add spawnpoint
+				Map::addSpawnPoint(i, j);
 				break;
 			case '4':
 				//generate AI

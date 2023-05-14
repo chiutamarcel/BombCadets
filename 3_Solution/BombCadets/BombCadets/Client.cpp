@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "Map.h"
 #include "Common/Common.h"
 
 #include <iostream>
@@ -51,6 +52,7 @@ void Client::connect()
     }
 
     std::cout << "Server connection successful!" << std::endl;
+    Map::readFromFile("map.txt");
 }
 
 void Client::disconnect()
@@ -96,6 +98,7 @@ void Client::start()
     }
 
     connect();
+    socket.setBlocking(false);
 }
 
 void Client::update()
@@ -105,12 +108,12 @@ void Client::update()
         std::size_t received;
         unsigned short port;
 
-        if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
+        sf::Socket::Status status;
+
+        status = socket.receive(indata, PACKETDATASIZE, received, sv_address, port);
+        
+        if (status == sf::Socket::Done)
         {
-            std::cout << "ERROR!" << std::endl;
-            exit(1);
-        }
-        else {
             std::cout << indata << std::endl;
         }
         //chatPrompt();

@@ -343,11 +343,14 @@ void Game::update()
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     Map::readFromFile(mapFileName);
+    Map::spawnCharacter();
 }
 
 void Game::startMultiPlayer() {
     curGameState = GAMESTATE::INGAME;
     Client::getInstance().start();
+    for (int i = 0; i < Map::maxPlayers; i++)
+        Map::spawnCharacter();
 }
 
 void Game::draw()
