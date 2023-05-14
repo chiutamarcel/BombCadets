@@ -343,14 +343,16 @@ void Game::update()
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     Map::readFromFile(mapFileName);
-    Map::spawnCharacter();
+    Map::spawnCharacter(Map::CharacterType::PLAYER);
 }
 
 void Game::startMultiPlayer() {
     curGameState = GAMESTATE::INGAME;
     Client::getInstance().start();
+
+    // TODO: change later after adding a proper Bot class
     for (int i = 0; i < Map::maxPlayers; i++)
-        Map::spawnCharacter();
+        Map::spawnCharacter(Map::CharacterType::BASE); 
 }
 
 void Game::draw()

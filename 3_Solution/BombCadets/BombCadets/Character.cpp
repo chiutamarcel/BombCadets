@@ -11,10 +11,8 @@ Character::Character
 ) :
 	Entity(position, size)
 {
-	input = sf::Vector2f(0.0f, 0.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	speed = _speed;
-	planted.restart();
 }
 
 Character::Character
@@ -27,7 +25,6 @@ Character::Character
 	Character(position, size, _speed)
 {
 	shape.setTexture(texture);
-	planted.restart();
 }
 
 Character::Character
@@ -43,7 +40,6 @@ Character::Character
 		texture,
 		_speed)
 {
-	planted.restart();
 }
 
 Character::Character
@@ -56,7 +52,6 @@ Character::Character
 	Character(position, size, _speed)
 {
 	speed = _speed;
-	planted.restart();
 	shape.setScale(0.9f, 0.9f);
 }
 
@@ -70,7 +65,6 @@ Character::Character
 	Character(position, sf::Vector2f(length, length), _speed)
 {
 	shape.setFillColor(color);
-	planted.restart();
 	shape.setScale(0.9f, 0.9f);
 }
 
@@ -82,14 +76,6 @@ void Character::update(float deltaTime)
 {
 	Entity::update(deltaTime);
 
-	input.y = sf::Keyboard::isKeyPressed(sf::Keyboard::S) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-
-	input.x = sf::Keyboard::isKeyPressed(sf::Keyboard::D) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-
-	velocity = input * speed * deltaTime;
-
 	sf::Vector2f temp(velocity.x, 0.0f);
 	checkCollision(temp);
 	velocity.x = temp.x;
@@ -98,13 +84,6 @@ void Character::update(float deltaTime)
 	velocity.y = temp.y;
 	
 	shape.move(velocity);
-
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && (this->planted.getElapsedTime().asSeconds() > 3.f))
-	{
-		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f,16.f), 32.f, sf::Color::Magenta));
-		if(this->planted.getElapsedTime().asSeconds() >= 3)
-			this->planted.restart();
-	}
 }
 
 void Character::die()

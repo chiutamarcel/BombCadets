@@ -5,6 +5,8 @@
 #include <vector>
 #include <time.h>
 
+#include "Player.h"
+
 using namespace GameConfig;
 
 namespace Map {
@@ -15,7 +17,7 @@ namespace Map {
 }
 
 
-void Map::spawnCharacter()
+void Map::spawnCharacter(CharacterType type)
 {
 	if (curPlayers >= maxPlayers)
 		return;
@@ -23,13 +25,31 @@ void Map::spawnCharacter()
 	int x = spawnPoints[curPlayers].second;
 	int y = spawnPoints[curPlayers].first;
 
-	Entities::getInstance().getCharacters().push_back
-	(
-		new Character
+	switch (type) {
+	case CharacterType::PLAYER:
+		Entities::getInstance().getCharacters().push_back
 		(
-			sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
-		)
-	);
+			new Player
+			(
+				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+			)
+		);
+		break;
+	case CharacterType::BASE:
+		Entities::getInstance().getCharacters().push_back
+		(
+			new Character
+			(
+				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+			)
+		);
+		break;
+	case CharacterType::BOT:
+		// TODO
+		break;
+	}
+
+
 	curPlayers++;
 }
 
