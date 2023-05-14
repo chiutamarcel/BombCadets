@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Map.h"
+#include "Client.h"
 #include "GameConfig.h"
 #include <utility>
 #include <fstream>
@@ -117,6 +118,8 @@ void Game::pollEvents()
                         if (y == 1)
                         {
                             //multi player
+                            startMultiPlayer();
+                            return;
                         }
                     }
                 }
@@ -340,6 +343,11 @@ void Game::update()
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     Map::readFromFile(mapFileName);
+}
+
+void Game::startMultiPlayer() {
+    curGameState = GAMESTATE::INGAME;
+    Client::getInstance().start();
 }
 
 void Game::draw()

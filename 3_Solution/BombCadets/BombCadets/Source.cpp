@@ -8,27 +8,24 @@
 
 using namespace sf;
 
-#define HEIGHT 832
-#define WIDTH 1344
-
 using namespace std;
 
 int main()
 {
     Game game;
-    //Client client;
 
     game.start();
-    //client.start();
 
     // Game Loop
     while (game.getWindow().isOpen())
     {
         game.pollEvents();
         game.update();
-        //client.update();
+        Client::getInstance().update();
         game.draw();
     }
+
+    Client::deleteInstance();
 
     return EXIT_SUCCESS;
 }

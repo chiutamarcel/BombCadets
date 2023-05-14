@@ -4,14 +4,28 @@
 
 class Client
 {
+	static Client* instance;
+
 	sf::UdpSocket socket;
 	sf::IpAddress sv_address;
+	bool hasStarted;
+
+	~Client();
+	Client();
+	Client(Client& other) = delete;
 
 	void chatPrompt();
-	void connect();
 
 public:
 	void start();
 	void update();
+
+	void connect();
+	void disconnect();
+
+	static Client& getInstance();
+	static void deleteInstance();
+
+	const bool& getHasStarted();
 };
 

@@ -55,6 +55,7 @@ public:
 	void start();
 
 	void startSinglePlayer();
+	void startMultiPlayer();
 
 	// Polls events
 	void pollEvents();

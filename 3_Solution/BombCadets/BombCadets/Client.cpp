@@ -3,7 +3,16 @@
 
 #include <iostream>
 
+Client* Client::instance = nullptr;
 
+Client::~Client()
+{
+}
+
+Client::Client()
+{
+    hasStarted = false;
+}
 
 void Client::chatPrompt()
 {
@@ -44,8 +53,33 @@ void Client::connect()
     std::cout << "Server connection successful!" << std::endl;
 }
 
+void Client::disconnect()
+{
+}
+
+Client& Client::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new Client();
+    }
+
+    return *instance;
+}
+
+void Client::deleteInstance()
+{
+    if (instance == nullptr) return;
+    delete instance;
+}
+
+const bool& Client::getHasStarted()
+{
+    return hasStarted;
+}
+
 void Client::start()
 {
+    hasStarted = true;
     socket.setBlocking(true);
 
     std::string sv_addr_str;
@@ -66,17 +100,19 @@ void Client::start()
 
 void Client::update()
 {
-    char indata[PACKETDATASIZE];
-    std::size_t received;
-    unsigned short port;
+    if (hasStarted == true) {
+        char indata[PACKETDATASIZE];
+        std::size_t received;
+        unsigned short port;
 
-    if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
-    {
-        std::cout << "ERROR!" << std::endl;
-        exit(1);
+        if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
+        {
+            std::cout << "ERROR!" << std::endl;
+            exit(1);
+        }
+        else {
+            std::cout << indata << std::endl;
+        }
+        //chatPrompt();
     }
-    else {
-        std::cout << indata << std::endl;
-    }
-    //chatPrompt();
 }
