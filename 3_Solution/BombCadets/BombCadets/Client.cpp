@@ -28,6 +28,10 @@ void Client::connect()
     char outdata[PACKETDATASIZE] = "connect";
     char indata[PACKETDATASIZE] = "";
     std::size_t received;
+    
+
+    sf::Packet inPacket;
+    sf::IpAddress sender;
     unsigned short port;
 
     std::cout << "Trying to connect to server..." << std::endl;
@@ -38,19 +42,21 @@ void Client::connect()
         exit(1);
     }
 
-    // NOTE: here the port is used to save the port!
-    if (socket.receive(indata, PACKETDATASIZE, received, sv_address, port) != sf::Socket::Done)
-    {
-        std::cout << "ERROR!" << std::endl;
-        exit(1);
+    std::string text;
+    if (socket.receive(inPacket, sender, port)) {
+        if (port == SERVER_PORT) {
+            inPacket >> text;
+        }
     }
 
-    // NOTE: here I should first check if the port is the server's
-    if (strcmp(indata, "connected") != 0)
-    {
-        std::cout << "Server connection failed!" << std::endl;
-        exit(1);
+    if (port == SERVER_PORT) {
+
+        if (!strcmp(text.c_str(), "connected")) {
+            std::cout << "Server connection failed!" << std::endl;
+            exit(1);
+        }
     }
+
 
     std::cout << "Server connection successful!" << std::endl;
     Map::readFromFile("map.txt");
