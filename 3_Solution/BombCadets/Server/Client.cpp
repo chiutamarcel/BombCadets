@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "Client.h"
 #include "Common/Common.h"
 
 int Client::lastId = 0;
@@ -31,9 +32,3 @@ void Client::update() {
 	packet << id << CommonNetworking::PacketType::VELOCITY << velocity.x << velocity.y;
 	send(packet);
 }
-
-void Client::send(sf::Packet& packet)
-{
-	serverSocket->send(packet, ip, CLIENT_PORT);
-}
-

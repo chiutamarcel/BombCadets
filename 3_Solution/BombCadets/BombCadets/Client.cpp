@@ -28,11 +28,6 @@ void Client::connect()
     char outdata[PACKETDATASIZE] = "connect";
     char indata[PACKETDATASIZE] = "";
     std::size_t received;
-    
-
-    sf::Packet inPacket;
-    sf::IpAddress sender;
-    unsigned short port;
 
     std::cout << "Trying to connect to server..." << std::endl;
 
@@ -42,21 +37,19 @@ void Client::connect()
         exit(1);
     }
 
+    sf::Packet packet;
     std::string text;
-    if (socket.receive(inPacket, sender, port)) {
-        if (port == SERVER_PORT) {
-            inPacket >> text;
-        }
-    }
 
-    if (port == SERVER_PORT) {
+    packet = receivePacket();
+
+    if (packet) {
+        packet >> text;
 
         if (!strcmp(text.c_str(), "connected")) {
             std::cout << "Server connection failed!" << std::endl;
             exit(1);
         }
     }
-
 
     std::cout << "Server connection successful!" << std::endl;
     Map::readFromFile("map.txt");
@@ -111,18 +104,33 @@ void Client::start()
 void Client::update()
 {
     if (hasStarted == true) {
-        char indata[PACKETDATASIZE];
-        std::size_t received;
-        unsigned short port;
+        sf::Packet packet;
 
-        sf::Socket::Status status;
+        packet = std::move(receivePacket());
 
-        status = socket.receive(indata, PACKETDATASIZE, received, sv_address, port);
-        
-        if (status == sf::Socket::Done)
-        {
-            std::cout << indata << std::endl;
+        if (packet) {
+            std::cout << packet << std::endl;
         }
-        //chatPrompt();
     }
 }
+
+void Client::send(sf::Packet& packet)
+{
+    
+}
+
+sf::Packet&& Client::receivePacket()
+{
+    sf::Packet packet;
+    sf::IpAddress sender_addr;
+    unsigned short sender_port;
+
+    socket.receive(packet, sender_addr, sender_port);
+
+    if (sender_addr != sv_address.toString() || sender_port != SERVER_PORT) {
+        return std::move(sf::Packet());
+    }
+
+    return std::move(packet);
+}
+

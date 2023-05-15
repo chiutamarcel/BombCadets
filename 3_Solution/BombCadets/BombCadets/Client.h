@@ -27,5 +27,8 @@ public:
 	static void deleteInstance();
 
 	const bool& getHasStarted();
+
+	void send(sf::Packet& packet);
+	sf::Packet&& receivePacket();
 };
 
