@@ -11,6 +11,8 @@ class Client
 	sf::Vector2f velocity;
 	sf::UdpSocket* serverSocket;
 
+	void updateVelocity();
+
 public:
 	Client(sf::UdpSocket* _serverSocket = nullptr);
 	Client(std::string _ip, sf::UdpSocket* _serverSocket = nullptr);

@@ -1,7 +1,7 @@
 #include "Client.h"
 #include "Client.h"
 #include "Map.h"
-#include "Common/Common.h"
+#include "Common.h"
 
 #include <iostream>
 
@@ -25,30 +25,28 @@ void Client::chatPrompt()
 
 void Client::connect()
 {
-    char outdata[PACKETDATASIZE] = "connect";
-    char indata[PACKETDATASIZE] = "";
-    std::size_t received;
+    sf::Packet packet;
 
     std::cout << "Trying to connect to server..." << std::endl;
 
-    if (socket.send(outdata, PACKETDATASIZE, sv_address, SERVER_PORT) != sf::Socket::Done)
-    {
-        std::cout << "ERROR!" << std::endl;
-        exit(1);
-    }
+    packet << CommonNetworking::PacketType::MESSAGE << "connect";
 
-    sf::Packet packet;
+    send(packet);
+
+    packet.clear();
+
     std::string text;
 
     packet = receivePacket();
 
-    if (packet) {
-        packet >> text;
+    if (!packet) {
+        throw "Server connection failed!";
+    }
 
-        if (!strcmp(text.c_str(), "connected")) {
-            std::cout << "Server connection failed!" << std::endl;
-            exit(1);
-        }
+    packet >> text;
+
+    if (strcmp(text.c_str(), "connected")) {
+        throw text.c_str();
     }
 
     std::cout << "Server connection successful!" << std::endl;
@@ -106,7 +104,7 @@ void Client::update()
     if (hasStarted == true) {
         sf::Packet packet;
 
-        packet = std::move(receivePacket());
+        packet = receivePacket();
 
         if (packet) {
             std::cout << packet << std::endl;
@@ -116,7 +114,7 @@ void Client::update()
 
 void Client::send(sf::Packet& packet)
 {
-    
+    socket.send(packet, sv_address, SERVER_PORT);
 }
 
 sf::Packet&& Client::receivePacket()

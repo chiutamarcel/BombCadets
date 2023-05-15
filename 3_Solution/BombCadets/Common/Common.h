@@ -4,9 +4,13 @@
 
 #define PACKETDATASIZE 100
 
+#include "SFML/Network.hpp"
+
 namespace CommonNetworking {
 	enum PacketType {
 		VELOCITY,
 		MESSAGE
 	};
+
+	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
 }

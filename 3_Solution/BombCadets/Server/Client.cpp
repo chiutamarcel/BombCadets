@@ -1,6 +1,6 @@
 #include "Client.h"
 #include "Client.h"
-#include "Common/Common.h"
+#include "Common.h"
 
 int Client::lastId = 0;
 
@@ -26,9 +26,17 @@ Client::Client(std::string _ip, sf::UdpSocket* _serverSocket)
 	ip = sf::IpAddress(_ip);
 }
 
+void Client::send(sf::Packet& packet)
+{
+	serverSocket->send(packet, ip, CLIENT_PORT);
+}
+
+void Client::updateVelocity() {
+	sf::Packet packet;
+	packet << CommonNetworking::PacketType::VELOCITY << id << velocity.x << velocity.y;
+	send(packet);
+}
 
 void Client::update() {
-	sf::Packet packet;
-	packet << id << CommonNetworking::PacketType::VELOCITY << velocity.x << velocity.y;
-	send(packet);
+	updateVelocity();
 }

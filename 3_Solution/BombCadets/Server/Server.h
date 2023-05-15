@@ -10,12 +10,10 @@
 class Server
 {
 	sf::UdpSocket socket;
-	//std::unordered_set<std::string> connected_clients;
 	std::vector<Client*> connected_clients;
-
 	sf::IpAddress sv_address;
 
-	void listenForConnections(const char indata[100], sf::IpAddress sender);
+	void listenForConnections(sf::Packet packet, sf::IpAddress sender);
 	Client* spawnPlayer(std::string player_ip);
 	Client* searchClientByIp(std::string player_ip);
 public:

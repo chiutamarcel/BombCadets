@@ -1,13 +1,22 @@
 #include "Server.h"
-#include "Common/Common.h"
+#include "Common.h"
 
 #include <iostream>
 
 
 
-void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
+void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 {
-    if (strcmp(indata, "connect") != 0) {
+    CommonNetworking::PacketType packetType;
+    std::string text;
+
+    packet >> packetType;
+
+    if (packetType != CommonNetworking::PacketType::MESSAGE) {
+        return;
+    }
+
+    if (strcmp(text.c_str(), "connect") != 0) {
         return;
     }
 
@@ -36,7 +45,12 @@ Client* Server::spawnPlayer(std::string player_ip)
         packet << "spawn_player";
 
         Client* client = new Client(player_ip, &socket);
-        client->send(packet);
+        
+        // Notify all the other players that the player connected!
+        for (auto c : connected_clients) {
+            c->send(packet);
+        }
+
         connected_clients.push_back(client);
 
         return client;
@@ -72,21 +86,17 @@ void Server::start()
 
 void Server::update()
 {
-    char indata[100];
-    std::size_t received;
+    sf::Packet packet;
     sf::IpAddress sender;
     unsigned short port;
 
     sf::Socket::Status status;
 
-    status = socket.receive(indata, PACKETDATASIZE, received, sender, port);
+    status = socket.receive(packet, sender, port);
 
-    if (status != sf::Socket::Done)
-    {
-        throw std::string("Could not receive data from port ") + std::string(std::to_string(port));
+    for (auto client : connected_clients) {
+        client->update();
     }
-    std::cout << "Received " << received << " bytes from " << sender << " on port " << port << std::endl;
-    std::cout << indata << std::endl;
 
-    listenForConnections(indata, sender);
+    listenForConnections(packet, sender);
 }
