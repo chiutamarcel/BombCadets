@@ -16,26 +16,45 @@ void Server::listenForConnections(const char indata[100], sf::IpAddress sender)
         return;
     }
 
-    if (connected_clients.count(sender.toString()) == 0) {
-        char outdata[PACKETDATASIZE] = "connected";
-        socket.send(outdata, PACKETDATASIZE, sender, CLIENT_PORT) != sf::Socket::Done;
-        connected_clients.insert(sender.toString());
+    if (searchClientByIp(sender.toString()) == nullptr) {
+        sf::Packet packet;
+        packet << "connected";
+        Client* client = spawnPlayer(sender.toString());
+        client->send(packet);
     }
     else {
         std::cout << "Player already connected!" << std::endl;
     }
 
-    spawnPlayer(sender.toString());
+    
 }
 
-void Server::spawnPlayer(std::string player_ip)
+Client* Server::spawnPlayer(std::string player_ip)
 {
-    const char data[PACKETDATASIZE] = "spawn_player";
+    try {
+        sf::Packet packet;
+        packet << "spawn_player";
 
-    for (auto client : connected_clients) {
-        if (client != player_ip)
-            socket.send(data, PACKETDATASIZE, client, CLIENT_PORT);
+        Client* client = new Client(player_ip, &socket);
+        client->send(packet);
+        connected_clients.push_back(client);
+
+        return client;
     }
+    catch (...) {
+        return nullptr;
+    }
+    
+}
+
+Client* Server::searchClientByIp(std::string player_ip)
+{
+    for (auto client : connected_clients) {
+        if (client->getIp() == player_ip)
+            return client;
+    }
+
+    return nullptr;
 }
 
 void Server::start()

@@ -3,3 +3,10 @@
 #define MAX_CLIENTS 4
 
 #define PACKETDATASIZE 100
+
+namespace CommonNetworking {
+	enum PacketType {
+		VELOCITY,
+		MESSAGE
+	};
+}

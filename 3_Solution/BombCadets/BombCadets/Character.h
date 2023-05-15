@@ -19,5 +19,8 @@ public:
 	virtual void die();
 	
 	void checkCollision(sf::Vector2f& velocity);
+
+	void setVelocity(sf::Vector2f vel);
+	const sf::Vector2f& getVelocity();
 };
 
