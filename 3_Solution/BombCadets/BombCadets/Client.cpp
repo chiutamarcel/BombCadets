@@ -36,8 +36,8 @@ void Client::syncVelocities(sf::Packet packet)
 
     const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
 
-    if (id <= 0 || id >= characters.size())
-        throw "id out of bounds!";
+    //if (id <= 0 || id >= characters.size())
+    //    throw "id out of bounds!";
 
     characters[id]->setVelocity(vel);
 

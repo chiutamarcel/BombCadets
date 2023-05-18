@@ -36,5 +36,5 @@ void Client::updateVelocity() {
 }
 
 void Client::update() {
-	updateVelocity();
+	//updateVelocity();
 }

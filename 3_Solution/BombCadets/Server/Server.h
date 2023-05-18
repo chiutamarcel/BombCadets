@@ -14,6 +14,7 @@ class Server
 	sf::IpAddress sv_address;
 
 	void listenForConnections(sf::Packet packet, sf::IpAddress sender);
+	void listenForVelocities(sf::Packet packet, sf::IpAddress sender);
 	Client* spawnPlayer(std::string player_ip);
 	Client* searchClientByIp(std::string player_ip);
 public:
