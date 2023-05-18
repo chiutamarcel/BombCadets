@@ -4,6 +4,7 @@
 
 class Client
 {
+	int id;
 	static Client* instance;
 
 	sf::UdpSocket socket;
@@ -15,10 +16,12 @@ class Client
 	Client(Client& other) = delete;
 
 	void chatPrompt();
+	void updateVelocities(sf::Packet packet);
 
 public:
 	void start();
 	void update();
+	void pollEvents();
 
 	void connect();
 	void disconnect();
@@ -30,5 +33,8 @@ public:
 
 	void send(sf::Packet& packet);
 	sf::Packet receivePacket();
+
+	const int& getId();
+	void setId(int _id);
 };
 

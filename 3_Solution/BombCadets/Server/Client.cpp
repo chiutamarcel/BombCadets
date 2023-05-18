@@ -2,8 +2,6 @@
 #include "Client.h"
 #include "Common.h"
 
-int Client::lastId = 0;
-
 const sf::IpAddress& Client::getIp()
 {
 	return ip;
@@ -14,14 +12,14 @@ void Client::setVelocity(sf::Vector2f vel)
 	velocity = vel;
 }
 
-Client::Client(sf::UdpSocket* _serverSocket) {
+Client::Client(int _id, sf::UdpSocket* _serverSocket) {
 	velocity = sf::Vector2f(0.0f, 0.0f);
-	id = lastId + 1;
 	serverSocket = _serverSocket;
+	id = _id;
 }
 
-Client::Client(std::string _ip, sf::UdpSocket* _serverSocket)
-	: Client(_serverSocket)
+Client::Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket)
+	: Client(id, _serverSocket)
 {
 	ip = sf::IpAddress(_ip);
 }

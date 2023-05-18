@@ -18,6 +18,7 @@ Game::Game() {
 
 void Game::pollEvents()
 {
+    Client::getInstance().pollEvents();
     // Process events
     sf::Event event;
     while (window->pollEvent(event))
@@ -351,8 +352,14 @@ void Game::startMultiPlayer() {
     Client::getInstance().start();
 
     // TODO: change later after adding a proper Bot class
-    for (int i = 0; i < Map::maxPlayers; i++)
-        Map::spawnCharacter(Map::CharacterType::BASE); 
+    for (int i = 0; i < Map::maxPlayers; i++) {
+        if (i == Client::getInstance().getId()) {
+            Map::spawnCharacter(Map::CharacterType::PLAYER);
+        }
+        else {
+            Map::spawnCharacter(Map::CharacterType::BASE);
+        }
+    }
 }
 
 void Game::draw()

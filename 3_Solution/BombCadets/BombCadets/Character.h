@@ -15,7 +15,7 @@ public:
 	Character(sf::Vector2f position, float length, sf::Color color, float _speed = 0);
 	~Character();
 
-	virtual void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 	virtual void die();
 	
 	void checkCollision(sf::Vector2f& velocity);

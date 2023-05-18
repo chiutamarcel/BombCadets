@@ -5,7 +5,6 @@
 
 class Client
 {
-	static int lastId;
 	int id;
 	sf::IpAddress ip;
 	sf::Vector2f velocity;
@@ -14,8 +13,8 @@ class Client
 	void updateVelocity();
 
 public:
-	Client(sf::UdpSocket* _serverSocket = nullptr);
-	Client(std::string _ip, sf::UdpSocket* _serverSocket = nullptr);
+	Client(int _id, sf::UdpSocket* _serverSocket = nullptr);
+	Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket = nullptr);
 
 	const sf::IpAddress& getIp();
 

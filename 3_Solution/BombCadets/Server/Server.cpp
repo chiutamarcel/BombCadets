@@ -31,7 +31,8 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 
     if (searchClientByIp(sender.toString()) == nullptr) {
         sf::Packet packet;
-        packet << CommonNetworking::PacketType::MESSAGE << "connected";
+        int id = connected_clients.size();
+        packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
         Client* client = spawnPlayer(sender.toString());
         client->send(packet);
     }
@@ -48,7 +49,9 @@ Client* Server::spawnPlayer(std::string player_ip)
         sf::Packet packet;
         packet << CommonNetworking::PacketType::MESSAGE << "spawn_player";
 
-        Client* client = new Client(player_ip, &socket);
+        int id = connected_clients.size();
+
+        Client* client = new Client(id, player_ip, &socket);
         
         // Notify all the other players that the player connected!
         for (auto c : connected_clients) {
