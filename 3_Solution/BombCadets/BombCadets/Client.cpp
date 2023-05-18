@@ -49,6 +49,8 @@ void Client::sendLocalVelocity()
     sf::Vector2f vel = Entities::getInstance().getCharacters()[id]->getVelocity();
 
     packet << CommonNetworking::PacketType::VELOCITY << id << vel.x << vel.y;
+
+    send(packet);
 }
 
 void Client::sendPackets()
