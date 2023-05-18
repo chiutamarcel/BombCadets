@@ -100,7 +100,7 @@ void Client::connect()
     id = _id;
 
     std::cout << "Server connection successful!" << std::endl;
-    Map::readFromFile("map.txt");
+    Map::spawnMapFromFile("map.txt");
 }
 
 void Client::disconnect()

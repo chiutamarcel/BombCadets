@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "Player.h"
+#include "MapText.h"
 
 using namespace GameConfig;
 
@@ -58,30 +59,12 @@ void Map::addSpawnPoint(int x, int y)
 	spawnPoints.push_back(std::make_pair(x, y));
 }
 
-void Map::readFromFile(std::string filename)
+void Map::spawnMapFromFile(std::string filename)
 {
-	std::ifstream map(filename);
-
-	char** mapMatrix = new char* [(int)(BLOCKSONSCREENY)];
-	for (int i = 0; i < (int)(BLOCKSONSCREENY); i++)
-	{
-		mapMatrix[i] = new char[(int)(BLOCKSONSCREENX) + 1];
-	}
-
-	for (int i = 0; i < BLOCKSONSCREENY; i++) {
-		for (int j = 0; j < BLOCKSONSCREENX + 1; j++) {
-			map.get(mapMatrix[i][j]);
-		}
-	}
-	map.close();
-
-	readFromString(mapMatrix);
-
-	for (int i = 0; i < (int)(BLOCKSONSCREENY); i++)
-	{
-		delete[] mapMatrix[i];
-	}
-	delete[] mapMatrix;
+	MapText mapText(BLOCKSONSCREENX,BLOCKSONSCREENY);
+	mapText.readFromFile(filename);
+	std::cout << mapText << std::endl;
+	spawnMap(mapText);
 }
 
 void stringToEntities(char** mapMatrix) {
@@ -120,14 +103,14 @@ void stringToEntities(char** mapMatrix) {
 	std::cout << std::endl;
 }
 
-void writeBreakableBlocks(char** mapMatrix) {
+void writeBreakableBlocks(MapText& mapText) {
 	int count = 0;
 	std::vector<std::pair<int, int>> emptySpace;
 
 	for (int i = 0; i < BLOCKSONSCREENY; i++)
 		for (int j = 0; j < BLOCKSONSCREENX; j++)
 		{
-			if (mapMatrix[i][j] == '0')
+			if (mapText.at(i, j) == '0')
 				emptySpace.push_back(std::make_pair(i, j));
 			count++;
 		}
@@ -136,15 +119,21 @@ void writeBreakableBlocks(char** mapMatrix) {
 	while (numberOfBreakableWalls)
 	{
 		srand(time(NULL));
+
+		if (emptySpace.size() == 0) break;
+
 		int index = rand() % emptySpace.size();
-		mapMatrix[emptySpace[index].first][emptySpace[index].second] = '2';
+		int x = emptySpace[index].first;
+		int y = emptySpace[index].second;
+
+		mapText.at(x, y) = '2';
 		emptySpace.erase(emptySpace.begin() + index);
 		numberOfBreakableWalls--;
 	}
 }
 
-void Map::readFromString(char **mapMatrix)
+void Map::spawnMap(MapText mapText)
 {	
-	writeBreakableBlocks(mapMatrix);
-	stringToEntities(mapMatrix);
+	writeBreakableBlocks(mapText);
+	stringToEntities(mapText.c_str());
 }

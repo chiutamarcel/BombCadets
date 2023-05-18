@@ -56,7 +56,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Common.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\MapText.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +118,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Common.h">
-      <Filter>Header Files</Filter>
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\MapText.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +132,9 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{e58be47f-d1b5-46ef-82a5-c68e20d1532a}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{3b6083b1-0ac1-4823-a154-c504daeee8e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

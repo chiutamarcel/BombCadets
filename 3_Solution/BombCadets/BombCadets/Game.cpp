@@ -343,7 +343,7 @@ void Game::update()
 
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
-    Map::readFromFile(mapFileName);
+    Map::spawnMapFromFile(mapFileName);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
 }
 

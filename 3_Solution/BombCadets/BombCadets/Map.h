@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "MapText.h"
+
 namespace Map
 {
 	enum class CharacterType {
@@ -19,7 +21,7 @@ namespace Map
 	void spawnCharacter(CharacterType type);
 	void addSpawnPoint(int x, int y);
 
-	void readFromFile(std::string filename);
-	void readFromString(char** mapMatrix);
+	void spawnMapFromFile(std::string filename);
+	void spawnMap(MapText mapText);
 };
 

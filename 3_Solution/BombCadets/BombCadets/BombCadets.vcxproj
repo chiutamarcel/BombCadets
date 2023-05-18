@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Common.cpp" />
+    <ClCompile Include="..\Common\MapText.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="AboutMode.cpp" />
     <ClCompile Include="Bomb.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Common.h" />
+    <ClInclude Include="..\Common\MapText.h" />
     <ClInclude Include="AboutMode.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />

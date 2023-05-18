@@ -14,3 +14,7 @@ namespace CommonNetworking {
 
 	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
 }
+
+namespace Map {
+	void writeBreakableBlocks(char** mapMatrix);
+}

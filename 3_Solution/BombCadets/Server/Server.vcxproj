@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Common.cpp" />
+    <ClCompile Include="..\Common\MapText.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Server.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Common.h" />
+    <ClInclude Include="..\Common\MapText.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="WorldReplicator.h" />
