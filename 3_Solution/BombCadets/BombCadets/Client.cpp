@@ -43,6 +43,12 @@ void Client::connect()
         throw "Server connection failed!";
     }
 
+    CommonNetworking::PacketType type;
+    packet >> type;
+
+    if (!type == CommonNetworking::PacketType::MESSAGE) {
+        return;
+    }
     packet >> text;
 
     if (strcmp(text.c_str(), "connected")) {
@@ -117,7 +123,7 @@ void Client::send(sf::Packet& packet)
     socket.send(packet, sv_address, SERVER_PORT);
 }
 
-sf::Packet&& Client::receivePacket()
+sf::Packet Client::receivePacket()
 {
     sf::Packet packet;
     sf::IpAddress sender_addr;
@@ -126,9 +132,9 @@ sf::Packet&& Client::receivePacket()
     socket.receive(packet, sender_addr, sender_port);
 
     if (sender_addr != sv_address.toString() || sender_port != SERVER_PORT) {
-        return std::move(sf::Packet());
+        return sf::Packet();
     }
 
-    return std::move(packet);
+    return packet;
 }
 

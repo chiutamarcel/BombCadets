@@ -7,6 +7,8 @@
 
 void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 {
+    if (!packet) return;
+
     CommonNetworking::PacketType packetType;
     std::string text;
 
@@ -15,6 +17,8 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
     if (packetType != CommonNetworking::PacketType::MESSAGE) {
         return;
     }
+
+    packet >> text;
 
     if (strcmp(text.c_str(), "connect") != 0) {
         return;
@@ -27,7 +31,7 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 
     if (searchClientByIp(sender.toString()) == nullptr) {
         sf::Packet packet;
-        packet << "connected";
+        packet << CommonNetworking::PacketType::MESSAGE << "connected";
         Client* client = spawnPlayer(sender.toString());
         client->send(packet);
     }
@@ -42,7 +46,7 @@ Client* Server::spawnPlayer(std::string player_ip)
 {
     try {
         sf::Packet packet;
-        packet << "spawn_player";
+        packet << CommonNetworking::PacketType::MESSAGE << "spawn_player";
 
         Client* client = new Client(player_ip, &socket);
         
