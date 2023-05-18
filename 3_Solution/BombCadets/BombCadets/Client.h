@@ -16,7 +16,11 @@ class Client
 	Client(Client& other) = delete;
 
 	void chatPrompt();
-	void updateVelocities(sf::Packet packet);
+	void syncVelocities(sf::Packet packet);
+	void sendLocalVelocity();
+
+	void sendPackets();
+	void receivePackets();
 
 public:
 	void start();

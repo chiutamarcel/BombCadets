@@ -24,7 +24,7 @@ void Client::chatPrompt()
     socket.send(text.c_str(), PACKETDATASIZE, sv_address, SERVER_PORT);
 }
 
-void Client::updateVelocities(sf::Packet packet)
+void Client::syncVelocities(sf::Packet packet)
 {
     CommonNetworking::PacketType type;
     int id;
@@ -41,6 +41,28 @@ void Client::updateVelocities(sf::Packet packet)
 
     characters[id]->setVelocity(vel);
 
+}
+
+void Client::sendLocalVelocity()
+{
+    sf::Packet packet;
+    sf::Vector2f vel = Entities::getInstance().getCharacters()[id]->getVelocity();
+
+    packet << CommonNetworking::PacketType::VELOCITY << id << vel.x << vel.y;
+}
+
+void Client::sendPackets()
+{
+    sendLocalVelocity();
+}
+
+void Client::receivePackets()
+{
+    sf::Packet packet;
+
+    packet = receivePacket();
+
+    syncVelocities(packet);
 }
 
 void Client::connect()
@@ -128,11 +150,8 @@ void Client::start()
 void Client::update()
 {
     if (hasStarted == true) {
-        sf::Packet packet;
-
-        packet = receivePacket();
-
-        updateVelocities(packet);
+        receivePackets();
+        sendPackets();
     }
 }
 
