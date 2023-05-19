@@ -5,16 +5,18 @@
 #define PACKETDATASIZE 100
 
 #include "SFML/Network.hpp"
+#include "MapText.h"
 
 namespace CommonNetworking {
 	enum PacketType {
 		VELOCITY,
-		MESSAGE
+		MESSAGE,
+		MAPINFO
 	};
 
 	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
 }
 
 namespace Map {
-	void writeBreakableBlocks(char** mapMatrix);
+	void writeBreakableBlocks(MapText& mapText);
 }

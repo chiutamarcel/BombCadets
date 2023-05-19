@@ -103,37 +103,8 @@ void stringToEntities(char** mapMatrix) {
 	std::cout << std::endl;
 }
 
-void writeBreakableBlocks(MapText& mapText) {
-	int count = 0;
-	std::vector<std::pair<int, int>> emptySpace;
-
-	for (int i = 0; i < BLOCKSONSCREENY; i++)
-		for (int j = 0; j < BLOCKSONSCREENX; j++)
-		{
-			if (mapText.at(i, j) == '0')
-				emptySpace.push_back(std::make_pair(i, j));
-			count++;
-		}
-
-	int numberOfBreakableWalls = NRBREAKABLEWALLS;
-	while (numberOfBreakableWalls)
-	{
-		srand(time(NULL));
-
-		if (emptySpace.size() == 0) break;
-
-		int index = rand() % emptySpace.size();
-		int x = emptySpace[index].first;
-		int y = emptySpace[index].second;
-
-		mapText.at(x, y) = '2';
-		emptySpace.erase(emptySpace.begin() + index);
-		numberOfBreakableWalls--;
-	}
-}
-
 void Map::spawnMap(MapText mapText)
 {	
-	writeBreakableBlocks(mapText);
+	//writeBreakableBlocks(mapText);
 	stringToEntities(mapText.c_str());
 }

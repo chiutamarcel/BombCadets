@@ -20,6 +20,6 @@ int main()
     }
     catch (std::string error)
     {
-        std::cout << error << std::endl;
+        std::cout << "ERR: " << error << std::endl;
     }
 }

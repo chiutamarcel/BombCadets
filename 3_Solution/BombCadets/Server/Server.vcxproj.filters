@@ -53,5 +53,13 @@
     <ClInclude Include="..\Common\MapText.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\GameConfig.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\BombCadets\map.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SFML/Network.hpp"
+#include "Common.h"
 
 class Client
 {
@@ -21,6 +22,8 @@ class Client
 
 	void sendPackets();
 	void receivePackets();
+	
+	MapText waitForMapInfo();
 
 public:
 	void start();

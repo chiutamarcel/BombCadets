@@ -9,4 +9,5 @@ namespace GameConfig {
 	const int NRBREAKABLEWALLS = 75;
 	const int BLOCKSONSCREENX = (int) (WINDOWXSIZE / ENTITYSIZE);
 	const int BLOCKSONSCREENY = (int) (WINDOWYSIZE / ENTITYSIZE);
+	const char mapFile[] = "../map.txt";
 }

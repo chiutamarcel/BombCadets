@@ -1,9 +1,15 @@
 #include "Server.h"
 #include "Common.h"
+#include "GameConfig.h"
 
 #include <iostream>
 
 
+Server::Server():
+    mapText(GameConfig::BLOCKSONSCREENX, GameConfig::BLOCKSONSCREENY)
+{
+
+}
 
 void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 {
@@ -30,11 +36,14 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
     }
 
     if (searchClientByIp(sender.toString()) == nullptr) {
-        sf::Packet packet;
-        int id = connected_clients.size();
-        packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
+        //sf::Packet packet;
+        //int id = connected_clients.size();
+        //packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
+        //sendMapInfo(sender);
         Client* client = spawnPlayer(sender.toString());
-        client->send(packet);
+        //client->send(packet);
+        client->confirmConnection();
+        client->sendMapInfo(mapText);
     }
     else {
         std::cout << "Player already connected!" << std::endl;
@@ -108,6 +117,9 @@ void Server::start()
     }
 
     std::cout << "Server started successfully on port " << SERVER_PORT << std::endl;
+
+    mapText.readFromFile(GameConfig::mapFile);
+    mapText.putBreakableBlocks(GameConfig::NRBREAKABLEWALLS);
 }
 
 void Server::update()

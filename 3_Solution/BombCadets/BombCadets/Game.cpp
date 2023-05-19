@@ -343,7 +343,10 @@ void Game::update()
 
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
-    Map::spawnMapFromFile(mapFileName);
+    MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
+    mapText.readFromFile(mapFileName);
+    mapText.putBreakableBlocks(NRBREAKABLEWALLS);
+    Map::spawnMap(mapText);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
 }
 

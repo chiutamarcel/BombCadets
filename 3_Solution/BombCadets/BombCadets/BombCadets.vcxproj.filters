@@ -93,9 +93,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HighScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,6 +118,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\MapText.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\GameConfig.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

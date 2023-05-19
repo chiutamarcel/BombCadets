@@ -1,5 +1,4 @@
 #include "Client.h"
-#include "Client.h"
 #include "Common.h"
 
 const sf::IpAddress& Client::getIp()
@@ -7,9 +6,25 @@ const sf::IpAddress& Client::getIp()
 	return ip;
 }
 
+void Client::confirmConnection() {
+	sf::Packet packet;
+	packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
+	send(packet);
+}
+
 void Client::setVelocity(sf::Vector2f vel)
 {
 	velocity = vel;
+}
+
+void Client::sendMapInfo(const MapText& mapText)
+{
+	sf::Packet packet;
+
+	packet << CommonNetworking::PacketType::MAPINFO << mapText;
+
+	send(packet);
+
 }
 
 Client::Client(int _id, sf::UdpSocket* _serverSocket) {

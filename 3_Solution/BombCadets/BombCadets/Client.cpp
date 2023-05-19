@@ -1,8 +1,8 @@
 #include "Client.h"
-#include "Client.h"
 #include "Map.h"
-#include "Common.h"
+//#include "Common.h"
 #include "Entities.h"
+#include "GameConfig.h"
 
 #include <iostream>
 
@@ -67,6 +67,25 @@ void Client::receivePackets()
     syncVelocities(packet);
 }
 
+MapText Client::waitForMapInfo() {
+    using namespace GameConfig;
+
+    MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
+    sf::Packet packet;
+    CommonNetworking::PacketType type;
+
+    packet = receivePacket();
+
+    if (!(packet >> type >> mapText)) 
+        throw "Unexpected packet!";
+    if (type != CommonNetworking::PacketType::MAPINFO) 
+        throw "Packet is not of type MAPINFO!";
+
+    Map::spawnMap(mapText);
+
+    return mapText;
+}
+
 void Client::connect()
 {
     sf::Packet packet;
@@ -100,7 +119,6 @@ void Client::connect()
     id = _id;
 
     std::cout << "Server connection successful!" << std::endl;
-    Map::spawnMapFromFile("map.txt");
 }
 
 void Client::disconnect()
@@ -146,6 +164,7 @@ void Client::start()
     }
 
     connect();
+    waitForMapInfo();
     socket.setBlocking(false);
 }
 

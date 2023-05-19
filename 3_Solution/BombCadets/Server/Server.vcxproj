@@ -142,10 +142,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Common.h" />
+    <ClInclude Include="..\Common\GameConfig.h" />
     <ClInclude Include="..\Common\MapText.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="WorldReplicator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\BombCadets\map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
