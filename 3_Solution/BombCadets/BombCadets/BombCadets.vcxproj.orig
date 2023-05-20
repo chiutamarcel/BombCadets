@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Externals\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;$(SolutionDir)\Externals\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,40 +131,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\Common.cpp" />
+    <ClCompile Include="..\Common\MapText.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="AboutMode.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BreakableBlock.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Client.cpp" />
-=======
+    <ClCompile Include="CreateLobby.cpp" />
     <ClCompile Include="Entities.cpp" />
->>>>>>> barar
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="JoinLobby.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="HighScore.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="PlayMode.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\Common.h" />
+    <ClInclude Include="..\Common\GameConfig.h" />
+    <ClInclude Include="..\Common\MapText.h" />
+    <ClInclude Include="AboutMode.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BreakableBlock.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
-<<<<<<< HEAD
     <ClInclude Include="Client.h" />
-=======
+    <ClInclude Include="CreateLobby.h" />
     <ClInclude Include="Entities.h" />
->>>>>>> barar
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
 <<<<<<< HEAD
-    <ClInclude Include="Player.h" />
 =======
+    <ClInclude Include="GameConfig.h" />
+    <ClInclude Include="JoinLobby.h" />
+>>>>>>> 24bbffd (updated UI (create/join lobby))
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="UIElement.h" />
     <ClInclude Include="WorldObject.h" />
->>>>>>> barar
+    <ClInclude Include="HighScore.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="PlayMode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
