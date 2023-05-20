@@ -12,6 +12,8 @@ class Client
 	sf::IpAddress sv_address;
 	bool hasStarted;
 
+	sf::Clock lastPositionTimer;
+
 	~Client();
 	Client();
 	Client(Client& other) = delete;

@@ -8,6 +8,8 @@
 
 Client* Client::instance = nullptr;
 
+#define positionUpdateRate 200 // milliseconds
+
 Client::~Client()
 {
 }
@@ -72,8 +74,14 @@ void Client::sendLocalVelocity()
 }
 
 void Client::sendLocalPosition() {
+    sf::Time time = lastPositionTimer.getElapsedTime();
+
+    if (time.asMilliseconds() < positionUpdateRate) return;
+
+    lastPositionTimer.restart();
+
     sf::Packet packet;
-    sf::Vector2f pos = Entities::getInstance().getCharacters()[id]->getPosition();
+    sf::Vector2f pos = Entities::getInstance().getPlayer().getPosition();
 
     packet << CommonNetworking::PacketType::POSITION << id << pos.x << pos.y;
 
