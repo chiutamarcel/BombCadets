@@ -8,7 +8,7 @@
 using namespace GameConfig;
 
 enum class GAMESTATE { MAINMENU, INGAME };
-enum class MENUTYPE { MAINMENU, PLAY, OPTIONS, HIGHSCORES, ABOUT };
+enum class MENUTYPE { MAINMENU, PLAY, OPTIONS, HIGHSCORES, ABOUT, JOINLOBBY, CREATELOBBY };
 MENUTYPE curMenu;
 GAMESTATE curGameState;
 
@@ -21,8 +21,14 @@ void Game::pollEvents()
     Client::getInstance().pollEvents();
     // Process events
     sf::Event event;
+    
     while (window->pollEvent(event))
     {
+        if (event.type == sf::Event::TextEntered)
+        {
+            testText.typedOn(event);
+        }
+
         if (curGameState == GAMESTATE::INGAME) {
             if (event.type == Event::Closed) {
                 window->close();
@@ -96,31 +102,37 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Left) {
-                        playMode->MoveLeft();
+                        playMode->left();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Right) {
-                        playMode->MoveRight();
+                        playMode->right();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = playMode->PlayModePressed();
+                        int y = playMode->buttonPressed();
 
                         if (y == 0)
                         {
-                            //single player
-                            startSinglePlayer();
-                            return;
+                            //create lobby
+                            //startSinglePlayer();
+                            createLobby = new CreateLobby(WINDOWXSIZE, WINDOWYSIZE);
+                            testText = TextBox(50, sf::Color::White, true);
+                            testText.setFont();
+                            testText.setPosition({ 110, 280 });
+                            curMenu = MENUTYPE::CREATELOBBY;
+                            break;
                         }
 
                         if (y == 1)
                         {
-                            //multi player
-                            startMultiPlayer();
-                            return;
+                            //join lobby
+                            joinLobby = new JoinLobby(WINDOWXSIZE, WINDOWYSIZE);
+                            curMenu = MENUTYPE::JOINLOBBY;
+                            break;
                         }
                     }
                 }
@@ -142,18 +154,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        about->MoveUp();
+                        about->up();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        about->MoveDown();
+                        about->down();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = about->AboutPressed();
+                        int y = about->buttonPressed();
 
                         if (y == 0)
                         {
@@ -185,18 +197,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        highScore->MoveUp();
+                        highScore->up();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        highScore->MoveDown();
+                        highScore->down();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = highScore->HighPressed();
+                        int y = highScore->buttonPressed();
 
                         if (y == 0)
                         {
@@ -228,18 +240,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        options->MoveUp();
+                        options->up();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        options->MoveDown();
+                        options->down();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = options->OptionsPressed();
+                        int y = options->buttonPressed();
 
                         if (y == 0)
                         {
@@ -281,6 +293,7 @@ void Game::pollEvents()
     }
 }
 
+
 Game::~Game()
 {
 	if (window != nullptr)
@@ -291,7 +304,7 @@ void Game::start()
 {
 
 	// Make Main window
-    window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Main Menu");
+    window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
 	mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
 
 	//set background
@@ -318,6 +331,16 @@ void Game::start()
     optionsBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
     options_texture.loadFromFile("Textures\\optionen.png");
     optionsBackground.setTexture(&options_texture);
+
+    //join bacc
+    joinBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    join_texture.loadFromFile("Textures\\joinLobby.png");
+    joinBackground.setTexture(&join_texture);
+
+    //create bacc
+    createBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    create_texture.loadFromFile("Textures\\createLobby.png");
+    createBackground.setTexture(&create_texture);
 
     curMenu = MENUTYPE::MAINMENU;
     curGameState = GAMESTATE::MAINMENU;
@@ -393,6 +416,15 @@ void Game::draw()
             window->draw(optionsBackground);
             options->draw(*window);
             break;
+        case MENUTYPE::JOINLOBBY:
+			window->draw(joinBackground);
+			joinLobby->draw(*window);
+			break;
+        case MENUTYPE::CREATELOBBY:
+            window->draw(createBackground);
+			createLobby->draw(*window);
+            testText.draw(*window);
+			break;
         }
     } else if (curGameState == GAMESTATE::INGAME) {
         for (auto entity : Entities::getInstance().getCharacters())
