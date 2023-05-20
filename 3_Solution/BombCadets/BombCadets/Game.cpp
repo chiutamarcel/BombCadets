@@ -14,15 +14,31 @@ GAMESTATE curGameState;
 
 Game::Game() {
     mapFileName = "map.txt";
+    focus = true;
 }
 
 void Game::pollEvents()
 {
     Client::getInstance().pollEvents();
+
+    if (curGameState == GAMESTATE::INGAME) {
+        if (focus == true) {
+            Entities::getInstance().getPlayer().pollEvents();
+        }
+    }
+
     // Process events
     sf::Event event;
     while (window->pollEvent(event))
     {
+        if (event.type == sf::Event::GainedFocus) {
+            focus = true;
+        }
+        
+        if (event.type == sf::Event::LostFocus) {
+            focus = false;
+        }
+
         if (curGameState == GAMESTATE::INGAME) {
             if (event.type == Event::Closed) {
                 window->close();

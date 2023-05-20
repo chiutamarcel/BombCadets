@@ -17,5 +17,6 @@ public:
 	~Player();
 
 	virtual void update(float deltaTime) override;
+	virtual void pollEvents() override;
 };
 

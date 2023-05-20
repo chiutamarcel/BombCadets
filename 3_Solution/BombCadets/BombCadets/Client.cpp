@@ -14,6 +14,7 @@ Client::~Client()
 
 Client::Client()
 {
+    id = -1;
     hasStarted = false;
 }
 
@@ -203,8 +204,12 @@ void Client::start()
 
     sv_address = sf::IpAddress(sv_addr_str);
 
+    unsigned short port;
+    std::cout << "Enter client port: " << std::endl;
+    std::cin >> port;
+
     // bind the socket to a port
-    if (socket.bind(CLIENT_PORT) != sf::Socket::Done)
+    if (socket.bind(port) != sf::Socket::Done)
     {
         std::cout << "ERROR BINDING TO SOCKET!" << std::endl;
         exit(1);

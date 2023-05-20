@@ -50,3 +50,41 @@ void Entities::removeExplosion(Explosion* explosion)
 	}
 }
 
+void Entities::setPlayer(Player& _player)
+{
+	player = &(_player);
+}
+
+Player& Entities::getPlayer()
+{
+	return *player;
+}
+
+Entities::Entities()
+{
+	player = nullptr;
+}
+
+Entities::~Entities()
+{
+	for (auto wall : walls) {
+		delete wall;
+	}
+
+	for (auto c : characters) {
+		delete c;
+	}
+
+	for (auto bBlk : breakableBlocks) {
+		delete bBlk;
+	}
+
+	for (auto bomb : bombs) {
+		delete bomb;
+	}
+
+	for (auto explosion : explosions) {
+		delete explosion;
+	}
+}
+

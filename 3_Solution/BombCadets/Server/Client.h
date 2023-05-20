@@ -9,13 +9,15 @@ class Client
 {
 	int id;
 	sf::IpAddress ip;
+	unsigned short port;
 	sf::UdpSocket* serverSocket;
 
 public:
-	Client(int _id, sf::UdpSocket* _serverSocket = nullptr);
-	Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket = nullptr);
-
-	const sf::IpAddress& getIp();
+	Client(int _id, unsigned short _port, sf::UdpSocket* _serverSocket = nullptr);
+	Client(int _id, unsigned short _port, std::string _ip, sf::UdpSocket* _serverSocket = nullptr);
+	
+	const sf::IpAddress& getIp() const;
+	const unsigned short& getPort() const;
 
 	void confirmConnection();
 	void sendMapInfo(const MapText& mapText);

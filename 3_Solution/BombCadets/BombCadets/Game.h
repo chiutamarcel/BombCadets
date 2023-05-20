@@ -46,6 +46,8 @@ class Game
 
 	std::string mapFileName;
 
+	bool focus;
+
 public:
 
 	Game();

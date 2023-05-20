@@ -16,10 +16,11 @@ class Server
 	sf::IpAddress sv_address;
 	MapText mapText;
 
-	void listenForConnections(sf::Packet packet, sf::IpAddress sender);
-	void listenForPositions(sf::Packet packet, sf::IpAddress sender);
-	Client* spawnPlayer(std::string player_ip);
-	Client* searchClientByIp(std::string player_ip);
+	void listenForConnections(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	void listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	Client* spawnPlayer(std::string player_ip, unsigned short port);
+	//Client* searchClientByIp(std::string player_ip);
+	bool alreadyExists(std::string player_ip, unsigned short port);
 public:
 	Server();
 

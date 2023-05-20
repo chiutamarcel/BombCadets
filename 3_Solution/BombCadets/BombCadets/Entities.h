@@ -4,6 +4,7 @@
 #include "BreakableBlock.h"
 #include "Bomb.h"
 #include "Explosion.h"
+#include "Player.h"
 
 class Entities {
 public:
@@ -35,10 +36,16 @@ public:
         return explosions;
     }
 	void removeExplosion(Explosion* explosion);
+
+    void setPlayer(Player& _player);
+    Player& getPlayer();
     
 private:
-    Entities() {}
-    ~Entities(){}
+
+    Player* player;
+
+    Entities();
+    ~Entities();
 
     std::vector<Block*> walls;
     std::vector<Character*> characters;

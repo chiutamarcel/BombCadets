@@ -37,6 +37,10 @@ void Entity::update(float deltaTime)
 {
 }
 
+void Entity::pollEvents()
+{
+}
+
 const sf::RectangleShape& Entity::getShape()
 {
 	return shape;

@@ -1,9 +1,14 @@
 #include "Client.h"
 #include "Common.h"
 
-const sf::IpAddress& Client::getIp()
+const sf::IpAddress& Client::getIp() const
 {
 	return ip;
+}
+
+const unsigned short& Client::getPort() const
+{
+	return port;
 }
 
 void Client::confirmConnection() {
@@ -22,20 +27,21 @@ void Client::sendMapInfo(const MapText& mapText)
 
 }
 
-Client::Client(int _id, sf::UdpSocket* _serverSocket) {
+Client::Client(int _id, unsigned short _port, sf::UdpSocket* _serverSocket) {
 	serverSocket = _serverSocket;
 	id = _id;
+	port = _port;
 }
 
-Client::Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket)
-	: Client(_id, _serverSocket)
+Client::Client(int _id, unsigned short _port, std::string _ip, sf::UdpSocket* _serverSocket)
+	: Client(_id, _port, _serverSocket)
 {
 	ip = sf::IpAddress(_ip);
 }
 
 void Client::send(sf::Packet& packet)
 {
-	serverSocket->send(packet, ip, CLIENT_PORT);
+	serverSocket->send(packet, ip, port);
 }
 
 void Client::update() {

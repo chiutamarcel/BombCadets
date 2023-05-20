@@ -11,7 +11,7 @@ Server::Server():
 
 }
 
-void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
+void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender, unsigned short port)
 {
     try {
         if (!packet) return;
@@ -36,19 +36,14 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
             return;
         }
 
-        if (searchClientByIp(sender.toString()) == nullptr) {
-            Client* client = spawnPlayer(sender.toString());
+        Client* client = spawnPlayer(sender.toString(), port);
 
-            if (client == nullptr) {
-                throw std::string("Could not spawn client: ") + sender.toString();
-            }
+        if (client == nullptr) {
+            throw std::string("Could not spawn client: ") + sender.toString();
+        }
 
-            client->confirmConnection();
-            client->sendMapInfo(mapText);
-        }
-        else {
-            std::cout << "Player already connected!" << std::endl;
-        }
+        client->confirmConnection();
+        client->sendMapInfo(mapText);
     }
     catch (std::string e) {
         std::cout << e << std::endl;
@@ -56,7 +51,7 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
     
 }
 
-void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender) {
+void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port) {
     CommonNetworking::PacketType type;
     int id;
     sf::Vector2f pos;
@@ -74,15 +69,19 @@ void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender) {
     }
 }
 
-Client* Server::spawnPlayer(std::string player_ip)
+Client* Server::spawnPlayer(std::string player_ip, unsigned short port)
 {
     try {
+        if (alreadyExists(player_ip, port) == true) {
+            throw std::string("Client is already connected!");
+        }
+
         sf::Packet packet;
         packet << CommonNetworking::PacketType::MESSAGE << "spawn_player";
 
         int id = connected_clients.size();
 
-        Client* client = new Client(id, player_ip, &socket);
+        Client* client = new Client(id, port, player_ip, &socket);
         
         // Notify all the other players that the player connected!
         for (auto c : connected_clients) {
@@ -93,20 +92,29 @@ Client* Server::spawnPlayer(std::string player_ip)
 
         return client;
     }
-    catch (...) {
+    catch (std::string e) {
+        std::cout << e << std::endl;
         return nullptr;
     }
     
 }
 
-Client* Server::searchClientByIp(std::string player_ip)
+//Client* Server::searchClientByIp(std::string player_ip)
+//{
+//    for (auto client : connected_clients) {
+//        if (client->getIp() == player_ip)
+//            return client;
+//    }
+//
+//    return nullptr;
+//}
+
+bool Server::alreadyExists(std::string player_ip, unsigned short port)
 {
     for (auto client : connected_clients) {
-        if (client->getIp() == player_ip)
-            return client;
+        if (client->getIp() == player_ip && client->getPort() == port) return true;
     }
-
-    return nullptr;
+    return false;
 }
 
 void Server::start()
@@ -139,7 +147,7 @@ void Server::update()
         client->update();
     }
 
-    listenForPositions(packet, sender);
+    listenForPositions(packet, sender, port);
     //listenForVelocities(packet, sender);
-    listenForConnections(packet, sender);
+    listenForConnections(packet, sender, port);
 }

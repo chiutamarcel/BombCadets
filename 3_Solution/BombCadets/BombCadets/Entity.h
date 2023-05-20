@@ -21,6 +21,7 @@ public:
 
 	// Functions
 	virtual void update(float deltaTime);
+	virtual void pollEvents();
 
 	// Getters / Setters
 	const sf::RectangleShape& getShape();
