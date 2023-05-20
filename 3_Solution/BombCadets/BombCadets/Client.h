@@ -39,7 +39,7 @@ public:
 	const bool& getHasStarted();
 
 	void send(sf::Packet& packet);
-	sf::Packet receivePacket();
+	void receivePacket(sf::Packet& packet);
 
 	const int& getId();
 	void setId(int _id);

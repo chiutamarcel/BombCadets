@@ -27,10 +27,10 @@ void Client::chatPrompt()
 void Client::syncVelocities(sf::Packet packet)
 {
     CommonNetworking::PacketType type;
-    int id;
+    int _id;
     sf::Vector2f vel;
 
-    if (!(packet >> type >> id >> vel.x >> vel.y)) return;
+    if (!(packet >> type >> _id >> vel.x >> vel.y)) return;
 
     if (type != CommonNetworking::PacketType::VELOCITY) return;
 
@@ -39,7 +39,7 @@ void Client::syncVelocities(sf::Packet packet)
     //if (id <= 0 || id >= characters.size())
     //    throw "id out of bounds!";
 
-    characters[id]->setVelocity(vel);
+    characters[_id]->setVelocity(vel);
 
 }
 
@@ -60,65 +60,84 @@ void Client::sendPackets()
 
 void Client::receivePackets()
 {
-    sf::Packet packet;
+    try {
+        sf::Packet packet;
+        
+        receivePacket(packet);
 
-    packet = receivePacket();
+        if (!packet) return;
 
-    syncVelocities(packet);
+        syncVelocities(packet);
+    }
+    catch (std::string e) {
+
+    }
 }
 
 MapText Client::waitForMapInfo() {
-    using namespace GameConfig;
+    try {
+        using namespace GameConfig;
 
-    MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
-    sf::Packet packet;
-    CommonNetworking::PacketType type;
+        MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
+        sf::Packet packet;
+        CommonNetworking::PacketType type;
 
-    packet = receivePacket();
+        receivePacket(packet);
 
-    if (!(packet >> type >> mapText)) 
-        throw "Unexpected packet!";
-    if (type != CommonNetworking::PacketType::MAPINFO) 
-        throw "Packet is not of type MAPINFO!";
+        if (!(packet >> type >> mapText))
+            throw std::string("Unexpected packet!");
+        if (type != CommonNetworking::PacketType::MAPINFO)
+            throw std::string("Packet is not of type MAPINFO!");
 
-    Map::spawnMap(mapText);
+        Map::spawnMap(mapText);
 
-    return mapText;
+        return mapText;
+    }
+    catch (std::string e) {
+        std::cout << e << std::endl;
+        exit(1);
+    }
 }
 
 void Client::connect()
 {
-    sf::Packet packet;
+    try {
+        sf::Packet packet;
 
-    std::cout << "Trying to connect to server..." << std::endl;
+        std::cout << "Trying to connect to server..." << std::endl;
 
-    packet << CommonNetworking::PacketType::MESSAGE << "connect";
+        packet << CommonNetworking::PacketType::MESSAGE << "connect";
 
-    send(packet);
+        send(packet);
 
-    packet.clear();
+        packet.clear();
 
-    std::string text;
-    CommonNetworking::PacketType type;
-    int _id;
+        std::string text;
+        CommonNetworking::PacketType type;
+        int _id;
 
-    packet = receivePacket();
+        receivePacket(packet);
 
-    if (!(packet >> type >> text >> _id)) {
-        throw "Server connection failed!";
+        if (!(packet >> type >> text >> _id)) {
+            throw std::string("Server connection failed!");
+        }
+
+        if (!type == CommonNetworking::PacketType::MESSAGE) {
+            return;
+        }
+
+        if (strcmp(text.c_str(), "connected")) {
+            throw text;
+        }
+
+        id = _id;
+
+        std::cout << "Server connection successful with id: " << id << std::endl;
     }
-
-    if (!type == CommonNetworking::PacketType::MESSAGE) {
-        return;
+    catch (std::string e) {
+        std::cout << e << std::endl;
+        exit(1);
     }
-
-    if (strcmp(text.c_str(), "connected")) {
-        throw text.c_str();
-    }
-
-    id = _id;
-
-    std::cout << "Server connection successful!" << std::endl;
 }
 
 void Client::disconnect()
@@ -171,7 +190,12 @@ void Client::start()
 void Client::update()
 {
     if (hasStarted == true) {
-        receivePackets();
+        try {
+            receivePackets();
+        }
+        catch (std::string e) {
+
+        }
         sendPackets();
     }
 }
@@ -186,19 +210,16 @@ void Client::send(sf::Packet& packet)
     socket.send(packet, sv_address, SERVER_PORT);
 }
 
-sf::Packet Client::receivePacket()
+void Client::receivePacket(sf::Packet& packet)
 {
-    sf::Packet packet;
     sf::IpAddress sender_addr;
     unsigned short sender_port;
 
     socket.receive(packet, sender_addr, sender_port);
 
     if (sender_addr != sv_address.toString() || sender_port != SERVER_PORT) {
-        return sf::Packet();
+        return;
     }
-
-    return packet;
 }
 
 const int& Client::getId()
