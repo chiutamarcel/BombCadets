@@ -34,7 +34,7 @@ Client::Client(int _id, sf::UdpSocket* _serverSocket) {
 }
 
 Client::Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket)
-	: Client(id, _serverSocket)
+	: Client(_id, _serverSocket)
 {
 	ip = sf::IpAddress(_ip);
 }

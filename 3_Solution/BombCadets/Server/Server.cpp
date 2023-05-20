@@ -13,42 +13,46 @@ Server::Server():
 
 void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
 {
-    if (!packet) return;
+    try {
+        if (!packet) return;
 
-    CommonNetworking::PacketType packetType;
-    std::string text;
+        CommonNetworking::PacketType packetType;
+        std::string text;
 
-    packet >> packetType;
+        packet >> packetType;
 
-    if (packetType != CommonNetworking::PacketType::MESSAGE) {
-        return;
+        if (packetType != CommonNetworking::PacketType::MESSAGE) {
+            return;
+        }
+
+        packet >> text;
+
+        if (strcmp(text.c_str(), "connect") != 0) {
+            return;
+        }
+
+        if (connected_clients.size() >= MAX_CLIENTS) {
+            std::cout << "Maximum nr of players reached!" << std::endl;
+            return;
+        }
+
+        if (searchClientByIp(sender.toString()) == nullptr) {
+            Client* client = spawnPlayer(sender.toString());
+
+            if (client == nullptr) {
+                throw std::string("Could not spawn client: ") + sender.toString();
+            }
+
+            client->confirmConnection();
+            client->sendMapInfo(mapText);
+        }
+        else {
+            std::cout << "Player already connected!" << std::endl;
+        }
     }
-
-    packet >> text;
-
-    if (strcmp(text.c_str(), "connect") != 0) {
-        return;
+    catch (std::string e) {
+        std::cout << e << std::endl;
     }
-
-    if (connected_clients.size() >= MAX_CLIENTS) {
-        std::cout << "Maximum nr of players reached!" << std::endl;
-        return;
-    }
-
-    if (searchClientByIp(sender.toString()) == nullptr) {
-        //sf::Packet packet;
-        //int id = connected_clients.size();
-        //packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
-        //sendMapInfo(sender);
-        Client* client = spawnPlayer(sender.toString());
-        //client->send(packet);
-        client->confirmConnection();
-        client->sendMapInfo(mapText);
-    }
-    else {
-        std::cout << "Player already connected!" << std::endl;
-    }
-
     
 }
 
