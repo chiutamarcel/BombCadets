@@ -63,7 +63,7 @@ void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigne
     packet << type << id << pos.x << pos.y;
 
     for (auto client : connected_clients) {
-        if (client->getIp() != sender) {
+        if (client->getIp() != sender || client->getPort() != port) {
             client->send(packet);
         }
     }
