@@ -148,27 +148,34 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="JoinLobby.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Menu.cpp" />
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="MapOfNodes.cpp" />
     <ClCompile Include="NPC.cpp" />
-
+=======
     <ClCompile Include="Menu.cpp" />
-
+>>>>>>> f02bac8 (updated UI (create/join lobby))
+=======
+    <ClCompile Include="Menu.cpp" />
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PlayMode.cpp" />
     <ClCompile Include="Source.cpp" />
-
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="src\AStar.cpp" />
-    <ClCompile Include="TextBox.cpp" />
-    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="src\Node.cpp" />
-
+=======
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="UIElement.cpp" />
-
+>>>>>>> f02bac8 (updated UI (create/join lobby))
+=======
+    <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,26 +198,30 @@
     <ClInclude Include="JoinLobby.h" />
     <ClInclude Include="Map.h" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="MapOfNodes.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="src\AStar.h" />
     <ClInclude Include="src\Node.h" />
     <ClInclude Include="src\PathAlgorithm.h" />
     <ClInclude Include="src\PathFinder.h" />
-
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="TextBox.h" />
-    <ClInclude Include="UIElement.h" />
-
+=======
+=======
+=======
     <ClInclude Include="GameConfig.h" />
     <ClInclude Include="JoinLobby.h" />
-
+>>>>>>> 24bbffd (updated UI (create/join lobby))
     <ClInclude Include="Map.h" />
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="UIElement.h" />
+<<<<<<< HEAD
+>>>>>>> f02bac8 (updated UI (create/join lobby))
+=======
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     <ClInclude Include="WorldObject.h" />
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="MainMenu.h" />
@@ -219,9 +230,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     <None Include="ClassDiagram1.cd" />
 >>>>>>> f02bac8 (updated UI (create/join lobby))
+=======
+    <None Include="ClassDiagram1.cd" />
+>>>>>>> 88eeecc (updated UI (create/join lobby))
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

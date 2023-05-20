@@ -1,23 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     <ClCompile Include="AboutMode.cpp">
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Entities">
-      <UniqueIdentifier>{fc06bfe8-cc1d-470b-9a8e-86ef5e557eb7}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
@@ -29,10 +17,9 @@
     <ClCompile Include="BreakableBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BreakableBlock.cpp">
+    <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
     <ClCompile Include="Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,52 +47,6 @@
     <ClCompile Include="Options.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayMode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common.cpp">
-
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\MapText.cpp">
-      <Filter>Common</Filter>
-
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Node.cpp">
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AStar.cpp">
-    <ClCompile Include="Explosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityNode.cpp">
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mapOfNodes.cpp">
-    <ClCompile Include="HighScore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
->>>>>>> 87b82f5 (i hope it works)
-    </ClCompile>
-    <ClCompile Include="Options.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -119,10 +60,32 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Common.cpp">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 88eeecc (updated UI (create/join lobby))
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\MapText.cpp">
       <Filter>Common</Filter>
+<<<<<<< HEAD
+=======
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AStar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapOfNodes.cpp">
+      <Filter>Source Files</Filter>
+>>>>>>> 87b82f5 (i hope it works)
+=======
+>>>>>>> 88eeecc (updated UI (create/join lobby))
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,76 +101,27 @@
     <ClInclude Include="BreakableBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-    <ClInclude Include="BreakableBlock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities.h">
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Explosion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HighScore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Options.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common.h">
     <ClInclude Include="Entities.h">
-
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\MapText.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\GameConfig.h">
-      <Filter>Common</Filter>
-
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Node.h">
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PathAlgorithm.h">
     <ClInclude Include="Explosion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PathFinder.h">
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AStar.h">
     <ClInclude Include="HighScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityNode.h">
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -226,12 +140,11 @@
     <ClInclude Include="WorldObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapOfNodes.h">
-      <Filter>Header Files</Filter>
->>>>>>> 87b82f5 (i hope it works)
-    </ClInclude>
-  </ItemGroup>
-      <ClInclude Include="..\Common\Common.h">
+    <ClInclude Include="..\Common\Common.h">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 88eeecc (updated UI (create/join lobby))
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\MapText.h">
@@ -239,7 +152,32 @@
     </ClInclude>
     <ClInclude Include="..\Common\GameConfig.h">
       <Filter>Common</Filter>
+<<<<<<< HEAD
+=======
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PathAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AStar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapOfNodes.h">
+      <Filter>Header Files</Filter>
+>>>>>>> 87b82f5 (i hope it works)
+=======
+>>>>>>> 88eeecc (updated UI (create/join lobby))
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{a6ebbc7c-90e3-4919-bb2f-e2b298a62c80}</UniqueIdentifier>
@@ -252,12 +190,12 @@
     <Filter Include="Common">
       <UniqueIdentifier>{3b6083b1-0ac1-4823-a154-c504daeee8e9}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-      <UniqueIdentifier>{3b6083b1-0ac1-4823-a154-c504daeee8e9}</UniqueIdentifier>
-    </Filter>
-
+=======
+=======
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="AboutMode.cpp" />
     <ClCompile Include="Bomb.cpp" />
@@ -313,5 +251,6 @@
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
 >>>>>>> 24bbffd (updated UI (create/join lobby))
+>>>>>>> 88eeecc (updated UI (create/join lobby))
   </ItemGroup>
 </Project>
