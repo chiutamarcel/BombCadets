@@ -41,3 +41,13 @@ const sf::RectangleShape& Entity::getShape()
 {
 	return shape;
 }
+
+void Entity::setPosition(sf::Vector2f _position)
+{
+	shape.setPosition(_position);
+}
+
+const sf::Vector2f& Entity::getPosition() const
+{
+	return shape.getPosition();
+}

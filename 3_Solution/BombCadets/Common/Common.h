@@ -11,7 +11,8 @@ namespace CommonNetworking {
 	enum PacketType {
 		VELOCITY,
 		MESSAGE,
-		MAPINFO
+		MAPINFO,
+		POSITION
 	};
 
 	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);

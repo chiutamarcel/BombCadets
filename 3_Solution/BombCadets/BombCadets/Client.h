@@ -18,7 +18,9 @@ class Client
 
 	void chatPrompt();
 	void syncVelocities(sf::Packet packet);
+	void syncPositions(sf::Packet packet);
 	void sendLocalVelocity();
+	void sendLocalPosition();
 
 	void sendPackets();
 	void receivePackets();

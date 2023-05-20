@@ -24,6 +24,9 @@ public:
 
 	// Getters / Setters
 	const sf::RectangleShape& getShape();
+
+	void setPosition(sf::Vector2f _position);
+	const sf::Vector2f& getPosition() const;
 };
 
 //static std::vector<Entity*> entities;

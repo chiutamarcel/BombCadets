@@ -75,6 +75,24 @@ void Server::listenForVelocities(sf::Packet packet, sf::IpAddress sender)
     }
 }
 
+void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender) {
+    CommonNetworking::PacketType type;
+    int id;
+    sf::Vector2f pos;
+
+    if (!(packet >> type >> id >> pos.x >> pos.y)) return;
+
+    if (type != CommonNetworking::PacketType::POSITION) return;
+
+    packet << type << id << pos.x << pos.y;
+
+    for (auto client : connected_clients) {
+        if (client->getIp() != sender) {
+            client->send(packet);
+        }
+    }
+}
+
 Client* Server::spawnPlayer(std::string player_ip)
 {
     try {
@@ -140,6 +158,7 @@ void Server::update()
         client->update();
     }
 
-    listenForVelocities(packet, sender);
+    listenForPositions(packet, sender);
+    //listenForVelocities(packet, sender);
     listenForConnections(packet, sender);
 }

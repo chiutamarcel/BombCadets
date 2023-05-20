@@ -43,6 +43,23 @@ void Client::syncVelocities(sf::Packet packet)
 
 }
 
+void Client::syncPositions(sf::Packet packet) {
+    CommonNetworking::PacketType type;
+    int _id;
+    sf::Vector2f pos;
+
+    if (!(packet >> type >> _id >> pos.x >> pos.y)) return;
+
+    if (type != CommonNetworking::PacketType::POSITION) return;
+
+    const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
+
+    //if (id <= 0 || id >= characters.size())
+    //    throw "id out of bounds!";
+
+    characters[_id]->setPosition(pos);
+}
+
 void Client::sendLocalVelocity()
 {
     sf::Packet packet;
@@ -53,9 +70,19 @@ void Client::sendLocalVelocity()
     send(packet);
 }
 
+void Client::sendLocalPosition() {
+    sf::Packet packet;
+    sf::Vector2f pos = Entities::getInstance().getCharacters()[id]->getPosition();
+
+    packet << CommonNetworking::PacketType::POSITION << id << pos.x << pos.y;
+
+    send(packet);
+}
+
 void Client::sendPackets()
 {
-    sendLocalVelocity();
+    //sendLocalVelocity();
+    sendLocalPosition();
 }
 
 void Client::receivePackets()
@@ -67,7 +94,8 @@ void Client::receivePackets()
 
         if (!packet) return;
 
-        syncVelocities(packet);
+        //syncVelocities(packet);
+        syncPositions(packet);
     }
     catch (std::string e) {
 
