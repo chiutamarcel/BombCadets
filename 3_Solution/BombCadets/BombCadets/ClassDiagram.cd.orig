@@ -1,4 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<ClassDiagram /> 
+=======
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="AboutMode" Collapsed="true">
     <Position X="7.5" Y="7.25" Width="1.5" />
@@ -142,3 +145,4 @@
   </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
+>>>>>>> f02bac8 (updated UI (create/join lobby))

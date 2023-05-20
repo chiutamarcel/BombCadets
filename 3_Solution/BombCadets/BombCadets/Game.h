@@ -16,6 +16,10 @@
 #include "AboutMode.h"
 #include "HighScore.h"
 #include "Options.h"
+#include "JoinLobby.h"
+#include "CreateLobby.h"
+
+#include "TextBox.h"
 
 class Game
 {
@@ -32,12 +36,19 @@ class Game
 	Texture high_texture;
 	RectangleShape optionsBackground;
 	Texture options_texture;
+	RectangleShape joinBackground;
+	Texture join_texture;
+	RectangleShape createBackground;
+	Texture create_texture;
 
 	MainMenu* mainMenu;
 	PlayMode* playMode;
 	AboutMode* about;
 	HighScore* highScore;
 	Options* options;
+	JoinLobby* joinLobby;
+	CreateLobby* createLobby;
+	TextBox testText;
 	
 	//Character character;
 

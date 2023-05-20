@@ -16,12 +16,30 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="AboutMode.cpp" />
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BreakableBlock.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Entities.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="HighScore.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="PlayMode.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="WorldObject.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CreateLobby.cpp" />
+    <ClCompile Include="JoinLobby.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,19 +96,34 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AboutMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BreakableBlock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
+    <ClInclude Include="AboutMode.h" />
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BreakableBlock.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="Entities.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameConfig.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="WorldObject.h" />
+    <ClInclude Include="HighScore.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="PlayMode.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CreateLobby.h" />
+    <ClInclude Include="JoinLobby.h" />
+    <ClInclude Include="TextBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
