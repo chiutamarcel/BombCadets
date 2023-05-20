@@ -1,0 +1,124 @@
+#include "Client.h"
+<<<<<<< HEAD
+#include "Server.h"
+#include <iostream>
+
+const sf::IpAddress& Client::getIp() const
+=======
+#include "Client.h"
+#include "Common.h"
+
+const sf::IpAddress& Client::getIp()
+>>>>>>> 87b82f5 (i hope it works)
+{
+	return ip;
+}
+
+<<<<<<< HEAD
+const unsigned short& Client::getPort() const
+{
+	return port;
+}
+
+void Client::confirmConnection() {
+	sf::Packet packet;
+	packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
+	send(packet);
+}
+
+void Client::sendMapInfo(const MapText& mapText)
+{
+	sf::Packet packet;
+
+	packet << CommonNetworking::PacketType::MAPINFO << mapText;
+
+	send(packet);
+
+}
+
+Client::Client(int _id, unsigned short _port, sf::UdpSocket* _serverSocket) {
+	serverSocket = _serverSocket;
+	id = _id;
+	port = _port;
+	
+	isDead = false;
+	for (int i = 0; i < MAX_CLIENTS; i++) {
+		killVotes[i] = 0;
+	}
+}
+
+Client::Client(int _id, unsigned short _port, std::string _ip, sf::UdpSocket* _serverSocket)
+	: Client(_id, _port, _serverSocket)
+=======
+void Client::setVelocity(sf::Vector2f vel)
+{
+	velocity = vel;
+}
+
+Client::Client(int _id, sf::UdpSocket* _serverSocket) {
+	velocity = sf::Vector2f(0.0f, 0.0f);
+	serverSocket = _serverSocket;
+	id = _id;
+}
+
+Client::Client(int _id, std::string _ip, sf::UdpSocket* _serverSocket)
+	: Client(id, _serverSocket)
+>>>>>>> 87b82f5 (i hope it works)
+{
+	ip = sf::IpAddress(_ip);
+}
+
+void Client::send(sf::Packet& packet)
+{
+<<<<<<< HEAD
+	serverSocket->send(packet, ip, port);
+}
+
+void Client::die()
+{
+	std::cout << "Client " << id << " died!" << std::endl;
+	sf::Packet packet;
+
+	send(packet);
+	Server::getInstance().endGame(id);
+}
+
+void Client::getKillVoted(int voterId, int playerCount)
+{
+	if (isDead) return;
+
+	if (voterId < 0 || voterId >= playerCount) {
+		throw std::string("id out of range!");
+	}
+
+	killVotes[voterId] = 1;
+
+	int getKilled = 1;
+	for (int i = 0; i < playerCount; i++) {
+		if (killVotes[i] == 0) {
+			getKilled = 0;
+			break;
+		}
+	}
+
+	if (getKilled) {
+		die();
+	}
+}
+
+void Client::update() {
+	
+=======
+	serverSocket->send(packet, ip, CLIENT_PORT);
+}
+
+void Client::updateVelocity() {
+	sf::Packet packet;
+	packet << CommonNetworking::PacketType::VELOCITY << id << velocity.x << velocity.y;
+	send(packet);
+}
+
+void Client::update() {
+	//updateVelocity();
+>>>>>>> 87b82f5 (i hope it works)
+}

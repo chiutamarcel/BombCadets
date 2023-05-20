@@ -11,8 +11,9 @@ Character::Character
 ) :
 	Entity(position, size)
 {
+	targetPos = position;
+	velocity = sf::Vector2f(0.0f, 0.0f);
 	speed = _speed;
-	planted.restart();
 }
 
 Character::Character
@@ -25,7 +26,6 @@ Character::Character
 	Character(position, size, _speed)
 {
 	shape.setTexture(texture);
-	planted.restart();
 }
 
 Character::Character
@@ -41,7 +41,6 @@ Character::Character
 		texture,
 		_speed)
 {
-	planted.restart();
 }
 
 Character::Character
@@ -53,13 +52,8 @@ Character::Character
 ) : 
 	Character(position, size, _speed)
 {
-<<<<<<< HEAD
-	shape.setFillColor(color);
-=======
 	speed = _speed;
-	planted.restart();
 	shape.setScale(0.9f, 0.9f);
->>>>>>> barar
 }
 
 Character::Character
@@ -72,7 +66,6 @@ Character::Character
 	Character(position, sf::Vector2f(length, length), _speed)
 {
 	shape.setFillColor(color);
-	planted.restart();
 	shape.setScale(0.9f, 0.9f);
 }
 
@@ -84,16 +77,6 @@ void Character::update(float deltaTime)
 {
 	Entity::update(deltaTime);
 
-<<<<<<< HEAD
-=======
-	input.y = sf::Keyboard::isKeyPressed(sf::Keyboard::S) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-
-	input.x = sf::Keyboard::isKeyPressed(sf::Keyboard::D) -
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-
-	velocity = input * speed * deltaTime;
-
 	sf::Vector2f temp(velocity.x, 0.0f);
 	checkCollision(temp);
 	velocity.x = temp.x;
@@ -101,15 +84,7 @@ void Character::update(float deltaTime)
 	checkCollision(temp);
 	velocity.y = temp.y;
 	
->>>>>>> barar
 	shape.move(velocity);
-
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && (this->planted.getElapsedTime().asSeconds() > 3.f))
-	{
-		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f,16.f), 32.f, sf::Color::Magenta));
-		if(this->planted.getElapsedTime().asSeconds() >= 3)
-			this->planted.restart();
-	}
 }
 
 void Character::die()
@@ -140,3 +115,46 @@ void Character::checkCollision(sf::Vector2f &velocity)
 		}
 	}
 }
+
+void Character::setVelocity(sf::Vector2f vel)
+{
+	velocity = vel;
+}
+
+const sf::Vector2f& Character::getVelocity()
+{
+	return velocity;
+}
+<<<<<<< HEAD
+
+sf::Vector2f Character::lerp(sf::Vector2f from, sf::Vector2f to, float rate)
+{
+	if (rate > 100) {
+		throw std::string("Lerp rate cannot surpass 100!");
+		exit(1);
+	}
+
+	sf::Vector2f result;
+
+	result.x = from.x * (1 - (rate / 100)) + to.x * (rate / 100);
+	result.y = from.y * (1 - (rate / 100)) + to.y * (rate / 100);
+
+	return result;
+}
+
+void Character::slideTo(sf::Vector2f to, float rate)
+{
+	setPosition(lerp(getPosition(), to, rate));
+}
+
+void Character::slideToTargetPos(float rate)
+{
+	slideTo(targetPos, rate);
+}
+
+void Character::setTargetPos(sf::Vector2f _targetPos)
+{
+	targetPos = _targetPos;
+}
+=======
+>>>>>>> 87b82f5 (i hope it works)

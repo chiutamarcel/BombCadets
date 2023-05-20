@@ -1,0 +1,74 @@
+#pragma once
+
+#include "SFML/Network.hpp"
+#include "Common.h"
+#include "Character.h"
+
+class Client
+{
+	int id;
+	static Client* instance;
+
+	sf::UdpSocket socket;
+	sf::IpAddress sv_address;
+	bool hasStarted;
+
+	sf::Clock lastPositionTimer;
+
+	std::vector<Character*> *characters;
+
+	~Client();
+	Client();
+	Client(Client& other) = delete;
+
+	void chatPrompt();
+<<<<<<< HEAD
+	//void syncVelocities(sf::Packet packet);
+	void syncPositions(sf::Packet packet);
+	void sendLocalVelocity();
+	void sendLocalPosition();
+	
+	void sendPackets();
+	void receivePackets();
+	void listenForBombPacket(sf::Packet packet);
+	void listenForLoser(sf::Packet packet);
+	
+	MapText waitForMapInfo();
+=======
+	void syncVelocities(sf::Packet packet);
+	void sendLocalVelocity();
+
+	void sendPackets();
+	void receivePackets();
+>>>>>>> 87b82f5 (i hope it works)
+
+public:
+	void start();
+	void update();
+	void pollEvents();
+<<<<<<< HEAD
+
+	void sendBombPacket(sf::Vector2f bombPos);
+	void sendKillRequest(int targetId);
+=======
+>>>>>>> 87b82f5 (i hope it works)
+
+	void connect();
+	void disconnect();
+
+	static Client& getInstance();
+	static void deleteInstance();
+
+	const bool& getHasStarted();
+
+	void send(sf::Packet& packet);
+<<<<<<< HEAD
+	void receivePacket(sf::Packet& packet);
+=======
+	sf::Packet receivePacket();
+>>>>>>> 87b82f5 (i hope it works)
+
+	const int& getId();
+	void setId(int _id);
+};
+

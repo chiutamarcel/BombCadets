@@ -1,9 +1,14 @@
 #include "Client.h"
-
+#include "Client.h"
 #include "Map.h"
+<<<<<<< HEAD
 //#include "Common.h"
 #include "Entities.h"
 #include "GameConfig.h"
+=======
+#include "Common.h"
+#include "Entities.h"
+>>>>>>> 87b82f5 (i hope it works)
 
 #include <iostream>
 
@@ -29,6 +34,7 @@ void Client::chatPrompt()
     socket.send(text.c_str(), PACKETDATASIZE, sv_address, SERVER_PORT);
 }
 
+<<<<<<< HEAD
 //void Client::syncVelocities(sf::Packet packet)
 //{
 //    CommonNetworking::PacketType type;
@@ -58,19 +64,38 @@ void Client::syncPositions(sf::Packet packet) {
     if (type != CommonNetworking::PacketType::POSITION) return;
 
     (*characters)[_id]->setTargetPos(pos);
+=======
+void Client::syncVelocities(sf::Packet packet)
+{
+    CommonNetworking::PacketType type;
+    int id;
+    sf::Vector2f vel;
+
+    if (!(packet >> type >> id >> vel.x >> vel.y)) return;
+
+    if (type != CommonNetworking::PacketType::VELOCITY) return;
+
+    const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
+
+    //if (id <= 0 || id >= characters.size())
+    //    throw "id out of bounds!";
+
+    characters[id]->setVelocity(vel);
+
+>>>>>>> 87b82f5 (i hope it works)
 }
 
 void Client::sendLocalVelocity()
 {
     sf::Packet packet;
     sf::Vector2f vel = Entities::getInstance().getCharacters()[id]->getVelocity();
-    
 
     packet << CommonNetworking::PacketType::VELOCITY << id << vel.x << vel.y;
 
     send(packet);
 }
 
+<<<<<<< HEAD
 void Client::sendLocalPosition() {
     sf::Time time = lastPositionTimer.getElapsedTime();
 
@@ -114,10 +139,16 @@ void Client::sendPackets()
 {
     //sendLocalVelocity();
     sendLocalPosition();
+=======
+void Client::sendPackets()
+{
+    sendLocalVelocity();
+>>>>>>> 87b82f5 (i hope it works)
 }
 
 void Client::receivePackets()
 {
+<<<<<<< HEAD
     try {
         sf::Packet packet;
         
@@ -188,15 +219,27 @@ MapText Client::waitForMapInfo() {
         std::cout << e << std::endl;
         exit(1);
     }
+=======
+    sf::Packet packet;
+
+    packet = receivePacket();
+
+    syncVelocities(packet);
+>>>>>>> 87b82f5 (i hope it works)
 }
 
 void Client::connect()
 {
+<<<<<<< HEAD
     try {
         sf::Packet packet;
+=======
+    sf::Packet packet;
+>>>>>>> 87b82f5 (i hope it works)
 
         std::cout << "Trying to connect to server..." << std::endl;
 
+<<<<<<< HEAD
         packet << CommonNetworking::PacketType::MESSAGE << "connect";
 
         send(packet);
@@ -229,6 +272,36 @@ void Client::connect()
         std::cout << e << std::endl;
         exit(1);
     }
+=======
+    packet << CommonNetworking::PacketType::MESSAGE << "connect";
+
+    send(packet);
+
+    packet.clear();
+
+    std::string text;
+    CommonNetworking::PacketType type;
+    int _id;
+
+    packet = receivePacket();
+
+    if (!(packet >> type >> text >> _id)) {
+        throw "Server connection failed!";
+    }
+
+    if (!type == CommonNetworking::PacketType::MESSAGE) {
+        return;
+    }
+
+    if (strcmp(text.c_str(), "connected")) {
+        throw text.c_str();
+    }
+
+    id = _id;
+
+    std::cout << "Server connection successful!" << std::endl;
+    Map::readFromFile("map.txt");
+>>>>>>> 87b82f5 (i hope it works)
 }
 
 void Client::disconnect()
@@ -287,6 +360,7 @@ void Client::start()
 void Client::update()
 {
     if (hasStarted == true) {
+<<<<<<< HEAD
         try {
             receivePackets();
         }
@@ -301,6 +375,10 @@ void Client::update()
                 ((*characters)[i])->slideToTargetPos(positionSmoothRate);
             }
         }
+=======
+        receivePackets();
+        sendPackets();
+>>>>>>> 87b82f5 (i hope it works)
     }
 }
 
@@ -314,16 +392,29 @@ void Client::send(sf::Packet& packet)
     socket.send(packet, sv_address, SERVER_PORT);
 }
 
+<<<<<<< HEAD
 void Client::receivePacket(sf::Packet& packet)
 {
+=======
+sf::Packet Client::receivePacket()
+{
+    sf::Packet packet;
+>>>>>>> 87b82f5 (i hope it works)
     sf::IpAddress sender_addr;
     unsigned short sender_port;
 
     socket.receive(packet, sender_addr, sender_port);
 
     if (sender_addr != sv_address.toString() || sender_port != SERVER_PORT) {
+<<<<<<< HEAD
         return;
     }
+=======
+        return sf::Packet();
+    }
+
+    return packet;
+>>>>>>> 87b82f5 (i hope it works)
 }
 
 const int& Client::getId()

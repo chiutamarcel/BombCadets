@@ -15,7 +15,7 @@ namespace Map {
 	
 	int maxPlayers = 2;
 	int curPlayers = 0;
-}
+} 
 
 
 void Map::spawnCharacter(CharacterType type)

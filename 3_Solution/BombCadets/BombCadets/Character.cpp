@@ -155,3 +155,13 @@ void Character::setTargetPos(sf::Vector2f _targetPos)
 {
 	targetPos = _targetPos;
 }
+
+void Character::setVelocity(sf::Vector2f vel)
+{
+	velocity = vel;
+}
+
+const sf::Vector2f& Character::getVelocity()
+{
+	return velocity;
+}

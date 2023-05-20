@@ -1,0 +1,41 @@
+<<<<<<< HEAD
+#pragma once
+
+=======
+>>>>>>> 87b82f5 (i hope it works)
+#define CLIENT_PORT 54001
+#define SERVER_PORT 54000
+#define MAX_CLIENTS 4
+
+#define PACKETDATASIZE 100
+
+#include "SFML/Network.hpp"
+<<<<<<< HEAD
+#include "MapText.h"
+=======
+>>>>>>> 87b82f5 (i hope it works)
+
+namespace CommonNetworking {
+	enum PacketType {
+		VELOCITY,
+<<<<<<< HEAD
+		MESSAGE,
+		MAPINFO,
+		POSITION,
+		BOMB,
+		KILLVOTE,
+		LOSER
+	};
+
+	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
+}
+
+namespace Map {
+	void writeBreakableBlocks(MapText& mapText);
+=======
+		MESSAGE
+	};
+
+	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
+>>>>>>> 87b82f5 (i hope it works)
+}

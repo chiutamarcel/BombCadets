@@ -1,0 +1,57 @@
+#pragma once
+
+#include <unordered_set>
+#include <string>
+
+#include "SFML/Network.hpp"
+
+#include "Client.h"
+
+<<<<<<< HEAD
+#include "MapText.h"
+
+=======
+>>>>>>> 87b82f5 (i hope it works)
+class Server
+{
+	static Server* instance;
+
+	bool hasGameStarted;
+
+	sf::UdpSocket socket;
+	std::vector<Client*> connected_clients;
+	sf::IpAddress sv_address;
+	MapText mapText;
+
+<<<<<<< HEAD
+	void listenForConnections(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	void listenForKillRequests(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	//void listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	//void listenForBombs(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	void forwardPackets(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	Client* spawnPlayer(std::string player_ip, unsigned short port);
+	//Client* searchClientByIp(std::string player_ip);
+	bool alreadyExists(std::string player_ip, unsigned short port);
+
+	Server();
+	~Server();
+=======
+	void listenForConnections(sf::Packet packet, sf::IpAddress sender);
+	void listenForVelocities(sf::Packet packet, sf::IpAddress sender);
+	Client* spawnPlayer(std::string player_ip);
+	Client* searchClientByIp(std::string player_ip);
+>>>>>>> 87b82f5 (i hope it works)
+public:
+	void endGame(int loserId);
+
+	void start();
+	void update();
+
+	int getPlayerCount();
+
+	static Server& getInstance();
+	static void deleteInstance();
+
+	const bool& getHasMatchStarted() const;
+};
+

@@ -57,9 +57,21 @@
     </ClCompile>
     <ClCompile Include="..\Common\Common.cpp">
       <Filter>Common</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\MapText.cpp">
       <Filter>Common</Filter>
+    <ClCompile Include="src\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AStar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapOfNodes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +105,9 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="HighScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -116,12 +131,29 @@
     </ClInclude>
     <ClInclude Include="..\Common\Common.h">
       <Filter>Common</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\MapText.h">
       <Filter>Common</Filter>
+    <ClInclude Include="src\Node.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\GameConfig.h">
       <Filter>Common</Filter>
+    <ClInclude Include="src\PathAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AStar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapOfNodes.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,5 +168,8 @@
     <Filter Include="Common">
       <UniqueIdentifier>{3b6083b1-0ac1-4823-a154-c504daeee8e9}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

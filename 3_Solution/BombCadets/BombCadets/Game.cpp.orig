@@ -1,36 +1,303 @@
 #include "Game.h"
+#include "Map.h"
+#include "Client.h"
+#include "GameConfig.h"
 #include <utility>
 #include <fstream>
 
-#define ENTITYSIZE 64.0f
-#define PLAYERSIZE 64.0f
-#define PLAYERSPEED 100.0f
-#define WINDOWXSIZE 1344
-#define WINDOWYSIZE 832
-#define NRBREAKABLEWALLS 75
+using namespace GameConfig;
+
+enum class GAMESTATE { MAINMENU, INGAME };
+enum class MENUTYPE { MAINMENU, PLAY, OPTIONS, HIGHSCORES, ABOUT };
+MENUTYPE curMenu;
+GAMESTATE curGameState;
+
+Game::Game() {
+    focus = true;
+}
 
 void Game::pollEvents()
 {
-	// Process events
-	sf::Event event;
-	while (window->pollEvent(event))
-	{
-		// Close window: exit
-		if (event.type == sf::Event::Closed)
-			window->close();
-	}
-}
-
+    Client::getInstance().pollEvents();
 <<<<<<< HEAD
-Game::Game() //: 
-	//player(sf::Vector2f(0.0f, 0.0f), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED)
-{
-	window = nullptr;
-}
-=======
 
-Game::Game(){}
->>>>>>> barar
+    if (curGameState == GAMESTATE::INGAME) {
+        if (focus == true) {
+            Entities::getInstance().getPlayer().pollEvents();
+        }
+    }
+
+=======
+>>>>>>> 87b82f5 (i hope it works)
+    // Process events
+    sf::Event event;
+    while (window->pollEvent(event))
+    {
+        if (event.type == sf::Event::GainedFocus) {
+            focus = true;
+        }
+        
+        if (event.type == sf::Event::LostFocus) {
+            focus = false;
+        }
+
+        if (curGameState == GAMESTATE::INGAME) {
+            if (event.type == Event::Closed) {
+                window->close();
+                return;
+            }
+
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Escape) {
+                    window->close();
+                    return;
+                }
+            }
+        } else if (curGameState == GAMESTATE::MAINMENU) {
+            switch (curMenu) {
+            case MENUTYPE::MAINMENU:
+                if (event.type == Event::Closed) {
+                    window->close();
+                }
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Up) {
+                        mainMenu->MoveUp();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Down) {
+                        mainMenu->MoveDown();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Return) {
+
+                        int x = mainMenu->MainMenuPressed();
+                        switch (x) {
+                        case 0:
+                            playMode = new PlayMode(WINDOWXSIZE, WINDOWYSIZE);
+                            curMenu = MENUTYPE::PLAY;
+                            break;
+                        case 1:
+                            options = new Options(WINDOWXSIZE, WINDOWYSIZE);
+                            curMenu = MENUTYPE::OPTIONS;
+                            break;
+                        case 2:
+                            highScore = new HighScore(WINDOWXSIZE, WINDOWYSIZE);
+                            curMenu = MENUTYPE::HIGHSCORES;
+                            break;
+                        case 3:
+                            about = new AboutMode(WINDOWXSIZE, WINDOWYSIZE);
+                            curMenu = MENUTYPE::ABOUT;
+                            break;
+                        case 4:
+                            exit(0);
+                            break;
+                        }
+                    }
+                }
+                break;
+            case MENUTYPE::PLAY:
+                if (event.type == Event::Closed) {
+                    curMenu = MENUTYPE::MAINMENU;
+                    delete playMode;
+                    break;
+                }
+
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) {
+                        curMenu = MENUTYPE::MAINMENU;
+                        delete playMode;
+                        break;
+                    }
+                }
+
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Left) {
+                        playMode->MoveLeft();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Right) {
+                        playMode->MoveRight();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Return) {
+
+                        int y = playMode->PlayModePressed();
+
+                        if (y == 0)
+                        {
+                            //single player
+                            startSinglePlayer();
+                            return;
+                        }
+
+                        if (y == 1)
+                        {
+                            //multi player
+                            startMultiPlayer();
+                            return;
+                        }
+                    }
+                }
+                break;
+
+            case MENUTYPE::ABOUT:
+
+                if (event.type == Event::Closed) {
+                    curMenu = MENUTYPE::MAINMENU;
+                    break;
+                }
+
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) {
+                        curMenu = MENUTYPE::MAINMENU;
+                        break;
+                    }
+                }
+
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Up) {
+                        about->MoveUp();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Down) {
+                        about->MoveDown();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Return) {
+
+                        int y = about->AboutPressed();
+
+                        if (y == 0)
+                        {
+                            //how to play
+                        }
+
+                        if (y == 1)
+                        {
+                            //controls
+                        }
+                    }
+
+                }
+
+                break;
+            case MENUTYPE::HIGHSCORES:
+
+                if (event.type == Event::Closed) {
+                    curMenu = MENUTYPE::MAINMENU;
+                    break;
+                }
+
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) {
+                        curMenu = MENUTYPE::MAINMENU;
+                        break;
+                    }
+                }
+
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Up) {
+                        highScore->MoveUp();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Down) {
+                        highScore->MoveDown();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Return) {
+
+                        int y = highScore->HighPressed();
+
+                        if (y == 0)
+                        {
+                            //local
+                        }
+
+                        if (y == 1)
+                        {
+                            //regional
+                        }
+                    }
+
+                }
+
+                break;
+            case MENUTYPE::OPTIONS:
+
+                if (event.type == Event::Closed) {
+                    curMenu = MENUTYPE::MAINMENU;
+                    break;
+                }
+
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) {
+                        curMenu = MENUTYPE::MAINMENU;
+                        break;
+                    }
+                }
+
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Up) {
+                        options->MoveUp();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Down) {
+                        options->MoveDown();
+                        break;
+                    }
+
+                    if (event.key.code == Keyboard::Return) {
+
+                        int y = options->OptionsPressed();
+
+                        if (y == 0)
+                        {
+                            //player skin
+                        }
+
+                        if (y == 1)
+                        {
+                            //bomb skin
+                        }
+
+                        if (y == 2)
+                        {
+                            //sound
+                        }
+                    }
+
+                }
+
+                break;
+            default:
+
+                if (event.type == Event::Closed) {
+                    curMenu = MENUTYPE::MAINMENU;
+                    break;
+                }
+
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) {
+                        curMenu = MENUTYPE::MAINMENU;
+                        break;
+                    }
+                }
+
+                break;
+
+            }
+        }
+    }
+}
 
 Game::~Game()
 {
@@ -40,118 +307,80 @@ Game::~Game()
 
 void Game::start()
 {
-	window = new sf::RenderWindow(
-		sf::VideoMode(WINDOWXSIZE, WINDOWYSIZE), 
-		"SFML window"
-	);
-	generateMap();
-}
 
-void Game::generateMap()
-{
-	// read from a file the map
-	std::ifstream map("map.txt");
+	// Make Main window
+    window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Main Menu");
+	mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
 
-	if(!map.is_open())
-	{
-		std::cout << "Error opening map file" << std::endl;
-		exit(1);
-	}
-	// alloc the map matrix
-	char** mapMatrix = new char* [(int)(WINDOWYSIZE / ENTITYSIZE)];
-	for (int i = 0; i < (int)(WINDOWYSIZE / ENTITYSIZE); i++)
-	{
-		mapMatrix[i] = new char[(int)(WINDOWXSIZE / ENTITYSIZE) + 1];
-	}
+	//set background
+	background.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+	Maintexture.loadFromFile("Textures\\mainbackground.png");
+	background.setTexture(&Maintexture);
 
-	std::vector<std::pair<int, int>> breakableWalls;
-	// read the map
-	char type;
-	for (int i = 0; i < WINDOWYSIZE / ENTITYSIZE; i++)
-		for (int j = 0; j < WINDOWXSIZE / ENTITYSIZE + 1; j++)
-		{
-			map.get(type);
-			mapMatrix[i][j] = type;
-			if (type == '0')
-				breakableWalls.push_back(std::make_pair(i, j));
-		}
-	map.close();
-	// randomly generate the breakable walls
-	int numberOfBreakableWalls = NRBREAKABLEWALLS;
-	while (numberOfBreakableWalls )
-	{
-		srand(time(NULL));
-		int index = rand() % breakableWalls.size();
-		mapMatrix[breakableWalls[index].first][breakableWalls[index].second] = '2';
-		breakableWalls.erase(breakableWalls.begin() + index);
-		numberOfBreakableWalls--;
-	}
-	
-	// generate the map
-	for(int i=0; i < WINDOWYSIZE / ENTITYSIZE ; i++, std::cout<<std::endl)
-		for (int j = 0; j < WINDOWXSIZE / ENTITYSIZE; j++)
-		{
-			std::cout << mapMatrix[i][j];
-			switch (mapMatrix[i][j])
-			{
-			case '1':
-				//create a wall
-				Entities::getInstance().getWalls().push_back(new Block(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Green));
-				break;
-			case '2':
-				//create brakable block
-				Entities::getInstance().getBreakableBlocks().push_back(new BreakableBlock(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Red));
-				break;
-			case '3':
-				//create player
-				Entities::getInstance().getCharacters().push_back(new Character(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED));
-				break;
-			case '4':
-				//generate AI
-				break;
-			case 'z':
-				//generate menu
-				break;
-			default:
-				break;
-			}
-		}
-	std::cout << std::endl;
+	//Play bacc
+	playBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+	play_texture.loadFromFile("Textures\\afterplay.png");
+	playBackground.setTexture(&play_texture);
 
-	for (int i = 0; i < (int)(WINDOWYSIZE / ENTITYSIZE); i++)
-	{
-		delete[] mapMatrix[i];
-	}
-	delete[] mapMatrix;
+	//About bacc
+	aboutBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+	about_texture.loadFromFile("Textures\\about.png");
+	aboutBackground.setTexture(&about_texture);
+
+    //highscores bacc
+    highBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    high_texture.loadFromFile("Textures\\highsc.png");
+    highBackground.setTexture(&high_texture);
+
+    //options bacc
+    optionsBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    options_texture.loadFromFile("Textures\\optionen.png");
+    optionsBackground.setTexture(&options_texture);
+
+    curMenu = MENUTYPE::MAINMENU;
+    curGameState = GAMESTATE::MAINMENU;
 }
 
 void Game::update()
 {
-<<<<<<< HEAD
-	//player.update(deltaTime.asSeconds());
+	if (curGameState == GAMESTATE::INGAME) {
+		for (auto entity : Entities::getInstance().getCharacters())
+			entity->update(deltaTime.asSeconds());
+		for (auto entity : Entities::getInstance().getBreakableBlocks())
+			entity->update(deltaTime.asSeconds());
+		for (auto entity : Entities::getInstance().getBombs())
+			entity->update(deltaTime.asSeconds());
 
-=======
-	//character.update(deltaTime.asSeconds());
-	for (auto entity : Entities::getInstance().getCharacters())
-		entity->update(deltaTime.asSeconds());
-	for (auto entity : Entities::getInstance().getBreakableBlocks())
-		entity->update(deltaTime.asSeconds());
-	for (auto entity : Entities::getInstance().getBombs())
-		entity->update(deltaTime.asSeconds());
-	//for (auto entity : Entities::getInstance().getExplosions())
-	//{
-	//	//if(entity == previous)
-	//	std::cout << entity << std::endl;
-	//	auto previous = entity;
-	//	entity->update(deltaTime.asSeconds());
-	//	
-	//}
-	std::vector<Explosion*>& explosions = Entities::getInstance().getExplosions();
-	for (int i = 0; i < explosions.size(); i++)
+		std::vector<Explosion*>& explosions = Entities::getInstance().getExplosions();
+		for (int i = 0; i < explosions.size(); i++)
 		(explosions[i])->update(deltaTime.asSeconds());
-	
->>>>>>> barar
-	deltaTime = deltaClock.restart();
+		
+		deltaTime = deltaClock.restart();
+	}
+}
+
+void Game::startSinglePlayer() {
+    curGameState = GAMESTATE::INGAME;
+    MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
+    mapText.readFromFile(mapFile);
+    mapText.putBreakableBlocks(NRBREAKABLEWALLS);
+    Map::spawnMap(mapText);
+    Map::spawnCharacter(Map::CharacterType::PLAYER);
+}
+
+void Game::startMultiPlayer() {
+    curGameState = GAMESTATE::INGAME;
+    Client::getInstance().start();
+
+    // TODO: change later after adding a proper Bot class
+    for (int i = 0; i < Map::maxPlayers; i++) {
+        if (i == Client::getInstance().getId()) {
+            Map::spawnCharacter(Map::CharacterType::PLAYER);
+        }
+        else {
+            Map::spawnCharacter(Map::CharacterType::BASE);
+        }
+    }
 }
 
 void Game::draw()
@@ -160,20 +389,42 @@ void Game::draw()
 	window->clear();
 
 	// Draw
-<<<<<<< HEAD
-	//window->draw(player.getShape());
-=======
-	for (auto entity : Entities::getInstance().getCharacters())
-		window->draw(entity->getShape());
-	for (auto entity : Entities::getInstance().getBreakableBlocks())
-		window->draw(entity->getShape());
-	for (auto entity : Entities::getInstance().getBombs())
-		window->draw(entity->getShape());
-	for (auto entity : Entities::getInstance().getWalls())
-		window->draw(entity->getShape());
-	for (auto entity : Entities::getInstance().getExplosions())
-		window->draw(entity->getShape());
->>>>>>> barar
+    if (curGameState == GAMESTATE::MAINMENU) {
+        switch (curMenu) {
+        case MENUTYPE::MAINMENU:
+            window->draw(background);
+            mainMenu->draw(*window);
+            break;
+        case MENUTYPE::PLAY:
+            window->draw(playBackground);
+            playMode->draw(*window);
+            break;
+        case MENUTYPE::ABOUT:
+            window->draw(aboutBackground);
+            about->draw(*window);
+            break;
+        case MENUTYPE::HIGHSCORES:
+            window->draw(highBackground);
+            highScore->draw(*window);
+            break;
+        case MENUTYPE::OPTIONS:
+            window->draw(optionsBackground);
+            options->draw(*window);
+            break;
+        }
+    } else if (curGameState == GAMESTATE::INGAME) {
+        for (auto entity : Entities::getInstance().getCharacters())
+		    window->draw(entity->getShape());
+	    for (auto entity : Entities::getInstance().getBreakableBlocks())
+		    window->draw(entity->getShape());
+	    for (auto entity : Entities::getInstance().getBombs())
+		    window->draw(entity->getShape());
+	    for (auto entity : Entities::getInstance().getWalls())
+		    window->draw(entity->getShape());
+	    for (auto entity : Entities::getInstance().getExplosions())
+		    window->draw(entity->getShape());
+    }
+
 
 	// Display what has been drawn
 	window->display();
