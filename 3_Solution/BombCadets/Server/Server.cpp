@@ -56,25 +56,6 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender)
     
 }
 
-void Server::listenForVelocities(sf::Packet packet, sf::IpAddress sender)
-{
-    CommonNetworking::PacketType type;
-    int id;
-    sf::Vector2f vel;
-
-    if (!(packet >> type >> id >> vel.x >> vel.y)) return;
-
-    if (type != CommonNetworking::PacketType::VELOCITY) return;
-
-    packet << type << id << vel.x << vel.y;
-
-    for (auto client : connected_clients) {
-        if (client->getIp() != sender) {
-            client->send(packet);
-        }
-    }
-}
-
 void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender) {
     CommonNetworking::PacketType type;
     int id;
