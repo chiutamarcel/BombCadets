@@ -30,7 +30,7 @@ void NPC::printNodes()
 			}
 		}
 		std::cout << "start: " << this->shape.getPosition().y / 64 - 2<< " " << this->shape.getPosition().x / 64 << std::endl;
-		std::cout << "goal: " << mapOfNodes::getInstance().getGoal()->getY() << " " << mapOfNodes::getInstance().getGoal()->getX() << std::endl;
+		std::cout << "goal: " << mapOfNodes::getInstance().getGoal()->getY() / 64  << " " << mapOfNodes::getInstance().getGoal()->getX() / 64 << std::endl;
 		for (auto it : mapOfNodes::getInstance().getPath())
 		{
 			std::cout << it->getY()/64 << " " << it->getX()/64 << std::endl;

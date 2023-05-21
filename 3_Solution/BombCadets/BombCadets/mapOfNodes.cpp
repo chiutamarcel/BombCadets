@@ -10,7 +10,7 @@ mapOfNodes::mapOfNodes()
 		entityNodes[y] = new EntityNode[21];
 		for (int x = 0; x < 21; x++)
 		{
-			entityNodes[y][x].setPosition(y * GameConfig::ENTITYSIZE + 32, x * GameConfig::ENTITYSIZE + 32);
+			entityNodes[y][x].setPosition(x * GameConfig::ENTITYSIZE + 32, y * GameConfig::ENTITYSIZE + 32);
 			entityNodes[y][x].setType(EntityType::PATH);
 		}
 	}
@@ -138,23 +138,24 @@ int mapOfNodes::findPath()
 
 void mapOfNodes::setSecondaryGoal()
 {
-	int yGoal, xGoal;
-	float distance = 1000000;
-	for (int y = 0; y < 11; y++)
-		for (int x = 0; x < 21; x++)
-		{
-			if (entityNodes[y][x].getType() == EntityType::BREAKABLE_WALL)
-			{
-				float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
-				if (newDistance < distance)
-				{
-					distance = newDistance;
-					yGoal = y;
-					xGoal = x;
-				}
-			}
-		}
-	pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
+	//int yGoal, xGoal;
+	//float distance = 1000000;
+	//for (int y = 0; y < 11; y++)
+	//	for (int x = 0; x < 21; x++)
+	//	{
+	//		if (entityNodes[y][x].getType() == EntityType::BREAKABLE_WALL)
+	//		{
+	//			float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
+	//			if (newDistance < distance)
+	//			{
+	//				distance = newDistance;
+	//				yGoal = y;
+	//				xGoal = x;
+	//			}
+	//		}
+	//	}
+	//pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
+	pathGenerator.setGoal(entityNodes[7][17]);
 }
 
 void mapOfNodes::setPathToRunFromBomb()
