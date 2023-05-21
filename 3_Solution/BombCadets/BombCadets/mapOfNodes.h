@@ -15,6 +15,8 @@ private:
 	mapOfNodes();
 	~mapOfNodes();
 
+	
+public:
 	void updateMapOfNodes();
 	void setupRelationships();
 	void setStart(int x, int y);
@@ -22,11 +24,16 @@ private:
 	int findPath();
 	void setSecondaryGoal();
 	void setPathToRunFromBomb();
-	
-public:
+	float distanceToGoal();
+	EntityNode *getGoal();
+	std::vector<EntityNode*> getPath();
+	void addChild(int y, int x, int newY, int newX);
 	static mapOfNodes& getInstance() {
 		static mapOfNodes instance;
 		return instance;
+	}
+	EntityNode** getEntityNodes() {
+		return entityNodes;
 	}
 };
 

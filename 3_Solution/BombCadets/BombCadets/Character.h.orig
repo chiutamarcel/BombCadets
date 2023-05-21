@@ -6,8 +6,13 @@ class Character : public Entity
 protected:
 	float speed;
 	sf::Vector2f velocity;
+<<<<<<< HEAD
 	sf::Vector2f targetPos;
+=======
+	sf::Clock planted;
+>>>>>>> 7e87abb (just a backup)
 
+	virtual void movement(float deltaTime);
 public:
 	Character(sf::Vector2f position, sf::Vector2f size, float _speed = 0);
 	Character(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture, float _speed = 0);
@@ -21,7 +26,6 @@ public:
 	
 	void checkCollision(sf::Vector2f& velocity);
 
-<<<<<<< HEAD
 	sf::Vector2f lerp(sf::Vector2f from, sf::Vector2f to, float rate);
 
 	void slideTo(sf::Vector2f to, float rate);
@@ -32,9 +36,5 @@ public:
 	const sf::Vector2f& getVelocity();
 
 	void setTargetPos(sf::Vector2f _targetPos);
-=======
-	void setVelocity(sf::Vector2f vel);
-	const sf::Vector2f& getVelocity();
->>>>>>> 87b82f5 (i hope it works)
 };
 

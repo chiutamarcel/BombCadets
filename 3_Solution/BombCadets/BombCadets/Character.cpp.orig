@@ -125,8 +125,8 @@ const sf::Vector2f& Character::getVelocity()
 {
 	return velocity;
 }
-<<<<<<< HEAD
 
+<<<<<<< HEAD
 sf::Vector2f Character::lerp(sf::Vector2f from, sf::Vector2f to, float rate)
 {
 	if (rate > 100) {
@@ -156,5 +156,19 @@ void Character::setTargetPos(sf::Vector2f _targetPos)
 {
 	targetPos = _targetPos;
 }
+
+void Character::setVelocity(sf::Vector2f vel)
+{
+	velocity = vel;
+}
+
+const sf::Vector2f& Character::getVelocity()
+{
+	return velocity;
+}
 =======
->>>>>>> 87b82f5 (i hope it works)
+void Character::movement(float deltaTime)
+{
+	velocity = sf::Vector2f(0.0f, 0.0f);
+}
+>>>>>>> 7e87abb (just a backup)

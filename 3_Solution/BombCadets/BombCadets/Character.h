@@ -7,7 +7,9 @@ protected:
 	float speed;
 	sf::Vector2f velocity;
 	sf::Vector2f targetPos;
+	sf::Clock planted;
 
+	virtual void movement(float deltaTime);
 public:
 	Character(sf::Vector2f position, sf::Vector2f size, float _speed = 0);
 	Character(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture, float _speed = 0);

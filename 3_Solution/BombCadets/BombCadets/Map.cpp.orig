@@ -6,8 +6,11 @@
 #include <time.h>
 
 #include "Player.h"
+<<<<<<< HEAD
 #include "MapText.h"
+=======
 #include "NPC.h"
+>>>>>>> 7e87abb (just a backup)
 
 using namespace GameConfig;
 

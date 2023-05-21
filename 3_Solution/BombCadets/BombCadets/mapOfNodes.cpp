@@ -5,21 +5,21 @@
 mapOfNodes::mapOfNodes()
 {
 	entityNodes = new EntityNode * [11];
-	for (int i = 0; i <11; i++)
+	for (int y = 0; y <11; y++)
 	{
-		entityNodes[i] = new EntityNode[21];
-		for (int j = 0; j < 21; j++)
+		entityNodes[y] = new EntityNode[21];
+		for (int x = 0; x < 21; x++)
 		{
-			entityNodes[i][j].setPosition(i * GameConfig::ENTITYSIZE + 32, j * GameConfig::ENTITYSIZE + 32);
-			entityNodes[i][j].setType(EntityType::PATH);
+			entityNodes[y][x].setPosition(y * GameConfig::ENTITYSIZE + 32, x * GameConfig::ENTITYSIZE + 32);
+			entityNodes[y][x].setType(EntityType::PATH);
 		}
 	}
 	
-	for (auto i : Entities::getInstance().getWalls())
+	for (auto it : Entities::getInstance().getWalls())
 	{
-		int x = i->getShape().getOrigin().x / GameConfig::ENTITYSIZE;
-		int y = i->getShape().getOrigin().y / GameConfig::ENTITYSIZE;
-		entityNodes[x][y].setType(EntityType::UNBREAKABLE_WALL);
+		int y = it->getShape().getPosition().y / GameConfig::ENTITYSIZE - 2;
+		int x = it->getShape().getPosition().x / GameConfig::ENTITYSIZE;
+		entityNodes[y][x].setType(EntityType::UNBREAKABLE_WALL);
 	}
 }
 
@@ -34,27 +34,27 @@ mapOfNodes::~mapOfNodes()
 
 void mapOfNodes::updateMapOfNodes()
 {
-	for (int i = 0; i < 11; i++)
+	for (int y = 0; y < 11; y++)
 	{
-		for (int j = 0; j < 21; j++)
+		for (int x = 0; x < 21; x++)
 		{
-			if (entityNodes[i][j].getType() != EntityType::UNBREAKABLE_WALL)
-				entityNodes[i][j].setType(EntityType::PATH);
+			if (entityNodes[y][x].getType() != EntityType::UNBREAKABLE_WALL)
+				entityNodes[y][x].setType(EntityType::PATH);
 		}
 	}
 	
-	for (auto i : Entities::getInstance().getCharacters())
+	for (auto it : Entities::getInstance().getCharacters())
 	{
-		int x = i->getShape().getOrigin().x / GameConfig::ENTITYSIZE;
-		int y = i->getShape().getOrigin().y / GameConfig::ENTITYSIZE;
-		entityNodes[x][y].setType(EntityType::CHARACTER);
+		int y = it->getShape().getPosition().y / GameConfig::ENTITYSIZE - 2;
+		int x = it->getShape().getPosition().x / GameConfig::ENTITYSIZE;
+		entityNodes[y][x].setType(EntityType::CHARACTER);
 	}
 
-	for (auto i : Entities::getInstance().getBreakableBlocks())
+	for (auto it : Entities::getInstance().getBreakableBlocks())
 	{
-		int x = i->getShape().getOrigin().x / GameConfig::ENTITYSIZE;
-		int y = i->getShape().getOrigin().y / GameConfig::ENTITYSIZE;
-		entityNodes[x][y].setType(EntityType::BREAKABLE_WALL);
+		int y = it->getShape().getPosition().y / GameConfig::ENTITYSIZE - 2;
+		int x = it->getShape().getPosition().x / GameConfig::ENTITYSIZE;
+		entityNodes[y][x].setType(EntityType::BREAKABLE_WALL);
 	}
 	
 	setupRelationships();
@@ -62,55 +62,73 @@ void mapOfNodes::updateMapOfNodes()
 
 void mapOfNodes::setupRelationships()
 {
-	EntityNode* child;
-	int newI, newJ;
-	
-	for (int i = 0; i < 11; i++)
+	/*
+	for (int y = 1; y < 10; y++)
 	{
-		for (int j = 0; j < 21; j++)
+		for (int x = 1; x < 20; x++)
 		{
-			for (int k = -1; k < 2; k++)
+			if (entityNodes[y][x].getType() != EntityType::UNBREAKABLE_WALL)
 			{
-				newI = entityNodes[i][j].getY() / GameConfig::ENTITYSIZE + k;
-				for (int l = -1; l < 2; l++)
+				for (int i = -1; i < 2; i++)
 				{
-					newJ = entityNodes[i][j].getX() / GameConfig::ENTITYSIZE + l;
-					if (newI >= 0 && newI < 21 && newJ >= 0 && newJ < 11)
+					newY = y + i;
+					for (int j = -1; j < 2; j++)
 					{
-						child = &(entityNodes[newJ][newI]);
-						if (child->getType() != EntityType::UNBREAKABLE_WALL && (newI!=i || newJ != j))
-							entityNodes[i][j].addChild(child, 64);
+						newX = x + j;
+						if (newY > 0 && newY < 10 && newX > 0 && newX < 20 && abs(newX) != abs(newY))
+						{
+							child = &(entityNodes[newY][newX]);
+							if ((newY != y || newX != x) && child->getType() != EntityType::UNBREAKABLE_WALL)
+								entityNodes[y][x].addChild(child, 64);
+						}
 					}
 				}
 			}
 		}
 	}
+	*/
+	for (int y = 1; y < 10; y++)
+	{
+		for (int x = 1; x < 20; x++)
+		{
+			if (entityNodes[y][x].getType() != EntityType::BREAKABLE_WALL && entityNodes[y][x].getType() != EntityType::UNBREAKABLE_WALL)
+			{
+				mapOfNodes::addChild(y, x, y - 1, x);
+
+				mapOfNodes::addChild(y, x, y + 1, x);
+
+				mapOfNodes::addChild(y, x, y, x - 1);
+
+				mapOfNodes::addChild(y, x, y, x + 1);
+			}
+		}
+	}
 }
 
-void mapOfNodes::setStart(int x, int y)
+void mapOfNodes::setStart(int y, int x)
 {
-	pathGenerator.setStart(entityNodes[x][y]);
+	pathGenerator.setStart(entityNodes[y][x]);
 }
 
 void mapOfNodes::setGoal()
 {
-	int iGoal, jGoal;
+	int yGoal = 0, xGoal = 0;
 	float distance = 1000000;
-	for(int i = 0; i < 11; i++)
-		for (int j = 0; j < 21; j++)
+	for(int y = 0; y < 11; y++)
+		for (int x = 0; x < 21; x++)
 		{
-			if (entityNodes[i][j].getType() == EntityType::CHARACTER)
+			if (entityNodes[y][x].getType() == EntityType::CHARACTER )
 			{
-				float newDistance = entityNodes[i][j].distanceTo(pathGenerator.getStart());
-				if (newDistance < distance)
+				float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
+				if (newDistance < distance && newDistance > 128)
 				{
 					distance = newDistance;
-					iGoal = i;
-					jGoal = j;
+					yGoal = y;
+					xGoal = x;
 				}
 			}
 		}
-	pathGenerator.setGoal(entityNodes[iGoal][jGoal]);
+	pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
 }
 
 int mapOfNodes::findPath()
@@ -120,45 +138,71 @@ int mapOfNodes::findPath()
 
 void mapOfNodes::setSecondaryGoal()
 {
-	int iGoal, jGoal;
+	int yGoal, xGoal;
 	float distance = 1000000;
-	for (int i = 0; i < 11; i++)
-		for (int j = 0; j < 21; j++)
+	for (int y = 0; y < 11; y++)
+		for (int x = 0; x < 21; x++)
 		{
-			if (entityNodes[i][j].getType() == EntityType::BREAKABLE_WALL)
+			if (entityNodes[y][x].getType() == EntityType::BREAKABLE_WALL)
 			{
-				float newDistance = entityNodes[i][j].distanceTo(pathGenerator.getStart());
+				float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
 				if (newDistance < distance)
 				{
 					distance = newDistance;
-					iGoal = i;
-					jGoal = j;
+					yGoal = y;
+					xGoal = x;
 				}
 			}
 		}
-	pathGenerator.setGoal(entityNodes[iGoal][jGoal]);
+	pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
 }
 
 void mapOfNodes::setPathToRunFromBomb()
 {
 	pathGenerator.setStart(*(pathGenerator.getGoal()));
-	int iGoal, jGoal;
+	int yGoal, xGoal;
 	float distance = 1000000;
 	
-	for (int i = 0; i < 11; i++)
-		for (int j = 0; j < 21; j++)
+	for (int y = 0; y < 11; y++)
+		for (int x = 0; x < 21; x++)
 		{
-			if (entityNodes[i][j].getType() == EntityType::PATH)
+			if (entityNodes[y][x].getType() == EntityType::PATH)
 			{
-				distance = entityNodes[i][j].distanceTo(pathGenerator.getStart());
+				distance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
 				if (distance > 128)
 				{
-					iGoal = i;
-					jGoal = j;
-					pathGenerator.setGoal(entityNodes[iGoal][jGoal]);
+					yGoal = y;
+					xGoal = x;
+					pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
 					if (pathGenerator.findPath<AStar>(path) == 1)
 						return;					
 				}
 			}
 		}
+}
+
+float mapOfNodes::distanceToGoal()
+{
+	return pathGenerator.getStart()->distanceTo((pathGenerator.getGoal()));
+}
+
+EntityNode* mapOfNodes::getGoal()
+{
+	return pathGenerator.getGoal();
+}
+
+std::vector<EntityNode*> mapOfNodes::getPath()
+{
+	return path;
+}
+
+void mapOfNodes::addChild(int y, int x, int newY, int newX)
+{
+
+	EntityNode* child;
+	if (entityNodes[newY][newX].getType() != EntityType::BREAKABLE_WALL && entityNodes[newY][newX].getType() != EntityType::UNBREAKABLE_WALL)
+	{
+		child = &(entityNodes[newY][newX]);
+		entityNodes[y][x].addChild(child, 54);
+	}
 }

@@ -165,3 +165,8 @@ const sf::Vector2f& Character::getVelocity()
 {
 	return velocity;
 }
+
+void Character::movement(float deltaTime)
+{
+	velocity = sf::Vector2f(0.0f, 0.0f);
+}
