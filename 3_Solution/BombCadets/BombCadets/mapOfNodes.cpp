@@ -42,11 +42,11 @@ void mapOfNodes::updateMapOfNodes()
 				entityNodes[y][x].setType(EntityType::PATH);
 		}
 	}
-	
 	for (auto it : Entities::getInstance().getCharacters())
 	{
 		int y = it->getShape().getPosition().y / GameConfig::ENTITYSIZE - 2;
 		int x = it->getShape().getPosition().x / GameConfig::ENTITYSIZE;
+		entityNodes[y][x].setPosition(x, y);
 		entityNodes[y][x].setType(EntityType::CHARACTER);
 	}
 
@@ -62,31 +62,6 @@ void mapOfNodes::updateMapOfNodes()
 
 void mapOfNodes::setupRelationships()
 {
-	/*
-	for (int y = 1; y < 10; y++)
-	{
-		for (int x = 1; x < 20; x++)
-		{
-			if (entityNodes[y][x].getType() != EntityType::UNBREAKABLE_WALL)
-			{
-				for (int i = -1; i < 2; i++)
-				{
-					newY = y + i;
-					for (int j = -1; j < 2; j++)
-					{
-						newX = x + j;
-						if (newY > 0 && newY < 10 && newX > 0 && newX < 20 && abs(newX) != abs(newY))
-						{
-							child = &(entityNodes[newY][newX]);
-							if ((newY != y || newX != x) && child->getType() != EntityType::UNBREAKABLE_WALL)
-								entityNodes[y][x].addChild(child, 64);
-						}
-					}
-				}
-			}
-		}
-	}
-	*/
 	for (int y = 1; y < 10; y++)
 	{
 		for (int x = 1; x < 20; x++)
@@ -138,31 +113,52 @@ int mapOfNodes::findPath()
 
 void mapOfNodes::setSecondaryGoal()
 {
-	//int yGoal, xGoal;
-	//float distance = 1000000;
-	//for (int y = 0; y < 11; y++)
-	//	for (int x = 0; x < 21; x++)
-	//	{
-	//		if (entityNodes[y][x].getType() == EntityType::BREAKABLE_WALL)
-	//		{
-	//			float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
-	//			if (newDistance < distance)
-	//			{
-	//				distance = newDistance;
-	//				yGoal = y;
-	//				xGoal = x;
-	//			}
-	//		}
-	//	}
-	//pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
+	/*int yGoal, xGoal;
+	float distance = 1000000;
+	for (int y = 0; y < 11; y++)
+		for (int x = 0; x < 21; x++)
+		{
+			if (entityNodes[y][x].getType() == EntityType::BREAKABLE_WALL)
+			{
+				float newDistance = entityNodes[y][x].distanceTo(pathGenerator.getStart());
+				if (newDistance < distance)
+				{
+					distance = newDistance;
+					yGoal = y;
+					xGoal = x;
+				}
+			}
+		}
+	
+	for (int y = -1; y < 2; y++)
+	{
+		for (int x = -1; x < 2; x++)
+		{
+			if (y != x && y != -x)
+			{
+				if (entityNodes[yGoal + y][xGoal + x].getType() == EntityType::PATH)
+				{
+					pathGenerator.setGoal(entityNodes[yGoal + y][xGoal + x]);
+					if (pathGenerator.findPath<AStar>(path) == 1)
+						return;
+				}
+			}
+		}
+	}*/
+
+
 	pathGenerator.setGoal(entityNodes[7][17]);
+	path.clear();
+	std::cout << pathGenerator.getStart()->getX() << "," << pathGenerator.getStart()->getY() << std::endl;
+	pathGenerator.findPath<AStar>(path);
+
 }
 
 void mapOfNodes::setPathToRunFromBomb()
 {
 	pathGenerator.setStart(*(pathGenerator.getGoal()));
 	int yGoal, xGoal;
-	float distance = 1000000;
+	float distance;
 	
 	for (int y = 0; y < 11; y++)
 		for (int x = 0; x < 21; x++)

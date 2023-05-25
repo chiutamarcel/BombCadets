@@ -33,7 +33,7 @@ void Map::spawnCharacter(CharacterType type)
 		(
 			new Player
 			(
-				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+				sf::Vector2f(x * ENTITYSIZE + 4, y * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
 			)
 		);
 		break;
@@ -90,7 +90,7 @@ void stringToEntities(char** mapMatrix) {
 				Map::addSpawnPoint(i, j);
 				break;
 			case '4':
-				Entities::getInstance().getCharacters().push_back(new NPC(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Yellow, PLAYERSPEED));
+				Entities::getInstance().getCharacters().push_back(new NPC(sf::Vector2f(j * ENTITYSIZE + 4, i * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Yellow, PLAYERSPEED));
 				//generate AI
 				break;
 			case 'z':

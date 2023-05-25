@@ -78,28 +78,6 @@ void Explosion::removeExplosion()
 
 void Explosion::checkCollision()
 {
-	//for (auto fire : Entities::getInstance().getExplosions())
-	//{
-	//	for (auto breakableBlock : Entities::getInstance().getBreakableBlocks())
-	//		if (fire->getShape().getGlobalBounds().intersects(breakableBlock->getShape().getGlobalBounds()))
-	//		{
-	//			Entities::getInstance().removeBreakableBlock(breakableBlock);
-	//			delete breakableBlock;
-	//		}
-	//	for (auto character : Entities::getInstance().getCharacters())
-	//		if (fire->getShape().getGlobalBounds().intersects(character->getShape().getGlobalBounds()))
-	//		{
-	//			Entities::getInstance().removeCharacter(character);
-	//			delete character;
-	//		}
-	//	for (auto walls : Entities::getInstance().getWalls())
-	//		if (fire->getShape().getGlobalBounds().intersects(walls->getShape().getGlobalBounds()))
-	//		{
-	//			Entities::getInstance().removeExplosion(fire);
-	//			delete fire;
-	//		}
-	//}
-	
 	for (auto breakableBlock : Entities::getInstance().getBreakableBlocks())
 		if (this->getShape().getGlobalBounds().intersects(breakableBlock->getShape().getGlobalBounds()))
 		{

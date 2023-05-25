@@ -29,7 +29,7 @@ void NPC::printNodes()
 				break;
 			}
 		}
-		std::cout << "start: " << this->shape.getPosition().y / 64 - 2<< " " << this->shape.getPosition().x / 64 << std::endl;
+		std::cout << "start: " << this->shape.getPosition().y << " " << this->shape.getPosition().x  << std::endl;
 		std::cout << "goal: " << mapOfNodes::getInstance().getGoal()->getY() / 64  << " " << mapOfNodes::getInstance().getGoal()->getX() / 64 << std::endl;
 		for (auto it : mapOfNodes::getInstance().getPath())
 		{
@@ -39,10 +39,38 @@ void NPC::printNodes()
 
 void NPC::movement(float deltaTime)
 {
-	float directX = mapOfNodes::getInstance().getPath().back()->getX() - this->shape.getPosition().x;
-	float directY = mapOfNodes::getInstance().getPath().back()->getY() - this->shape.getPosition().y;
-	sf::Vector2f direction = sf::Vector2f(directX, directY);
-	velocity = direction * speed * deltaTime;
+	sf::Vector2f direction = sf::Vector2f(0, 0);
+	
+	if (mapOfNodes::getInstance().getPath().size() > 0)
+	{
+		if (mapOfNodes::getInstance().getPath().back()->getY() < this->shape.getPosition().y / 64 - 2)
+		{
+			direction.y = 1;
+			direction.x = 0;
+		}
+		else if (mapOfNodes::getInstance().getPath().back()->getY() > this->shape.getPosition().y / 64 - 2)
+		{
+			direction.y = -1;
+			direction.x = 0;
+		}
+		else if (mapOfNodes::getInstance().getPath().back()->getX() < this->shape.getPosition().x / 64)
+		{
+			direction.x = 1;
+			direction.y = 0;
+		}
+		else if (mapOfNodes::getInstance().getPath().back()->getX() > this->shape.getPosition().x / 64)
+		{
+			direction.x = -1;
+			direction.y = 0;
+		}
+		else
+		{
+			direction.x = 0;
+			direction.y = 0;
+		}
+	}
+	this->velocity = direction * speed * deltaTime ;
+	
 }
 
 void NPC::whereToGo()
@@ -53,51 +81,57 @@ void NPC::whereToGo()
 	if (mapOfNodes::getInstance().findPath() == 0)
 	{
 		mapOfNodes::getInstance().setSecondaryGoal();
-		mapOfNodes::getInstance().findPath();
+		//mapOfNodes::getInstance().findPath();
 	}
 	printNodes();
 
-	if (mapOfNodes::getInstance().distanceToGoal() < 64 && (mapOfNodes::getInstance().getGoal()->getType() == EntityType::CHARACTER || mapOfNodes::getInstance().getGoal()->getType() == EntityType::BREAKABLE_WALL))
-	{
-		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
-		if (this->planted.getElapsedTime().asSeconds() >= 3)
-			this->planted.restart();
-	}
+	//if (mapOfNodes::getInstance().distanceToGoal() < 128)
+	//{
+	//	if (this->planted.getElapsedTime().asSeconds() >= 3) {
+	//		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
+	//		this->planted.restart();
+	//	}
+	//}
 
-	for (auto it : Entities::getInstance().getBombs())
-	{
-		float distX = it->getShape().getPosition().x - this->shape.getPosition().x;
-		float distY = it->getShape().getPosition().y - this->shape.getPosition().y;
-		if (sqrt(distX * distX + distY * distY) < 128)
-		{
-			mapOfNodes::getInstance().setPathToRunFromBomb();
-		}
-	}
+	//for (auto it : Entities::getInstance().getBombs())
+	//{
+	//	float distX = it->getShape().getPosition().x - this->shape.getPosition().x;
+	//	float distY = it->getShape().getPosition().y - this->shape.getPosition().y;
+	//	if (sqrt(distX * distX + distY * distY) < 128)
+	//	{
+	//		mapOfNodes::getInstance().setPathToRunFromBomb();
+	//	}
+	//}
 }
 
 NPC::NPC(sf::Vector2f position, sf::Vector2f size, float speed) :
 	Character(position, size, speed)
 {
+	clock.restart();
 }
 
 NPC::NPC(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture, float speed) :
 	Character(position, size, texture, speed)
 {
+	clock.restart();
 }
 
 NPC::NPC(sf::Vector2f position, float length, sf::Texture* texture, float speed) :
 	Character(position, length, texture, speed)
 {
+	clock.restart();
 }
 
 NPC::NPC(sf::Vector2f position, sf::Vector2f size, sf::Color color, float speed) :
 	Character(position, size, color, speed)
 {
+	clock.restart();
 }
 
 NPC::NPC(sf::Vector2f position, float length, sf::Color color, float speed) :
 	Character(position, length, color, speed)
 {
+	clock.restart();
 }
 
 NPC::~NPC()
@@ -106,8 +140,12 @@ NPC::~NPC()
 
 void NPC::update(float deltaTime)
 {
-	Character::update(deltaTime);
-	this->whereToGo();
-	this->movement(deltaTime);
+	//if (clock.getElapsedTime().asSeconds() >= 0.0001f) {
+		this->whereToGo();
+		this->movement(deltaTime);
+		Character::update(deltaTime);
+	//mapOfNodes::getInstance().getPath().clear();
+	//	clock.restart();
+	//}
 }
 

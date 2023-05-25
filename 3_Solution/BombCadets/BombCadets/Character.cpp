@@ -53,7 +53,7 @@ Character::Character
 	Character(position, size, _speed)
 {
 	speed = _speed;
-	shape.setScale(0.9f, 0.9f);
+	//shape.setScale(0.9f, 0.9f);
 }
 
 Character::Character
@@ -66,7 +66,7 @@ Character::Character
 	Character(position, sf::Vector2f(length, length), _speed)
 {
 	shape.setFillColor(color);
-	shape.setScale(0.9f, 0.9f);
+	//shape.setScale(0.9f, 0.9f);
 }
 
 Character::~Character()
