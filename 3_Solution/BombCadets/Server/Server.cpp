@@ -51,16 +51,57 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender, unsig
     
 }
 
-void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port) {
+//void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port) {
+//    CommonNetworking::PacketType type;
+//    int id;
+//    sf::Vector2f pos;
+//
+//    if (!(packet >> type >> id >> pos.x >> pos.y)) return;
+//
+//    if (type != CommonNetworking::PacketType::POSITION) return;
+//
+//    packet << type << id << pos.x << pos.y;
+//
+//    for (auto client : connected_clients) {
+//        if (client->getIp() != sender || client->getPort() != port) {
+//            client->send(packet);
+//        }
+//    }
+//}
+//
+//void Server::listenForBombs(sf::Packet packet, sf::IpAddress sender, unsigned short port)
+//{
+//    CommonNetworking::PacketType type;
+//    int id;
+//    sf::Vector2f bombPos;
+//
+//    if (!(packet >> type >> id >> bombPos.x >> bombPos.y)) return;
+//
+//    if (type != CommonNetworking::PacketType::BOMB) return;
+//
+//    packet << type << id << bombPos.x << bombPos.y;
+//
+//    for (auto client : connected_clients) {
+//        if (client->getIp() != sender || client->getPort() != port) {
+//            client->send(packet);
+//        }
+//    }
+//}
+
+void Server::forwardPackets(sf::Packet packet, sf::IpAddress sender, unsigned short port)
+{
     CommonNetworking::PacketType type;
-    int id;
-    sf::Vector2f pos;
 
-    if (!(packet >> type >> id >> pos.x >> pos.y)) return;
+    if (!(packet >> type)) return;
 
-    if (type != CommonNetworking::PacketType::POSITION) return;
+    if 
+    (
+        (type != CommonNetworking::PacketType::BOMB) &&
+        (type != CommonNetworking::PacketType::POSITION)
+    ) 
+        return;
 
-    packet << type << id << pos.x << pos.y;
+    packet << type;
 
     for (auto client : connected_clients) {
         if (client->getIp() != sender || client->getPort() != port) {
@@ -147,7 +188,8 @@ void Server::update()
         client->update();
     }
 
-    listenForPositions(packet, sender, port);
+    //listenForPositions(packet, sender, port);
     //listenForVelocities(packet, sender);
     listenForConnections(packet, sender, port);
+    forwardPackets(packet, sender, port);
 }

@@ -26,9 +26,10 @@ class Client
 	void syncPositions(sf::Packet packet);
 	void sendLocalVelocity();
 	void sendLocalPosition();
-
+	
 	void sendPackets();
 	void receivePackets();
+	void listenForBombPacket(sf::Packet packet);
 	
 	MapText waitForMapInfo();
 
@@ -36,6 +37,8 @@ public:
 	void start();
 	void update();
 	void pollEvents();
+
+	void sendBombPacket(sf::Vector2f bombPos);
 
 	void connect();
 	void disconnect();

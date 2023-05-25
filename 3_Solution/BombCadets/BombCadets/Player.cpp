@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Entities.h"
+#include "Client.h"
 
 void Player::movement(float deltaTime)
 {
@@ -10,7 +11,7 @@ void Player::movement(float deltaTime)
 void Player::init()
 {
 	Entities::getInstance().setPlayer(*this);
-	planted.restart();
+	cooldownTimer.restart();
 	input = sf::Vector2f(0.0f, 0.0f);
 }
 
@@ -65,10 +66,13 @@ void Player::pollEvents()
 		sf::Keyboard::isKeyPressed(sf::Keyboard::A);
 
 	//	Bomb plant
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && (this->planted.getElapsedTime().asSeconds() > 3.f))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && (this->cooldownTimer.getElapsedTime().asSeconds() > 3.f))
 	{
-		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
-		if (this->planted.getElapsedTime().asSeconds() >= 3)
-			this->planted.restart();
+		sf::Vector2f bombPos = this->getShape().getPosition() + this->getShape().getSize() * 0.5f;
+		Entities::getInstance().spawnBomb(bombPos);
+		Client::getInstance().sendBombPacket(bombPos);
+		
+		if (this->cooldownTimer.getElapsedTime().asSeconds() >= 3)
+			this->cooldownTimer.restart();
 	}
 }

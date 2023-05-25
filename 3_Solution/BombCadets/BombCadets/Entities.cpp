@@ -1,5 +1,7 @@
 #include "Entities.h"
 
+#define BOMB_SIZE 32.0f
+
 void Entities::removeCharacter(Character* character)
 {
 	for (auto it = characters.begin(); it != characters.end(); ++it)
@@ -58,6 +60,16 @@ void Entities::setPlayer(Player& _player)
 Player& Entities::getPlayer()
 {
 	return *player;
+}
+
+void Entities::spawnBomb(float x, float y)
+{
+	spawnBomb(sf::Vector2f(x, y));
+}
+
+void Entities::spawnBomb(sf::Vector2f position)
+{
+	getBombs().push_back(new Bomb(position - sf::Vector2f(BOMB_SIZE, BOMB_SIZE) * 0.5f, BOMB_SIZE, sf::Color::Magenta));
 }
 
 Entities::Entities()

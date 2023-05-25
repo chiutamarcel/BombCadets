@@ -84,6 +84,18 @@ void Client::sendLocalPosition() {
     send(packet);
 }
 
+void Client::sendBombPacket(sf::Vector2f bombPos)
+{
+    if (hasStarted == false)
+        return;
+
+    sf::Packet packet;
+
+    packet << CommonNetworking::PacketType::BOMB << id << bombPos.x << bombPos.y;
+
+    send(packet);
+}
+
 void Client::sendPackets()
 {
     //sendLocalVelocity();
@@ -100,11 +112,25 @@ void Client::receivePackets()
         if (!packet) return;
 
         //syncVelocities(packet);
+        listenForBombPacket(packet);
         syncPositions(packet);
     }
     catch (std::string e) {
 
     }
+}
+
+void Client::listenForBombPacket(sf::Packet packet)
+{
+    CommonNetworking::PacketType type;
+    int _id;
+    sf::Vector2f bombPos;
+
+    if (!(packet >> type >> _id >> bombPos.x >> bombPos.y)) return;
+
+    if (type != CommonNetworking::PacketType::BOMB) return;
+
+    Entities::getInstance().spawnBomb(bombPos);
 }
 
 MapText Client::waitForMapInfo() {

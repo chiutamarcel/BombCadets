@@ -39,6 +39,9 @@ public:
 
     void setPlayer(Player& _player);
     Player& getPlayer();
+
+    void spawnBomb(float x, float y);
+    void spawnBomb(sf::Vector2f position);
     
 private:
 

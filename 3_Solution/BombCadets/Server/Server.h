@@ -17,7 +17,9 @@ class Server
 	MapText mapText;
 
 	void listenForConnections(sf::Packet packet, sf::IpAddress sender, unsigned short port);
-	void listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	//void listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	//void listenForBombs(sf::Packet packet, sf::IpAddress sender, unsigned short port);
+	void forwardPackets(sf::Packet packet, sf::IpAddress sender, unsigned short port);
 	Client* spawnPlayer(std::string player_ip, unsigned short port);
 	//Client* searchClientByIp(std::string player_ip);
 	bool alreadyExists(std::string player_ip, unsigned short port);

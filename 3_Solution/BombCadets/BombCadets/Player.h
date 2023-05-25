@@ -2,7 +2,7 @@
 #include "Character.h"
 class Player : public Character
 {
-	sf::Clock planted;
+	sf::Clock cooldownTimer;
 	sf::Vector2f input;
 
 	void movement(float deltaTime);

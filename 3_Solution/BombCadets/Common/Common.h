@@ -12,7 +12,8 @@ namespace CommonNetworking {
 		VELOCITY,
 		MESSAGE,
 		MAPINFO,
-		POSITION
+		POSITION,
+		BOMB
 	};
 
 	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);
