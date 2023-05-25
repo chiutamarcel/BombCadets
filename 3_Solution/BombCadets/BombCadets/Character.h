@@ -6,6 +6,7 @@ class Character : public Entity
 protected:
 	float speed;
 	sf::Vector2f velocity;
+	sf::Vector2f targetPos;
 
 public:
 	Character(sf::Vector2f position, sf::Vector2f size, float _speed = 0);
@@ -20,7 +21,15 @@ public:
 	
 	void checkCollision(sf::Vector2f& velocity);
 
+	sf::Vector2f lerp(sf::Vector2f from, sf::Vector2f to, float rate);
+
+	void slideTo(sf::Vector2f to, float rate);
+	void slideToTargetPos(float rate);
+
+	// getters and setters
 	void setVelocity(sf::Vector2f vel);
 	const sf::Vector2f& getVelocity();
+
+	void setTargetPos(sf::Vector2f _targetPos);
 };
 

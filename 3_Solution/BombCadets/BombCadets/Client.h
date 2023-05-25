@@ -2,6 +2,7 @@
 
 #include "SFML/Network.hpp"
 #include "Common.h"
+#include "Character.h"
 
 class Client
 {
@@ -14,12 +15,14 @@ class Client
 
 	sf::Clock lastPositionTimer;
 
+	std::vector<Character*> *characters;
+
 	~Client();
 	Client();
 	Client(Client& other) = delete;
 
 	void chatPrompt();
-	void syncVelocities(sf::Packet packet);
+	//void syncVelocities(sf::Packet packet);
 	void syncPositions(sf::Packet packet);
 	void sendLocalVelocity();
 	void sendLocalPosition();

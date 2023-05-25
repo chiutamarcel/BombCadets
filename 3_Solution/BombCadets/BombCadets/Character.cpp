@@ -11,6 +11,7 @@ Character::Character
 ) :
 	Entity(position, size)
 {
+	targetPos = position;
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	speed = _speed;
 }
@@ -123,4 +124,34 @@ void Character::setVelocity(sf::Vector2f vel)
 const sf::Vector2f& Character::getVelocity()
 {
 	return velocity;
+}
+
+sf::Vector2f Character::lerp(sf::Vector2f from, sf::Vector2f to, float rate)
+{
+	if (rate > 100) {
+		throw std::string("Lerp rate cannot surpass 100!");
+		exit(1);
+	}
+
+	sf::Vector2f result;
+
+	result.x = from.x * (1 - (rate / 100)) + to.x * (rate / 100);
+	result.y = from.y * (1 - (rate / 100)) + to.y * (rate / 100);
+
+	return result;
+}
+
+void Character::slideTo(sf::Vector2f to, float rate)
+{
+	setPosition(lerp(getPosition(), to, rate));
+}
+
+void Character::slideToTargetPos(float rate)
+{
+	slideTo(targetPos, rate);
+}
+
+void Character::setTargetPos(sf::Vector2f _targetPos)
+{
+	targetPos = _targetPos;
 }

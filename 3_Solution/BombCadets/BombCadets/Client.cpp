@@ -8,7 +8,8 @@
 
 Client* Client::instance = nullptr;
 
-#define positionUpdateRate 200 // milliseconds
+#define positionUpdateRate 100 // milliseconds
+#define positionSmoothRate 10
 
 Client::~Client()
 {
@@ -27,24 +28,24 @@ void Client::chatPrompt()
     socket.send(text.c_str(), PACKETDATASIZE, sv_address, SERVER_PORT);
 }
 
-void Client::syncVelocities(sf::Packet packet)
-{
-    CommonNetworking::PacketType type;
-    int _id;
-    sf::Vector2f vel;
-
-    if (!(packet >> type >> _id >> vel.x >> vel.y)) return;
-
-    if (type != CommonNetworking::PacketType::VELOCITY) return;
-
-    const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
-
-    //if (id <= 0 || id >= characters.size())
-    //    throw "id out of bounds!";
-
-    characters[_id]->setVelocity(vel);
-
-}
+//void Client::syncVelocities(sf::Packet packet)
+//{
+//    CommonNetworking::PacketType type;
+//    int _id;
+//    sf::Vector2f vel;
+//
+//    if (!(packet >> type >> _id >> vel.x >> vel.y)) return;
+//
+//    if (type != CommonNetworking::PacketType::VELOCITY) return;
+//
+//    const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
+//
+//    //if (id <= 0 || id >= characters.size())
+//    //    throw "id out of bounds!";
+//
+//    characters[_id]->setVelocity(vel);
+//
+//}
 
 void Client::syncPositions(sf::Packet packet) {
     CommonNetworking::PacketType type;
@@ -55,12 +56,7 @@ void Client::syncPositions(sf::Packet packet) {
 
     if (type != CommonNetworking::PacketType::POSITION) return;
 
-    const std::vector<Character*>& characters = Entities::getInstance().getCharacters();
-
-    //if (id <= 0 || id >= characters.size())
-    //    throw "id out of bounds!";
-
-    characters[_id]->setPosition(pos);
+    (*characters)[_id]->setTargetPos(pos);
 }
 
 void Client::sendLocalVelocity()
@@ -226,6 +222,8 @@ void Client::start()
     connect();
     waitForMapInfo();
     socket.setBlocking(false);
+
+    characters = &(Entities::getInstance().getCharacters());
 }
 
 void Client::update()
@@ -238,6 +236,13 @@ void Client::update()
 
         }
         sendPackets();
+
+        // smoothly move each character into his new position
+        for (int i = 0; i < characters->size(); i++) {
+            if (i != id) {
+                ((*characters)[i])->slideToTargetPos(positionSmoothRate);
+            }
+        }
     }
 }
 
