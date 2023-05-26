@@ -15,8 +15,8 @@ static sf::Texture* breakableTexture = new sf::Texture();
 void init()
 {
 	wallTexture->loadFromFile("Textures\\breakk.png");
-	playerTexture->loadFromFile("Textures\\aidonow.png");
-	breakableTexture->loadFromFile("Textures\\actually_breakk.png");
+	playerTexture->loadFromFile("Textures\\head.png");
+	breakableTexture->loadFromFile("Textures\\barr.png");
 }
 
 using namespace GameConfig;

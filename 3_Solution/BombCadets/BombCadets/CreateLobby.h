@@ -5,33 +5,9 @@
 class CreateLobby : public PlayMode
 {
 public:
-	CreateLobby(float width, float height) : PlayMode(width, height)
-	{
-		//create bacc
-		createBackground.setSize(Vector2f(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE));
-		create_texture.loadFromFile("Textures\\server_ip.png");
-		createBackground.setTexture(&create_texture);
+	CreateLobby(float width, float height);
 
-		ip_add = TextBox(75, sf::Color::Black, true);
-		ip_add.setFont();
-		ip_add.setPosition({ 210, 480 });
-
-
-		if (!font.loadFromFile("Fonts\\SpaceMission.otf")) {
-			cout << "No font available\n";
-			exit(1);
-		}
-	};
-
-	virtual void draw(RenderWindow* window) override 
-	{
-		if (window == nullptr) {
-			exit(1);
-		}
-		window->draw(createBackground);
-		ip_add.draw(window);
-	};
-	
+	virtual void draw(RenderWindow* window) override;
 
 	virtual void up() override {}
 
@@ -39,22 +15,9 @@ public:
 
 	virtual void left() override {}
 	virtual void right() override {}
-	virtual void pollEvents(Event event, MENUTYPE& curMenu, GAMESTATE& curGameState, ENTRYTYPE& curEntryType) override
-	{
-		if (event.type == sf::Event::TextEntered && ip_add.getSelection() == true && curMenu == MENUTYPE::CREATELOBBY)
-		{
-			ip_add.typedOn(event);
-		}
+	virtual void pollEvents(Event event, MENUTYPE& curMenu, GAMESTATE& curGameState, ENTRYTYPE& curEntryType) override;
 
-		if (ip_add.getSelection() == false)
-		{
-			//baga tare aici mihai
-		}
-	}
-
-	virtual int buttonPressed() override {
-		return createSelected;
-	}
+	virtual int buttonPressed() override;
 
 	~CreateLobby() {};
 

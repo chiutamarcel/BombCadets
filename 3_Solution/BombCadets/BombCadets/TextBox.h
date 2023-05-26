@@ -12,26 +12,9 @@ class TextBox : public UIElement
 public:
 	TextBox() : UIElement() {}
 
-	TextBox(int size, sf::Color color, bool sel) : UIElement()
-	{
-		textbox.setCharacterSize(size);
-		textbox.setFillColor(color);
-		isSelected = sel;
-		if (sel)
-		{
-			textbox.setString("_");
-		}
-		else
-		{
-			textbox.setString("");
-		}
-	}
+	TextBox(int size, sf::Color color, bool sel);
 
-	void setFont()
-	{
-		font.loadFromFile("Fonts/SpaceMission.otf");
-		textbox.setFont(font);
-	}
+	void setFont();
 
 	void setPosition(sf::Vector2f pos)
 	{
@@ -49,84 +32,18 @@ public:
 		limit = lim;
 	}
 
-	void setSelected(bool sel)
-	{
-		isSelected = sel;
-		if (!sel)
-		{
-			std::string t = text.str();
-			std::string newT = "";
-			for (int i = 0; i < t.length(); ++i)
-			{
-				newT += t[i];
-			}
-			textbox.setString(newT);
-		}
-	}
+	void setSelected(bool sel);
 
 	std::string getText()
 	{
 		return text.str();
 	}
 
-	void draw(sf::RenderWindow* window)
-	{
-		try {
-			if (window == nullptr)
-				throw std::string("Window is null");
+	void draw(sf::RenderWindow* window);
 
-			window->draw(textbox);
-		}
-		catch (std::string e) {
-			std::cout << e << std::endl;
-		}
-	}
+	void char_entered(sf::Event input);
 
-	void typedOn(sf::Event input)
-	{
-		if (isSelected)
-		{
-			int charTyped = input.text.unicode;
-			if (charTyped < 128)
-			{
-				if (hasLimit)
-				{
-					if (text.str().length() <= limit && charTyped == ENTER_KEY)
-					{
-						if (text.str().length() > 0)
-						{
-							text.str().pop_back();
-						}
-						textbox.setString(text.str());
-						//setSelect(false);
-					}
-					else if (text.str().length() > limit && charTyped == DELETE_KEY)
-					{
-						deleteLastChar();
-					}
-					else if (text.str().length() <= limit)
-					{
-						inputLogic(charTyped);
-					}
-						
-				}
-				else
-				{
-					inputLogic(charTyped);
-				}
-			}
-		}
-	}
-
-	void setAsPass()
-	{
-		std::string buffy = "";
-		for (int i = 0; i < text.str().length(); ++i)
-		{
-			buffy += "*";
-		}
-		textbox.setString(buffy);
-	}
+	void setAsPass();
 
 	bool getSelection()
 	{
@@ -147,7 +64,7 @@ private:
 	int limit = 32;
 	sf::Font font;
 
-	void inputLogic(int charTyped)
+	void actual_char(int charTyped)
 	{
 		if (charTyped != DELETE_KEY && charTyped != ENTER_KEY && charTyped != ESCAPE_KEY)
 		{

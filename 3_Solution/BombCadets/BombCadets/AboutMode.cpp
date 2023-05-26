@@ -81,12 +81,20 @@ void AboutMode::pollEvents(Event event, MENUTYPE& curMenu, GAMESTATE& curGameSta
 
                 if (y == 0)
                 {
-                    //how to play
+                    /*howToPlay.setSize(Vector2f(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE));
+                    howTo_texture.loadFromFile("Textures\\htp.png");
+                    howToPlay.setTexture(&howTo_texture);
+
+                    window.draw(howToPlay);*/
                 }
 
                 if (y == 1)
                 {
-                    //controls
+                    /*controlsBacc.setSize(Vector2f(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE));
+                    controls_texture.loadFromFile("Textures\\ctrl.png");
+                    controlsBacc.setTexture(&controls_texture);
+
+                    window.draw(controlsBacc);*/
                 }
             }
 

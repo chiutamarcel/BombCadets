@@ -23,6 +23,37 @@ void UIProcessing::draw(RenderWindow* window)
     curUI->draw(window);
 }
 
+
+void UIProcessing::switchMenu(MENUTYPE curMenu)
+{
+    delete curUI;
+
+    switch (curMenu)
+    {
+    case MENUTYPE::MAINMENU:
+        curUI = new MainMenu(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::PLAY:
+        curUI = new PlayMode(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::ABOUT:
+        curUI = new AboutMode(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::HIGHSCORES:
+        curUI = new HighScore(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::OPTIONS:
+        curUI = new Options(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::JOINLOBBY:
+        curUI = new JoinLobby(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::CREATELOBBY:
+        curUI = new CreateLobby(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    }
+}
+
 void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &curMenu, GAMESTATE &curGameState, ENTRYTYPE &curEntryType)
 {
     // << "Processing events\n";
@@ -30,14 +61,14 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
         {
             if (event.type == sf::Event::TextEntered)
             {
-                logUsername.typedOn(event);
+                logUsername.char_entered(event);
             }
         }
         else if (curEntryType == ENTRYTYPE::LOGIN && logUsername.getSelection() == false && logPassword.getSelection()==true)
         {
             if (event.type == sf::Event::TextEntered)
             {
-                logPassword.typedOn(event);
+                logPassword.char_entered(event);
                 logPassword.setAsPass();
             }
         }
@@ -52,14 +83,14 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
         {
             if (event.type == sf::Event::TextEntered)
             {
-                createUsername.typedOn(event);
+                createUsername.char_entered(event);
             }
         }
         else if (curEntryType == ENTRYTYPE::CREATE && createUsername.getSelection() == false && createPassword.getSelection() == true)
         {
             if (event.type == sf::Event::TextEntered)
             {
-                createPassword.typedOn(event);
+                createPassword.char_entered(event);
                 createPassword.setAsPass();
             }
         }
@@ -74,7 +105,7 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
     {
         if (event.type == sf::Event::TextEntered)
         {
-            userTextBox.typedOn(event);
+            userTextBox.char_entered(event);
         }
         event.key.code = Keyboard::Escape;
     }
@@ -99,30 +130,29 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
 
     if (event.type == sf::Event::TextEntered && createPass.getSelection() == true && createLobb.getSelection() == false && curMenu == MENUTYPE::CREATELOBBY)
     {
-        createPass.typedOn(event);
+        createPass.char_entered(event);
         lobbyPass = createPass.getText();
         createPass.setAsPass();
     }
 
     if (event.type == sf::Event::TextEntered && createLobb.getSelection() == true && curMenu == MENUTYPE::CREATELOBBY)
     {
-        createLobb.typedOn(event);
+        createLobb.char_entered(event);
         lobbyName = createLobb.getText();
     }
 
     if (event.type == sf::Event::TextEntered && joinLobb.getSelection() == true && curMenu == MENUTYPE::JOINLOBBY)
     {
-        joinLobb.typedOn(event);
+        joinLobb.char_entered(event);
     }*/
+
+    if (event.type == Event::Closed) {
+            delete curUI;
+            exit(1);
+    }
 
     curUI->pollEvents(event, curMenu, curGameState, curEntryType);
     
-
-    //if (curGameState == GAMESTATE::INGAME) {
-    //    if (event.type == Event::Closed) {
-    //        window->close();
-    //        return;
-    //    }
 
     //    if (event.type == Event::KeyPressed) {
     //        if (event.key.code == Keyboard::Escape) {
@@ -477,3 +507,4 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
     //}
 
 }
+

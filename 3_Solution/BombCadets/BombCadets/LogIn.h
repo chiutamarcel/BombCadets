@@ -10,13 +10,7 @@ class LogIn : public Menu
 {
 public:
 public:
-	LogIn(float width, float height) : Menu()
-	{
-		if (!font.loadFromFile("Fonts\\SpaceMission.otf")) {
-			cout << "No font available\n";
-			exit(1);
-		}
-	};
+	LogIn(float width, float height);
 
 	virtual void draw(RenderWindow* window) override {}
 
@@ -27,9 +21,7 @@ public:
 	virtual void left() override {}
 	virtual void right() override {}
 
-	virtual int buttonPressed() override {
-		return loginSelected;
-	}
+	virtual int buttonPressed() override;
 
 	~LogIn() {};
 

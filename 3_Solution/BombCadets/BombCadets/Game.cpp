@@ -28,6 +28,13 @@ void Game::pollEvents()
     {
         if(curGameState != GAMESTATE::INGAME)
             UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
+        else
+        {
+            if (event.type == Event::Closed) {
+                window->close();
+                exit(1);
+            }
+        }
     }
 }
 
@@ -40,7 +47,10 @@ Game::~Game()
 
 void Game::start()
 {
-
+    if (!font.loadFromFile("Fonts\\SpaceMission.otf")) {
+        cout << "No font available\n";
+        exit(1);
+    }
 	// Make Main window
     window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
     //logCreate = new LogCreate(WINDOWXSIZE, WINDOWYSIZE);
@@ -66,6 +76,17 @@ void Game::start()
     sky_texture.loadFromFile("Textures\\sky.png");
     skyBacc.setTexture(&sky_texture);
 
+    bacc_game.setSize(Vector2f(1344, 832));
+    ba_texture.loadFromFile("Textures\\over_wall_bac.png");
+    bacc_game.setTexture(&ba_texture);
+
+    string templ = "May the mighty WON!";
+
+    disp_player.setString(templ);
+    disp_player.setFont(font);
+    disp_player.setFillColor(sf::Color::Yellow);
+    disp_player.setCharacterSize(70);
+    disp_player.setPosition(350, 35);
 
     curMenu = MENUTYPE::MAINMENU;
     curGameState = GAMESTATE::LOGIN;
@@ -158,6 +179,8 @@ void Game::draw()
 
         UIProcessing::get().draw(window);
     } else if (curGameState == GAMESTATE::INGAME) {
+        window->draw(bacc_game);
+
         for (auto entity : Entities::getInstance().getCharacters())
 		    window->draw(entity->getShape());
 	    for (auto entity : Entities::getInstance().getBreakableBlocks())
@@ -169,6 +192,7 @@ void Game::draw()
 	    for (auto entity : Entities::getInstance().getExplosions())
 		    window->draw(entity->getShape());
         window->draw(skyBacc);
+        window->draw(disp_player);
     }
   //  else if (curGameState == GAMESTATE::LOGIN) {
   //      switch (curEntryType) {

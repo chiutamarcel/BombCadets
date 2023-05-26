@@ -35,5 +35,11 @@ private:
 	Font font;
 	RectangleShape aboutBackground;
 	Texture about_texture;
+	RectangleShape howToPlay;
+	Texture howTo_texture;
+	RectangleShape controlsBacc;
+	Texture	controls_texture;
+	Text how;
+	Text ctrl;
 };
 

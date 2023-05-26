@@ -43,6 +43,9 @@ class Game
 
 	RectangleShape skyBacc;
 	Texture sky_texture;
+
+	RectangleShape bacc_game;
+	Texture ba_texture;
 	
 	//Character character;
 
@@ -51,6 +54,8 @@ class Game
 
 	float musicVolume = 50.f;
 
+	Text disp_player;
+	Font font;
 
 	std::string mapFileName;
 

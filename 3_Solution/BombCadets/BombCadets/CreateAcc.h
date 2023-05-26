@@ -9,13 +9,7 @@ using namespace sf;
 class CreateAcc : public Menu
 {
 public:
-	CreateAcc(float width, float height) : Menu()
-	{
-		if (!font.loadFromFile("Fonts\\SpaceMission.otf")) {
-			cout << "No font available\n";
-			exit(1);
-		}
-	};
+	CreateAcc(float width, float height);
 
 	virtual void draw(RenderWindow* window) override {}
 
@@ -26,9 +20,7 @@ public:
 	virtual void left() override {}
 	virtual void right() override {}
 
-	virtual int buttonPressed() override {
-		return createAccSelected;
-	}
+	virtual int buttonPressed() override;
 
 	~CreateAcc() {};
 
