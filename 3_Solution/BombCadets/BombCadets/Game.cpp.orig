@@ -2,7 +2,11 @@
 #include "Map.h"
 #include "Client.h"
 #include "GameConfig.h"
+<<<<<<< HEAD
 #include "UIProcessing.h"
+=======
+#include "Logger.h"
+>>>>>>> 00fd6cc (added logger class)
 #include <utility>
 #include <fstream>
 
@@ -28,28 +32,35 @@ void Game::pollEvents()
         }
     }
 
+
     // Process events
     sf::Event event;
-    
+
     while (window->pollEvent(event))
     {
-<<<<<<< HEAD
-        if (event.type == sf::Event::GainedFocus) {
-            focus = true;
-        }
-        
+
+
+        if (curGameState != GAMESTATE::INGAME)
+            UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
+
         if (event.type == sf::Event::LostFocus) {
             focus = false;
         }
 
+<<<<<<< HEAD
+        if (event.type == sf::Event::GainedFocus) {
+            focus = true;
+=======
         if (curGameState == GAMESTATE::INGAME) {
-            if (event.type == Event::Closed) {
+            if (event.type == Event::Closed) {       
+                Logger::getInstance()->log(LogLevel::INFO, "Game ended");
                 window->close();
                 return;
             }
 
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Escape) {
+                    Logger::getInstance()->log(LogLevel::INFO, "Game ended");
                     window->close();
                     return;
                 }
@@ -59,6 +70,7 @@ void Game::pollEvents()
             case MENUTYPE::MAINMENU:
                 if (event.type == Event::Closed) {
                     window->close();
+                    
                 }
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
@@ -115,37 +127,33 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Left) {
-                        playMode->left();
+                        playMode->MoveLeft();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Right) {
-                        playMode->right();
+                        playMode->MoveRight();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = playMode->buttonPressed();
+                        int y = playMode->PlayModePressed();
 
                         if (y == 0)
                         {
-                            //create lobby
-                            //startSinglePlayer();
-                            createLobby = new CreateLobby(WINDOWXSIZE, WINDOWYSIZE);
-                            testText = TextBox(50, sf::Color::White, true);
-                            testText.setFont();
-                            testText.setPosition({ 110, 280 });
-                            curMenu = MENUTYPE::CREATELOBBY;
-                            break;
+                            //single player
+							Logger::getInstance()->log(LogLevel::INFO, "Single player selected");
+                            startSinglePlayer();
+                            return;
                         }
 
                         if (y == 1)
                         {
-                            //join lobby
-                            joinLobby = new JoinLobby(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::JOINLOBBY;
-                            break;
+                            //multi player
+							Logger::getInstance()->log(LogLevel::INFO, "Multi player selected");
+                            startMultiPlayer();
+                            return;
                         }
                     }
                 }
@@ -167,18 +175,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        about->up();
+                        about->MoveUp();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        about->down();
+                        about->MoveDown();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = about->buttonPressed();
+                        int y = about->AboutPressed();
 
                         if (y == 0)
                         {
@@ -210,18 +218,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        highScore->up();
+                        highScore->MoveUp();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        highScore->down();
+                        highScore->MoveDown();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = highScore->buttonPressed();
+                        int y = highScore->HighPressed();
 
                         if (y == 0)
                         {
@@ -253,18 +261,18 @@ void Game::pollEvents()
 
                 if (event.type == Event::KeyReleased) {
                     if (event.key.code == Keyboard::Up) {
-                        options->up();
+                        options->MoveUp();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Down) {
-                        options->down();
+                        options->MoveDown();
                         break;
                     }
 
                     if (event.key.code == Keyboard::Return) {
 
-                        int y = options->buttonPressed();
+                        int y = options->OptionsPressed();
 
                         if (y == 0)
                         {
@@ -302,11 +310,8 @@ void Game::pollEvents()
                 break;
 
             }
+>>>>>>> 00fd6cc (added logger class)
         }
-=======
-        if(curGameState != GAMESTATE::INGAME)
-            UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
->>>>>>> 74d09b0 (- finished refactoring ui code to make it more oop)
     }
 }
 
@@ -319,9 +324,9 @@ Game::~Game()
 
 void Game::start()
 {
-
+	Logger::getInstance()->log(LogLevel::INFO, "Game started");
 	// Make Main window
-    window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
+    window = new sf::RenderWindow(sf::VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
     //logCreate = new LogCreate(WINDOWXSIZE, WINDOWYSIZE);
     //mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
 
@@ -341,7 +346,7 @@ void Game::start()
     //createAccBackground.setTexture(&createAcc_texture);
 
     //create sky bacc
-    skyBacc.setSize(Vector2f(1344, 136));
+    skyBacc.setSize(sf::Vector2f(1344, 136));
     sky_texture.loadFromFile("Textures\\sky.png");
     skyBacc.setTexture(&sky_texture);
 
@@ -366,32 +371,23 @@ void Game::update()
 		for (int i = 0; i < explosions.size(); i++)
 		(explosions[i])->update(deltaTime.asSeconds());
 		
-<<<<<<< HEAD
-		deltaTime = deltaClock.restart();
-  }
-=======
 		deltaTime = deltaClock.restart();;
-	}
->>>>>>> 74d09b0 (- finished refactoring ui code to make it more oop)
+  }
 }
 
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
-<<<<<<< HEAD
     mapText.readFromFile(mapFile);
-=======
-    mapText.readFromFile("map.txt");
->>>>>>> 74d09b0 (- finished refactoring ui code to make it more oop)
     mapText.putBreakableBlocks(NRBREAKABLEWALLS);
     Map::spawnMap(mapText);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
     Map::spawnCharacter(Map::CharacterType::BOT);
 }
 
-void Game::startMultiPlayer() {
+void Game::startMultiPlayer(std::string ip, unsigned short port) {
     curGameState = GAMESTATE::INGAME;
-    Client::getInstance().start();
+    Client::getInstance().start(ip, port);
 
     // TODO: change later after adding a proper Bot class
     for (int i = 0; i < Map::maxPlayers; i++) {

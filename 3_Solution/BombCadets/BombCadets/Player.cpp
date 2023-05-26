@@ -2,6 +2,7 @@
 
 #include "Entities.h"
 #include "Client.h"
+#include "Logger.h"
 
 void Player::movement(float deltaTime)
 {

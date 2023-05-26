@@ -3,6 +3,7 @@
 
 #include "Client.h"
 #include "Player.h"
+#include "Logger.h"
 
 sf::Texture Explosion::explosionTexture;
 
@@ -103,6 +104,10 @@ void Explosion::checkCollision()
 
 				if (dynamic_cast<Player*> (characters[i])) {
 					// lose game sp
+					//delete characters[i];	// am modificat aici
+					Entities::getInstance().removeCharacter(characters[i]);
+					std::cout << "You lost!" << std::endl;
+					Logger::getInstance()->log(LogLevel::INFO, "Player lost the game"); // se afiseaza game over si se iese din joc
 				} else {
 					// delete bot
 					delete characters[i];

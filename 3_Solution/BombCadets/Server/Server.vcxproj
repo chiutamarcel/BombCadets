@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Common.cpp" />
+    <ClCompile Include="..\Common\Logger.cpp" />
     <ClCompile Include="..\Common\MapText.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="..\Common\Common.h" />
     <ClInclude Include="..\Common\GameConfig.h" />
+    <ClInclude Include="..\Common\Logger.h" />
     <ClInclude Include="..\Common\MapText.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Server.h" />

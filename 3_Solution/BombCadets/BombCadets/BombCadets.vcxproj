@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Common.cpp" />
+    <ClCompile Include="..\Common\Logger.cpp" />
     <ClCompile Include="..\Common\MapText.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="AboutMode.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="..\Common\Common.h" />
     <ClInclude Include="..\Common\GameConfig.h" />
+    <ClInclude Include="..\Common\Logger.h" />
     <ClInclude Include="..\Common\MapText.h" />
     <ClInclude Include="AboutMode.h" />
     <ClInclude Include="Block.h" />

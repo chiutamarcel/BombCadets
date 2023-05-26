@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "MapText.h"
 #include "NPC.h"
+#include "Logger.h"
 
 static sf::Texture* wallTexture = new sf::Texture();
 static sf::Texture* playerTexture = new sf::Texture();
@@ -120,5 +121,6 @@ void stringToEntities(char** mapMatrix) {
 void Map::spawnMap(MapText mapText)
 {	
 	//writeBreakableBlocks(mapText);
+	Logger::getInstance()->log(LogLevel::INFO, "Generating map...");
 	stringToEntities(mapText.c_str());
 }

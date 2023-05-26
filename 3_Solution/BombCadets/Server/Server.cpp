@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "Common.h"
 #include "GameConfig.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -19,6 +20,7 @@ Server::~Server()
 void Server::endGame(int loserId)
 {
     std::cout << "Game ended, loser: " << loserId << std::endl;
+	Logger::getInstance()->log(LogLevel::INFO, "Game ended, loser: " + std::to_string(loserId));
 
     sf::Packet packet;
 
@@ -53,15 +55,15 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender, unsig
 
         if (connected_clients.size() >= MAX_CLIENTS) {
             std::cout << "Maximum nr of players reached!" << std::endl;
+			Logger::getInstance()->log(LogLevel::INFO, "Maximum nr of players reached!");
             return;
         }
 
         Client* client = spawnPlayer(sender.toString(), port);
 
         if (client == nullptr) {
+			Logger::getInstance()->log(LogLevel::ERROR, "Could not spawn client: " + sender.toString());
             throw std::string("Could not spawn client: ") + sender.toString();
-        
-        
         }
 
         client->confirmConnection();
@@ -87,6 +89,7 @@ void Server::listenForKillRequests(sf::Packet packet, sf::IpAddress sender, unsi
     connected_clients[targetId]->getKillVoted(id, getPlayerCount());
 
     std::cout << "Client " << targetId << " was killvoted by " << id << std::endl;
+	Logger::getInstance()->log(LogLevel::INFO, "Client " + std::to_string(targetId) + " was killvoted by " + std::to_string(id));
 }
 
 //void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port) {
@@ -152,6 +155,7 @@ Client* Server::spawnPlayer(std::string player_ip, unsigned short port)
 {
     try {
         if (alreadyExists(player_ip, port) == true) {
+			Logger::getInstance()->log(LogLevel::ERROR, "Client is already connected!");
             throw std::string("Client is already connected!");
         }
 
@@ -201,14 +205,17 @@ void Server::start()
 {
     hasGameStarted = true;
     std::cout << "Starting server..." << std::endl;
+	Logger::getInstance()->log(LogLevel::INFO, "Starting server...");
 
     // Binding socket
     if(socket.bind(SERVER_PORT) != sf::Socket::Done)
     {
         throw std::string("Could not bind socket!");
+		Logger::getInstance()->log(LogLevel::ERROR, "Could not bind socket!");
     }
 
     std::cout << "Server started successfully on port " << SERVER_PORT << std::endl;
+	Logger::getInstance()->log(LogLevel::INFO, "Server started successfully on port " + std::to_string(SERVER_PORT));
 
     mapText.readFromFile(GameConfig::mapFile);
     mapText.putBreakableBlocks(GameConfig::NRBREAKABLEWALLS);
@@ -253,6 +260,7 @@ Server& Server::getInstance()
 
 void Server::deleteInstance()
 {
+    Logger::getInstance()->log(LogLevel::INFO, "Closing server...");
     if (instance != nullptr)
         delete instance;
 }

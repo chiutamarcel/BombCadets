@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Client.h"
+#include "Logger.h"
 //#include "MainMenu.h"
 //#include "PlayMode.h"
 //#include "AboutMode.h"
@@ -25,7 +26,7 @@ int main()
         game.draw();
     }
 
-    Client::deleteInstance();
-
+    Client::deleteInstance();    
+    
     return EXIT_SUCCESS;
 }

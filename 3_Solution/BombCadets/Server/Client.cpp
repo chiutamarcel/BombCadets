@@ -1,6 +1,7 @@
 #include "Client.h"
 #include "Server.h"
 #include <iostream>
+#include "Logger.h"
 
 const sf::IpAddress& Client::getIp() const
 {
@@ -15,6 +16,7 @@ const unsigned short& Client::getPort() const
 void Client::confirmConnection() {
 	sf::Packet packet;
 	packet << CommonNetworking::PacketType::MESSAGE << "connected" << id;
+	Logger::getInstance()->log(LogLevel::INFO, "Client " + std::to_string(id) + " connected");
 	send(packet);
 }
 
@@ -52,6 +54,7 @@ void Client::send(sf::Packet& packet)
 
 void Client::die()
 {
+	Logger::getInstance()->log(LogLevel::INFO, "Client " + std::to_string(id) + " died! (IP: " + ip.toString() + ")");
 	std::cout << "Client " << id << " died!" << std::endl;
 	sf::Packet packet;
 
@@ -65,6 +68,7 @@ void Client::getKillVoted(int voterId, int playerCount)
 
 	if (voterId < 0 || voterId >= playerCount) {
 		throw std::string("id out of range!");
+		Logger::getInstance()->log(LogLevel::ERROR, "id out of range!");
 	}
 
 	killVotes[voterId] = 1;

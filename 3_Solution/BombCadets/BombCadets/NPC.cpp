@@ -1,6 +1,7 @@
 #include "NPC.h"
 #include "MapOfNodes.h"
 #include "Entities.h"
+#include "Logger.h"
 
 NPC::NPC(sf::Vector2f position, sf::Vector2f size, float speed):
 	Character(position, size, speed)
@@ -34,6 +35,7 @@ NPC::NPC(sf::Vector2f position, float length, sf::Color color, float speed) :
 
 NPC::~NPC()
 {
+	Logger::getInstance()->log(LogLevel::INFO, "The NPC died!");
 }
 
 void NPC::update(float deltaTime)
@@ -109,7 +111,8 @@ void NPC::whereToGo()
 		MapOfNodes::getInstance()->setGoal();
 		if (!MapOfNodes::getInstance()->findPath())
 		{
-			std::cout << "Path not found" << std::endl;
+			Logger::getInstance()->log(LogLevel::ERROR, "Path not found");
+			//std::cout << "Path not found" << std::endl;
 			return;
 		}
 	}

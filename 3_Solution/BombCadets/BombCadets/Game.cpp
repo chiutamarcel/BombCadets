@@ -3,6 +3,7 @@
 #include "Client.h"
 #include "GameConfig.h"
 #include "UIProcessing.h"
+#include "Logger.h"
 #include <utility>
 #include <fstream>
 

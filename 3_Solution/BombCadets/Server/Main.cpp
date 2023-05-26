@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -20,6 +21,7 @@ int main()
     }
     catch (std::string error)
     {
+		Logger::getInstance()->log(LogLevel::ERROR, error);
         std::cout << "ERR: " << error << std::endl;
     }
 
