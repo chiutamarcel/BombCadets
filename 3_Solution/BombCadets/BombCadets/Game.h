@@ -44,8 +44,6 @@ class Game
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
 
-	std::string mapFileName;
-
 	bool focus;
 
 public:

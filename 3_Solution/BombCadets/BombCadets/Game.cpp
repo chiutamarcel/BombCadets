@@ -13,7 +13,6 @@ MENUTYPE curMenu;
 GAMESTATE curGameState;
 
 Game::Game() {
-    mapFileName = "map.txt";
     focus = true;
 }
 
@@ -360,7 +359,7 @@ void Game::update()
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
-    mapText.readFromFile(mapFileName);
+    mapText.readFromFile(mapFile);
     mapText.putBreakableBlocks(NRBREAKABLEWALLS);
     Map::spawnMap(mapText);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
