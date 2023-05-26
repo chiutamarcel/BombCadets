@@ -1,6 +1,9 @@
 #include "Explosion.h"
 #include "Entities.h"
 
+#include "Client.h"
+#include "Player.h"
+
 Explosion::Explosion(sf::Vector2f position, sf::Vector2f size) :
 	WorldObject(position, size) {
 	alive = true;
@@ -103,11 +106,26 @@ void Explosion::checkCollision()
 			Entities::getInstance().removeBreakableBlock(breakableBlock);
 			delete breakableBlock;
 		}
-	for (auto character : Entities::getInstance().getCharacters())
-		if (this->getShape().getGlobalBounds().intersects(character->getShape().getGlobalBounds()))
+	std::vector<Character*> characters = Entities::getInstance().getCharacters();
+	for (int i = 0; i < characters.size(); i++)
+		if (this->getShape().getGlobalBounds().intersects(characters[i]->getShape().getGlobalBounds()))
 		{
-			Entities::getInstance().removeCharacter(character);
-			delete character;
+			if (Client::getInstance().getHasStarted() == true) {
+				// multiplayer
+
+				Client::getInstance().sendKillRequest(i);
+			}
+			else {
+				// singleplayer
+
+				if (dynamic_cast<Player*> (characters[i])) {
+					// lose game sp
+				} else {
+					// delete bot
+					delete characters[i];
+					Entities::getInstance().removeCharacter(characters[i]);
+				}
+			}
 		}
 	for (auto walls : Entities::getInstance().getWalls())
 		if (this->getShape().getGlobalBounds().intersects(walls->getShape().getGlobalBounds()))

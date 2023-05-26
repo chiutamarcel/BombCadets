@@ -1,3 +1,5 @@
+#pragma once
+
 #define CLIENT_PORT 54001
 #define SERVER_PORT 54000
 #define MAX_CLIENTS 4
@@ -13,7 +15,9 @@ namespace CommonNetworking {
 		MESSAGE,
 		MAPINFO,
 		POSITION,
-		BOMB
+		BOMB,
+		KILLVOTE,
+		LOSER
 	};
 
 	extern sf::Packet& operator>>(sf::Packet& packet, PacketType& packetType);

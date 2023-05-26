@@ -96,6 +96,18 @@ void Client::sendBombPacket(sf::Vector2f bombPos)
     send(packet);
 }
 
+void Client::sendKillRequest(int targetId)
+{
+    if (hasStarted == false)
+        return;
+
+    sf::Packet packet;
+
+    packet << CommonNetworking::PacketType::KILLVOTE << id << targetId;
+
+    send(packet);
+}
+
 void Client::sendPackets()
 {
     //sendLocalVelocity();
@@ -112,6 +124,7 @@ void Client::receivePackets()
         if (!packet) return;
 
         //syncVelocities(packet);
+        listenForLoser(packet);
         listenForBombPacket(packet);
         syncPositions(packet);
     }
@@ -131,6 +144,23 @@ void Client::listenForBombPacket(sf::Packet packet)
     if (type != CommonNetworking::PacketType::BOMB) return;
 
     Entities::getInstance().spawnBomb(bombPos);
+}
+
+void Client::listenForLoser(sf::Packet packet)
+{
+    CommonNetworking::PacketType type;
+    int loserId;
+
+    if (!(packet >> type >> loserId)) return;
+
+    if (type != CommonNetworking::PacketType::LOSER) return;
+
+    if (id == loserId) {
+        std::cout << "You lost!" << std::endl;
+    }
+    else {
+        std::cout << "You won!" << std::endl;
+    }
 }
 
 MapText Client::waitForMapInfo() {

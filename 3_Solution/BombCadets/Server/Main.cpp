@@ -4,7 +4,7 @@
 
 int main()
 {
-    Server server;
+    Server &server = Server::getInstance();
 
     try
     {
@@ -22,4 +22,6 @@ int main()
     {
         std::cout << "ERR: " << error << std::endl;
     }
+
+    server.deleteInstance();
 }

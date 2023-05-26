@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 
 #include "MapText.h"
+#include "Common.h"
 
 class Client
 {
@@ -11,6 +12,8 @@ class Client
 	sf::IpAddress ip;
 	unsigned short port;
 	sf::UdpSocket* serverSocket;
+	int killVotes[MAX_CLIENTS];
+	bool isDead;
 
 public:
 	Client(int _id, unsigned short _port, sf::UdpSocket* _serverSocket = nullptr);
@@ -23,5 +26,8 @@ public:
 	void sendMapInfo(const MapText& mapText);
 	void update();
 	void send(sf::Packet& packet);
+	void die();
+
+	void getKillVoted(int voterId, int playerCount);
 };
 

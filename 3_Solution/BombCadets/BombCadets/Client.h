@@ -30,6 +30,7 @@ class Client
 	void sendPackets();
 	void receivePackets();
 	void listenForBombPacket(sf::Packet packet);
+	void listenForLoser(sf::Packet packet);
 	
 	MapText waitForMapInfo();
 
@@ -39,6 +40,7 @@ public:
 	void pollEvents();
 
 	void sendBombPacket(sf::Vector2f bombPos);
+	void sendKillRequest(int targetId);
 
 	void connect();
 	void disconnect();

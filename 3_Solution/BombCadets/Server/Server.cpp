@@ -4,11 +4,31 @@
 
 #include <iostream>
 
+Server* Server::instance = nullptr;
 
 Server::Server():
     mapText(GameConfig::BLOCKSONSCREENX, GameConfig::BLOCKSONSCREENY)
 {
+    hasGameStarted = false;
+}
 
+Server::~Server()
+{
+}
+
+void Server::endGame(int loserId)
+{
+    std::cout << "Game ended, loser: " << loserId << std::endl;
+
+    sf::Packet packet;
+
+    packet << CommonNetworking::PacketType::LOSER << loserId;
+
+    for (auto client : connected_clients) {
+        client->send(packet);
+    }
+
+    hasGameStarted = false;
 }
 
 void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender, unsigned short port)
@@ -49,6 +69,21 @@ void Server::listenForConnections(sf::Packet packet, sf::IpAddress sender, unsig
         std::cout << e << std::endl;
     }
     
+}
+
+void Server::listenForKillRequests(sf::Packet packet, sf::IpAddress sender, unsigned short port)
+{
+    CommonNetworking::PacketType type;
+    int id;
+    int targetId;
+
+    if (!(packet >> type >> id >> targetId)) return;
+
+    if (type != CommonNetworking::PacketType::KILLVOTE) return;
+
+    connected_clients[targetId]->getKillVoted(id, getPlayerCount());
+
+    std::cout << "Client " << targetId << " was killvoted by " << id << std::endl;
 }
 
 //void Server::listenForPositions(sf::Packet packet, sf::IpAddress sender, unsigned short port) {
@@ -160,6 +195,7 @@ bool Server::alreadyExists(std::string player_ip, unsigned short port)
 
 void Server::start()
 {
+    hasGameStarted = true;
     std::cout << "Starting server..." << std::endl;
 
     // Binding socket
@@ -184,12 +220,39 @@ void Server::update()
 
     status = socket.receive(packet, sender, port);
 
+    listenForConnections(packet, sender, port);
+
     for (auto client : connected_clients) {
         client->update();
     }
 
-    //listenForPositions(packet, sender, port);
-    //listenForVelocities(packet, sender);
-    listenForConnections(packet, sender, port);
-    forwardPackets(packet, sender, port);
+    if (hasGameStarted == true) {
+        listenForKillRequests(packet, sender, port);
+        forwardPackets(packet, sender, port);
+    }
+}
+
+int Server::getPlayerCount()
+{
+    return connected_clients.size();
+}
+
+Server& Server::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new Server();
+    }
+
+    return *instance;
+}
+
+void Server::deleteInstance()
+{
+    if (instance != nullptr)
+        delete instance;
+}
+
+const bool& Server::getHasMatchStarted() const
+{
+    return hasGameStarted;
 }
