@@ -41,15 +41,36 @@ public:
 	virtual void right() override {}
 	virtual void pollEvents(Event event, MENUTYPE& curMenu, GAMESTATE& curGameState, ENTRYTYPE& curEntryType) override
 	{
-		if (event.type == sf::Event::TextEntered && ip_add.getSelection() == true && curMenu == MENUTYPE::CREATELOBBY)
+
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) {
+			std::string text = ip_add.getText();
+
+			std::string ip;
+			std::string port;
+
+			ip = text.substr(0, text.find(':'));
+			port = text.substr(text.find(':') + 1, text.size());
+
+			//std::cout << ip << ":" << port << std::endl;
+
+			
+
+		}
+
+
+		if (event.type == sf::Event::TextEntered && ip_add.getSelection() == true)
 		{
 			ip_add.typedOn(event);
 		}
 
-		if (ip_add.getSelection() == false)
-		{
-			//baga tare aici mihai
-		}
+
+		//if (ip_add.getSelection() == false)
+		//{
+		//	//baga tare aici mihai
+
+
+
+		//}
 	}
 
 	virtual int buttonPressed() override {

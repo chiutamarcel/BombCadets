@@ -35,7 +35,7 @@ class Client
 	MapText waitForMapInfo();
 
 public:
-	void start();
+	void start(std::string ip, unsigned short port);
 	void update();
 	void pollEvents();
 

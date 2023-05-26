@@ -30,14 +30,15 @@ void Game::pollEvents()
 
     // Process events
     sf::Event event;
-    
+
     while (window->pollEvent(event))
     {
-        if(curGameState != GAMESTATE::INGAME)
+        if (curGameState != GAMESTATE::INGAME)
             UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
-        
+
         if (event.type == sf::Event::LostFocus) {
             focus = false;
+        }
     }
 }
 

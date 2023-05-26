@@ -255,7 +255,7 @@ const bool& Client::getHasStarted()
     return hasStarted;
 }
 
-void Client::start()
+void Client::start(std::string ip, unsigned short port)
 {
     hasStarted = true;
     socket.setBlocking(true);
