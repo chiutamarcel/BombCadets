@@ -6,6 +6,9 @@ class NPC :
 	virtual void movement(float deltaTime);
 	void whereToGo();
 	float distanceTo(sf::Vector2f position);
+	
+	sf::Clock timer;
+	
 public:
 	NPC(sf::Vector2f position, sf::Vector2f size, float speed = 0);
 	NPC(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture, float speed = 0);

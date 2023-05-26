@@ -73,7 +73,7 @@ void MapOfNodes::setRelationships()
 	for (int y = 1; y < 10; y++)
 	{
 		for (int x = 1; x < 20; x++)
-		{//entityNodes[y][x].getType() != EntityType::BREAKABLE_WALL &&
+		{
 			if (this->option == 0) 
 			{
 				if (entityNodes[y][x].getType() != EntityType::UNBREAKABLE_WALL)
@@ -151,7 +151,6 @@ void MapOfNodes::setGoal()
 		}
 
 	pathGenerator.setGoal(entityNodes[yGoal][xGoal]);
-	//pathGenerator.setGoal(entityNodes[1][1]);
 }
 
 bool MapOfNodes::findPath()
