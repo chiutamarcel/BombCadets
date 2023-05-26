@@ -11,25 +11,13 @@
 #include "Block.h"
 #include "Entities.h"
 
-#include "MainMenu.h"
-#include "PlayMode.h"
-#include "AboutMode.h"
-#include "HighScore.h"
-#include "Options.h"
-#include "JoinLobby.h"
-#include "CreateLobby.h"
-#include "LogCreate.h"
-#include "LogIn.h"
-#include "CreateAcc.h"
-#include "InUsername.h"
-
 #include "TextBox.h"
 
 
 class Game
 {
-	string lobbyName;
-	string lobbyPass;
+	std::string lobbyName;
+	std::string lobbyPass;
 
 	sf::RenderWindow* window;
 	sf::RenderWindow* MENU;
@@ -41,8 +29,8 @@ class Game
 	//RectangleShape createAccBackground;
 	//Texture createAcc_texture;
 
-	RectangleShape skyBacc;
-	Texture sky_texture;
+	sf::RectangleShape skyBacc;
+	sf::Texture sky_texture;
 	
 	//Character character;
 
@@ -62,7 +50,7 @@ public:
 	void start();
 
 	static void startSinglePlayer();
-	static void startMultiPlayer();
+	static void startMultiPlayer(std::string ip, unsigned short port);
 
 	// Polls events
 	void pollEvents();

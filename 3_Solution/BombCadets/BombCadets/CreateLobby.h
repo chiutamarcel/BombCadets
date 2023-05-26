@@ -46,15 +46,17 @@ public:
 			std::string text = ip_add.getText();
 
 			std::string ip;
-			std::string port;
+			std::string port_str;
 
 			ip = text.substr(0, text.find(':'));
-			port = text.substr(text.find(':') + 1, text.size());
+			port_str = text.substr(text.find(':') + 1, text.size());
 
 			//std::cout << ip << ":" << port << std::endl;
 
-			
+			unsigned short port;
+			port = atoi(port_str.c_str());
 
+			Game::startMultiPlayer(ip, port);
 		}
 
 
@@ -62,15 +64,6 @@ public:
 		{
 			ip_add.typedOn(event);
 		}
-
-
-		//if (ip_add.getSelection() == false)
-		//{
-		//	//baga tare aici mihai
-
-
-
-		//}
 	}
 
 	virtual int buttonPressed() override {

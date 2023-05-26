@@ -52,8 +52,9 @@ Player::~Player()
 void Player::update(float deltaTime)
 {
 	Character::update(deltaTime);
-	sf::Texture* bombo = new sf::Texture;
-	bombo->loadFromFile("Textures\\bomb.png");
+	//sf::Texture* bombo = new sf::Texture;
+	//bombo->loadFromFile("Textures\\bomb.png");
+	//std::cout << getPosition().x << " " << getPosition().y << std::endl;
 	movement(deltaTime);
 }
 

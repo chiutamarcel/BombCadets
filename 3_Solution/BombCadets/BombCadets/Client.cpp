@@ -195,7 +195,7 @@ void Client::connect()
     try {
         sf::Packet packet;
 
-        std::cout << "Trying to connect to server..." << std::endl;
+        std::cout << "Trying to connect to server " << sv_address << std::endl;
 
         packet << CommonNetworking::PacketType::MESSAGE << "connect";
 
@@ -260,15 +260,16 @@ void Client::start(std::string ip, unsigned short port)
     hasStarted = true;
     socket.setBlocking(true);
 
-    std::string sv_addr_str;
-    std::cout << "Enter server address: " << std::endl;
-    std::cin >> sv_addr_str;
+    //std::string sv_addr_str;
+    //std::cout << "Enter server address: " << std::endl;
+    //std::cin >> sv_addr_str;
 
-    sv_address = sf::IpAddress(sv_addr_str);
+    //sv_address = sf::IpAddress(sv_addr_str);
+    sv_address = sf::IpAddress(ip);
 
-    unsigned short port;
-    std::cout << "Enter client port: " << std::endl;
-    std::cin >> port;
+    //unsigned short port;
+    //std::cout << "Enter client port: " << std::endl;
+    //std::cin >> port;
 
     // bind the socket to a port
     if (socket.bind(port) != sf::Socket::Done)
@@ -276,6 +277,8 @@ void Client::start(std::string ip, unsigned short port)
         std::cout << "ERROR BINDING TO SOCKET!" << std::endl;
         exit(1);
     }
+
+    std::cout << "Socket binded successfully on port" << port << "!" << std::endl;
 
     connect();
     waitForMapInfo();

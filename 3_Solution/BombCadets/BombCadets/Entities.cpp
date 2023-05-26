@@ -59,6 +59,9 @@ void Entities::setPlayer(Player& _player)
 
 Player& Entities::getPlayer()
 {
+	if (player == nullptr)
+		throw std::string("Player is null");
+
 	return *player;
 }
 

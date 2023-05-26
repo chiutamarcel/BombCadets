@@ -28,16 +28,23 @@ void Game::pollEvents()
         }
     }
 
+
     // Process events
     sf::Event event;
 
     while (window->pollEvent(event))
     {
+
+
         if (curGameState != GAMESTATE::INGAME)
             UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
 
         if (event.type == sf::Event::LostFocus) {
             focus = false;
+        }
+
+        if (event.type == sf::Event::GainedFocus) {
+            focus = true;
         }
     }
 }
@@ -53,7 +60,7 @@ void Game::start()
 {
 
 	// Make Main window
-    window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
+    window = new sf::RenderWindow(sf::VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
     //logCreate = new LogCreate(WINDOWXSIZE, WINDOWYSIZE);
     //mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
 
@@ -73,7 +80,7 @@ void Game::start()
     //createAccBackground.setTexture(&createAcc_texture);
 
     //create sky bacc
-    skyBacc.setSize(Vector2f(1344, 136));
+    skyBacc.setSize(sf::Vector2f(1344, 136));
     sky_texture.loadFromFile("Textures\\sky.png");
     skyBacc.setTexture(&sky_texture);
 
@@ -112,9 +119,9 @@ void Game::startSinglePlayer() {
     Map::spawnCharacter(Map::CharacterType::BOT);
 }
 
-void Game::startMultiPlayer() {
+void Game::startMultiPlayer(std::string ip, unsigned short port) {
     curGameState = GAMESTATE::INGAME;
-    Client::getInstance().start();
+    Client::getInstance().start(ip, port);
 
     // TODO: change later after adding a proper Bot class
     for (int i = 0; i < Map::maxPlayers; i++) {

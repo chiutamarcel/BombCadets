@@ -1,6 +1,14 @@
 #include "UIProcessing.h"
 #include "GameConfig.h"
 
+#include "MainMenu.h"
+#include "AboutMode.h"
+#include "InUsername.h"
+#include "JoinLobby.h"
+#include "HighScore.h"
+#include "Options.h"
+#include "CreateLobby.h"
+
 using namespace GameConfig;
 
 UIProcessing* UIProcessing::instance = nullptr;
@@ -18,12 +26,12 @@ void UIProcessing::destruct() {
     instance = nullptr;
 }
 
-void UIProcessing::draw(RenderWindow* window)
+void UIProcessing::draw(sf::RenderWindow* window)
 {
     curUI->draw(window);
 }
 
-void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &curMenu, GAMESTATE &curGameState, ENTRYTYPE &curEntryType)
+void UIProcessing::processEvents(sf::Event event, sf::RenderWindow* window, MENUTYPE &curMenu, GAMESTATE &curGameState, ENTRYTYPE &curEntryType)
 {
     // << "Processing events\n";
     /*if (curEntryType == ENTRYTYPE::LOGIN && logUsername.getSelection()==true)
@@ -476,4 +484,45 @@ void UIProcessing::processEvents(Event event, RenderWindow* window, MENUTYPE &cu
     //    }
     //}
 
+}
+
+void UIProcessing::switchMenu(MENUTYPE curMenu)
+{
+    delete curUI;
+
+    switch (curMenu)
+    {
+    case MENUTYPE::MAINMENU:
+        curUI = new MainMenu(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::PLAY:
+        curUI = new PlayMode(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::ABOUT:
+        curUI = new AboutMode(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::HIGHSCORES:
+        curUI = new HighScore(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::OPTIONS:
+        curUI = new Options(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::JOINLOBBY:
+        curUI = new JoinLobby(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    case MENUTYPE::CREATELOBBY:
+        curUI = new CreateLobby(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
+        break;
+    }
+}
+
+UIProcessing::UIProcessing()
+{
+    if (!music.openFromFile("Media\\bacc.wav"))
+        exit(1); // eroare
+    music.play();
+    music.setLoop(true);
+    music.setVolume(musicVolume);
+
+    curUI = new InUsername(GameConfig::WINDOWXSIZE, GameConfig::WINDOWYSIZE);
 }
