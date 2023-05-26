@@ -353,7 +353,7 @@ void Game::update()
 		(explosions[i])->update(deltaTime.asSeconds());
 		
 		deltaTime = deltaClock.restart();
-	}
+  }
 }
 
 void Game::startSinglePlayer() {

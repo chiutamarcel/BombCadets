@@ -87,7 +87,7 @@ class PathFinder
 			
 			for(auto rit = std::rbegin(path); rit != std::rend(path); ++rit)
 				solution.push_back( static_cast<TNode*>(*rit) );
-
+		
 			return true;
 		}
 

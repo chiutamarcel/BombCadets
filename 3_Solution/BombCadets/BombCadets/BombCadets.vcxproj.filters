@@ -70,7 +70,7 @@
     <ClCompile Include="EntityNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mapOfNodes.cpp">
+    <ClCompile Include="MapOfNodes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
@@ -155,7 +155,7 @@
     <ClInclude Include="EntityNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapOfNodes.h">
+    <ClInclude Include="MapOfNodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">

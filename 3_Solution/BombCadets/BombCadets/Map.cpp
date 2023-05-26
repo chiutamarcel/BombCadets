@@ -90,8 +90,8 @@ void stringToEntities(char** mapMatrix) {
 				Map::addSpawnPoint(i, j);
 				break;
 			case '4':
-				Entities::getInstance().getCharacters().push_back(new NPC(sf::Vector2f(j * ENTITYSIZE + 4, i * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Yellow, PLAYERSPEED));
 				//generate AI
+				Entities::getInstance().getCharacters().push_back(new NPC(sf::Vector2f(j * ENTITYSIZE + 4, i * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Cyan, PLAYERSPEED));
 				break;
 			case 'z':
 				//generate menu

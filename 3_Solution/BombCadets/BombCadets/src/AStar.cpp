@@ -1,4 +1,5 @@
 #include "AStar.h"
+#include <iostream>
 
 AStar::AStar()
 {}
@@ -8,6 +9,8 @@ AStar::~AStar()
 
 bool AStar::getPath(AStarNode* start, AStarNode* goal, std::vector<AStarNode*>& path)
 {
+	clear();
+
 	AStarNode *currentNode, *childNode;
 	float f, g, h;
 

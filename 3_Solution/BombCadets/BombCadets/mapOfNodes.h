@@ -3,37 +3,33 @@
 #include "src/AStar.h"
 #include "src/PathFinder.h"
 
-#include <vector>
-
-class mapOfNodes
+class MapOfNodes
 {
 private:
 	EntityNode** entityNodes;
 	std::vector<EntityNode*> path;
 	PathFinder<EntityNode> pathGenerator;
+	int option = 0;
 	
-	mapOfNodes();
-	~mapOfNodes();
-
+	MapOfNodes();
+	~MapOfNodes();
 	
 public:
+	static MapOfNodes* getInstance();
+	
 	void updateMapOfNodes();
-	void setupRelationships();
-	void setStart(int x, int y);
-	void setGoal();
-	int findPath();
-	void setSecondaryGoal();
-	void setPathToRunFromBomb();
-	float distanceToGoal();
-	EntityNode *getGoal();
-	std::vector<EntityNode*> getPath();
+	void setRelationships();
 	void addChild(int y, int x, int newY, int newX);
-	static mapOfNodes& getInstance() {
-		static mapOfNodes instance;
-		return instance;
-	}
-	EntityNode** getEntityNodes() {
-		return entityNodes;
-	}
+	void setStart(int y, int x);
+	void setGoal();
+	bool findPath();
+	void runFromBomb();
+	void setOption(int value) { option = value; }
+	int getOption() { return option; }
+	
+	std::vector<EntityNode*> &getPath() { return path; }
+	EntityNode** getEntityNodes() { return entityNodes; }
+	EntityNode* getGoal() { return pathGenerator.getGoal(); }
+	EntityNode* getStart() { return pathGenerator.getStart(); }
 };
 
