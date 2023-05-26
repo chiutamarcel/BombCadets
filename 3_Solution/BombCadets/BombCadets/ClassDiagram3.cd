@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MapText" Collapsed="true">
+    <Position X="28.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABMAgAAAAEAAAABAAAAAAAAAgAgiAAAAAAAAA=</HashCode>
+      <FileName>W:\BombCadets\3_Solution\BombCadets\Common\MapText.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AboutMode" Collapsed="true">
+    <Position X="19.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAAAAAACgAAAAAJAAAAAAAAIAIAAAAAAAgAAwAA=</HashCode>
+      <FileName>AboutMode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Block.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bomb" Collapsed="true">
+    <Position X="2.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAAAIAACIAABAAAAAAAAAAAAAAAAAAEAQA=</HashCode>
+      <FileName>Bomb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakableBlock" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>BreakableBlock.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Button" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEJAAABAAAAAAAAABIIAAAAAgAAEAICAAAACAQAAAAA=</HashCode>
+      <FileName>Button.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character" Collapsed="true">
+    <Position X="7.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAABAAAAAAAAAAAAIAAAQAAAARAAAAEKAA=</HashCode>
+      <FileName>Character.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client" Collapsed="true">
+    <Position X="28.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAAAShAAQAEggDABAAAAAARAEAQAAAEkAAIEAgY=</HashCode>
+      <FileName>Client.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CreateAcc" Collapsed="true">
+    <Position X="3.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAJAgAAAAAAIAAAAAAAABiAAwAA=</HashCode>
+      <FileName>CreateAcc.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CreateLobby" Collapsed="true">
+    <Position X="24" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAAAAICAAAAAAIAAAAABAAIAAAAAAAAAgAAwAA=</HashCode>
+      <FileName>CreateLobby.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities" Collapsed="true">
+    <Position X="30.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAEAQAAAAgUQAIAAACBAgQABIEIEAAAAAA=</HashCode>
+      <FileName>Entities.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="3.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAIAAAAAAAAAAAAAAAAAACACAAAAAAAAAAAAQEBAA=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Explosion" Collapsed="true">
+    <Position X="5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEAAAAAAACAAAEBIAgAAACAAAAAAAEAAA=</HashCode>
+      <FileName>Explosion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="32.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QMYCIAAAIBECAAAhAQoJBCEAJAiAFBEJiAAAAiAcJEA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JoinLobby" Collapsed="true">
+    <Position X="21.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAACAAAAAAYAAAAAAAAIAAAAACAAAgACwAA=</HashCode>
+      <FileName>JoinLobby.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LogCreate" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAACAABCAAIIAAAAAAAIAIAAAAAAAgAAwAA=</HashCode>
+      <FileName>LogCreate.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LogIn" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAABAAAACAAAAEAIAAAAAAAAIABAAAAAAAgAAwAA=</HashCode>
+      <FileName>LogIn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="7.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAABIAAAAAAQAEARA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBox" Collapsed="true">
+    <Position X="26.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAAAAQAAKAAAAAAAIACACCBAEAgEgIAAAACAAAQBA=</HashCode>
+      <FileName>TextBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorldObject" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAgA=</HashCode>
+      <FileName>WorldObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HighScore" Collapsed="true">
+    <Position X="12.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAABAAACAAAAAAIgAAAAAAAIAJAAAAAAAgAAwAA=</HashCode>
+      <FileName>HighScore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenu" Collapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAACAAAAAAIAQAAQAAAIAIAAAAAAAgAAwAA=</HashCode>
+      <FileName>MainMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Options" Collapsed="true">
+    <Position X="17.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAACAAIAAAIAAAAAAAAIAIAAAAAAAgBA4AA=</HashCode>
+      <FileName>Options.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayMode" Collapsed="true">
+    <Position X="22.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAgAAAAACAAgAAAIAAAAAAAAIAIAAAAAAAggAwAA=</HashCode>
+      <FileName>PlayMode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InUsername" Collapsed="true">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAABAAAACAAAAAgIAAAAAAAAICAAAAAAAAgAAwAA=</HashCode>
+      <FileName>InUsername.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIProcessing" Collapsed="true">
+    <Position X="30.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEFAAAAAAIQQAEAAQBUBAABABBhACAAAAA=</HashCode>
+      <FileName>UIProcessing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu" Collapsed="true">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABCAAAAAAIAAAAAAAAIEAAAAAAAAgAAwAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIElement" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAEBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIElement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CommonNetworking::PacketType" Collapsed="true">
+    <Position X="30.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAIBAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>W:\BombCadets\3_Solution\BombCadets\Common\Common.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GAMESTATE" Collapsed="true">
+    <Position X="32.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAEAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>W:\BombCadets\3_Solution\BombCadets\Common\GameConfig.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MENUTYPE" Collapsed="true">
+    <Position X="28.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEQCAAAAAAAAAAAAABAQAAgAAAAAEAAAAAAA=</HashCode>
+      <FileName>W:\BombCadets\3_Solution\BombCadets\Common\GameConfig.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ENTRYTYPE" Collapsed="true">
+    <Position X="30.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>W:\BombCadets\3_Solution\BombCadets\Common\GameConfig.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Map::CharacterType" Collapsed="true">
+    <Position X="28.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAMAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

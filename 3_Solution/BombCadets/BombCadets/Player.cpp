@@ -56,12 +56,13 @@ Player::~Player()
 void Player::update(float deltaTime)
 {
 	Character::update(deltaTime);
-
+	sf::Texture* bombo = new sf::Texture;
+	bombo->loadFromFile("Textures\\bomb.png");
 	movement(deltaTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && (this->planted.getElapsedTime().asSeconds() > 3.f))
 	{
-		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
+		Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, bombo));
 		if (this->planted.getElapsedTime().asSeconds() >= 3)
 			this->planted.restart();
 	}

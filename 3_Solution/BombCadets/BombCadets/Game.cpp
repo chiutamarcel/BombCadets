@@ -2,15 +2,17 @@
 #include "Map.h"
 #include "Client.h"
 #include "GameConfig.h"
+#include "UIProcessing.h"
 #include <utility>
 #include <fstream>
 
 using namespace GameConfig;
 
-enum class GAMESTATE { MAINMENU, INGAME };
-enum class MENUTYPE { MAINMENU, PLAY, OPTIONS, HIGHSCORES, ABOUT, JOINLOBBY, CREATELOBBY };
-MENUTYPE curMenu;
-GAMESTATE curGameState;
+//UIProcessing& UI=UI.get();
+
+static MENUTYPE curMenu;
+static GAMESTATE curGameState;
+static ENTRYTYPE curEntryType;
 
 Game::Game() {
     mapFileName = "map.txt";
@@ -24,272 +26,8 @@ void Game::pollEvents()
     
     while (window->pollEvent(event))
     {
-        if (event.type == sf::Event::TextEntered)
-        {
-            testText.typedOn(event);
-        }
-
-        if (curGameState == GAMESTATE::INGAME) {
-            if (event.type == Event::Closed) {
-                window->close();
-                return;
-            }
-
-            if (event.type == Event::KeyPressed) {
-                if (event.key.code == Keyboard::Escape) {
-                    window->close();
-                    return;
-                }
-            }
-        } else if (curGameState == GAMESTATE::MAINMENU) {
-            switch (curMenu) {
-            case MENUTYPE::MAINMENU:
-                if (event.type == Event::Closed) {
-                    window->close();
-                }
-                if (event.type == Event::KeyReleased) {
-                    if (event.key.code == Keyboard::Up) {
-                        mainMenu->MoveUp();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Down) {
-                        mainMenu->MoveDown();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Return) {
-
-                        int x = mainMenu->MainMenuPressed();
-                        switch (x) {
-                        case 0:
-                            playMode = new PlayMode(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::PLAY;
-                            break;
-                        case 1:
-                            options = new Options(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::OPTIONS;
-                            break;
-                        case 2:
-                            highScore = new HighScore(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::HIGHSCORES;
-                            break;
-                        case 3:
-                            about = new AboutMode(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::ABOUT;
-                            break;
-                        case 4:
-                            exit(0);
-                            break;
-                        }
-                    }
-                }
-                break;
-            case MENUTYPE::PLAY:
-                if (event.type == Event::Closed) {
-                    curMenu = MENUTYPE::MAINMENU;
-                    delete playMode;
-                    break;
-                }
-
-                if (event.type == Event::KeyPressed) {
-                    if (event.key.code == Keyboard::Escape) {
-                        curMenu = MENUTYPE::MAINMENU;
-                        delete playMode;
-                        break;
-                    }
-                }
-
-                if (event.type == Event::KeyReleased) {
-                    if (event.key.code == Keyboard::Left) {
-                        playMode->left();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Right) {
-                        playMode->right();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Return) {
-
-                        int y = playMode->buttonPressed();
-
-                        if (y == 0)
-                        {
-                            //create lobby
-                            //startSinglePlayer();
-                            createLobby = new CreateLobby(WINDOWXSIZE, WINDOWYSIZE);
-                            testText = TextBox(50, sf::Color::White, true);
-                            testText.setFont();
-                            testText.setPosition({ 110, 280 });
-                            curMenu = MENUTYPE::CREATELOBBY;
-                            break;
-                        }
-
-                        if (y == 1)
-                        {
-                            //join lobby
-                            joinLobby = new JoinLobby(WINDOWXSIZE, WINDOWYSIZE);
-                            curMenu = MENUTYPE::JOINLOBBY;
-                            break;
-                        }
-                    }
-                }
-                break;
-
-            case MENUTYPE::ABOUT:
-
-                if (event.type == Event::Closed) {
-                    curMenu = MENUTYPE::MAINMENU;
-                    break;
-                }
-
-                if (event.type == Event::KeyPressed) {
-                    if (event.key.code == Keyboard::Escape) {
-                        curMenu = MENUTYPE::MAINMENU;
-                        break;
-                    }
-                }
-
-                if (event.type == Event::KeyReleased) {
-                    if (event.key.code == Keyboard::Up) {
-                        about->up();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Down) {
-                        about->down();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Return) {
-
-                        int y = about->buttonPressed();
-
-                        if (y == 0)
-                        {
-                            //how to play
-                        }
-
-                        if (y == 1)
-                        {
-                            //controls
-                        }
-                    }
-
-                }
-
-                break;
-            case MENUTYPE::HIGHSCORES:
-
-                if (event.type == Event::Closed) {
-                    curMenu = MENUTYPE::MAINMENU;
-                    break;
-                }
-
-                if (event.type == Event::KeyPressed) {
-                    if (event.key.code == Keyboard::Escape) {
-                        curMenu = MENUTYPE::MAINMENU;
-                        break;
-                    }
-                }
-
-                if (event.type == Event::KeyReleased) {
-                    if (event.key.code == Keyboard::Up) {
-                        highScore->up();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Down) {
-                        highScore->down();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Return) {
-
-                        int y = highScore->buttonPressed();
-
-                        if (y == 0)
-                        {
-                            //local
-                        }
-
-                        if (y == 1)
-                        {
-                            //regional
-                        }
-                    }
-
-                }
-
-                break;
-            case MENUTYPE::OPTIONS:
-
-                if (event.type == Event::Closed) {
-                    curMenu = MENUTYPE::MAINMENU;
-                    break;
-                }
-
-                if (event.type == Event::KeyPressed) {
-                    if (event.key.code == Keyboard::Escape) {
-                        curMenu = MENUTYPE::MAINMENU;
-                        break;
-                    }
-                }
-
-                if (event.type == Event::KeyReleased) {
-                    if (event.key.code == Keyboard::Up) {
-                        options->up();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Down) {
-                        options->down();
-                        break;
-                    }
-
-                    if (event.key.code == Keyboard::Return) {
-
-                        int y = options->buttonPressed();
-
-                        if (y == 0)
-                        {
-                            //player skin
-                        }
-
-                        if (y == 1)
-                        {
-                            //bomb skin
-                        }
-
-                        if (y == 2)
-                        {
-                            //sound
-                        }
-                    }
-
-                }
-
-                break;
-            default:
-
-                if (event.type == Event::Closed) {
-                    curMenu = MENUTYPE::MAINMENU;
-                    break;
-                }
-
-                if (event.type == Event::KeyPressed) {
-                    if (event.key.code == Keyboard::Escape) {
-                        curMenu = MENUTYPE::MAINMENU;
-                        break;
-                    }
-                }
-
-                break;
-
-            }
-        }
+        if(curGameState != GAMESTATE::INGAME)
+            UIProcessing::get().processEvents(event, window, curMenu, curGameState, curEntryType);
     }
 }
 
@@ -305,45 +43,33 @@ void Game::start()
 
 	// Make Main window
     window = new sf::RenderWindow(VideoMode(WINDOWXSIZE, WINDOWYSIZE), "Bomberman");
-	mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
+    //logCreate = new LogCreate(WINDOWXSIZE, WINDOWYSIZE);
+    //mainMenu = new MainMenu(WINDOWXSIZE, WINDOWYSIZE);
 
-	//set background
-	background.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-	Maintexture.loadFromFile("Textures\\mainbackground.png");
-	background.setTexture(&Maintexture);
+    ////logCreate bacc
+    //logCreateBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    //logCreate_texture.loadFromFile("Textures\\logsig1.jpg");
+    //logCreateBackground.setTexture(&logCreate_texture);
 
-	//Play bacc
-	playBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-	play_texture.loadFromFile("Textures\\afterplay.png");
-	playBackground.setTexture(&play_texture);
+    ////login bacc
+    //logBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    //log_texture.loadFromFile("Textures\\log.png");
+    //logBackground.setTexture(&log_texture);
 
-	//About bacc
-	aboutBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-	about_texture.loadFromFile("Textures\\about.png");
-	aboutBackground.setTexture(&about_texture);
+    ////createAcc bacc
+    //createAccBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
+    //createAcc_texture.loadFromFile("Textures\\create.png");
+    //createAccBackground.setTexture(&createAcc_texture);
 
-    //highscores bacc
-    highBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-    high_texture.loadFromFile("Textures\\highsc.png");
-    highBackground.setTexture(&high_texture);
+    //create sky bacc
+    skyBacc.setSize(Vector2f(1344, 136));
+    sky_texture.loadFromFile("Textures\\sky.png");
+    skyBacc.setTexture(&sky_texture);
 
-    //options bacc
-    optionsBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-    options_texture.loadFromFile("Textures\\optionen.png");
-    optionsBackground.setTexture(&options_texture);
-
-    //join bacc
-    joinBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-    join_texture.loadFromFile("Textures\\joinLobby.png");
-    joinBackground.setTexture(&join_texture);
-
-    //create bacc
-    createBackground.setSize(Vector2f(WINDOWXSIZE, WINDOWYSIZE));
-    create_texture.loadFromFile("Textures\\createLobby.png");
-    createBackground.setTexture(&create_texture);
 
     curMenu = MENUTYPE::MAINMENU;
-    curGameState = GAMESTATE::MAINMENU;
+    curGameState = GAMESTATE::LOGIN;
+    curEntryType = ENTRYTYPE::CHOOSE;
 }
 
 void Game::update()
@@ -357,17 +83,18 @@ void Game::update()
 			entity->update(deltaTime.asSeconds());
 
 		std::vector<Explosion*>& explosions = Entities::getInstance().getExplosions();
+
 		for (int i = 0; i < explosions.size(); i++)
 		(explosions[i])->update(deltaTime.asSeconds());
 		
-		deltaTime = deltaClock.restart();
+		deltaTime = deltaClock.restart();;
 	}
 }
 
 void Game::startSinglePlayer() {
     curGameState = GAMESTATE::INGAME;
     MapText mapText(BLOCKSONSCREENX, BLOCKSONSCREENY);
-    mapText.readFromFile(mapFileName);
+    mapText.readFromFile("map.txt");
     mapText.putBreakableBlocks(NRBREAKABLEWALLS);
     Map::spawnMap(mapText);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
@@ -394,38 +121,42 @@ void Game::draw()
 	window->clear();
 
 	// Draw
-    if (curGameState == GAMESTATE::MAINMENU) {
-        switch (curMenu) {
+    if (curGameState == GAMESTATE::MAINMENU || curGameState == GAMESTATE::LOGIN) {
+        /*switch (curMenu) {
         case MENUTYPE::MAINMENU:
             window->draw(background);
-            mainMenu->draw(*window);
+            mainMenu->draw(window);
             break;
         case MENUTYPE::PLAY:
             window->draw(playBackground);
-            playMode->draw(*window);
+             playMode->draw(window);
             break;
         case MENUTYPE::ABOUT:
             window->draw(aboutBackground);
-            about->draw(*window);
+            about->draw(window);
             break;
         case MENUTYPE::HIGHSCORES:
             window->draw(highBackground);
-            highScore->draw(*window);
+            highScore->draw(window);
             break;
         case MENUTYPE::OPTIONS:
             window->draw(optionsBackground);
-            options->draw(*window);
+            options->draw(window);
             break;
         case MENUTYPE::JOINLOBBY:
 			window->draw(joinBackground);
-			joinLobby->draw(*window);
+			joinLobby->draw(window);
+            joinLobb.draw(window);
 			break;
         case MENUTYPE::CREATELOBBY:
             window->draw(createBackground);
-			createLobby->draw(*window);
-            testText.draw(*window);
-			break;
-        }
+			createLobby->draw(window);
+            createLobb.draw(window);
+            createPass.draw(window);
+            break;
+        }*/
+
+        UIProcessing::get().draw(window);
     } else if (curGameState == GAMESTATE::INGAME) {
         for (auto entity : Entities::getInstance().getCharacters())
 		    window->draw(entity->getShape());
@@ -437,8 +168,27 @@ void Game::draw()
 		    window->draw(entity->getShape());
 	    for (auto entity : Entities::getInstance().getExplosions())
 		    window->draw(entity->getShape());
+        window->draw(skyBacc);
     }
-
+  //  else if (curGameState == GAMESTATE::LOGIN) {
+  //      switch (curEntryType) {
+		//case ENTRYTYPE::IN:
+		//	window->draw(inUsernameBackground);
+		//	inUsername->draw(window);
+  //          userTextBox.draw(window);
+		//	break;
+		//case ENTRYTYPE::CHOOSE:
+  //          window->draw(inUsernameBackground);
+  //          inUsername->draw(window);
+  //          break;
+		////case ENTRYTYPE::CREATE:
+  //        // window->draw(createAccBackground);
+  //         // createAcc->draw(window);
+  //         // createUsername.draw(window);
+  //         // createPassword.draw(window);
+		//   // break;
+		//}
+	//}
 
 	// Display what has been drawn
 	window->display();

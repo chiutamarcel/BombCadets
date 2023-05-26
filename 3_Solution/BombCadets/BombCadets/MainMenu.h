@@ -1,31 +1,37 @@
 #pragma once
 #include <iostream>
 #include <SFML\Graphics.hpp>
+#include "Menu.h"
+#include "Button.h"
 
 using namespace std;
 using namespace sf;
 
 #define MAX_MAIN_MENU 5
 
-class MainMenu
+class MainMenu : public Menu
 {
+	vector<Button*>btns;
 public:
 	MainMenu(float width, float height);
 
-	void draw(RenderWindow& window);
-	void MoveUp();
-	void MoveDown();
+	virtual void draw(RenderWindow* window) override;
 
-	int MainMenuPressed() {
-		return MainMenuSelected;
-	}
+	virtual void up() override;
+	virtual void down() override;
+
+	virtual void left() override {}
+	virtual void right() override {}
+	virtual void pollEvents(Event event, MENUTYPE& curMenu, GAMESTATE& curGameState, ENTRYTYPE& curEntryType) override;
+
+	virtual int buttonPressed() override ;
 
 	~MainMenu();
 
 private:
 	int MainMenuSelected = 0;
 	Font font;
-	Text mainMenu[MAX_MAIN_MENU];
-
+	RectangleShape background;
+	Texture Maintexture;
 };
 

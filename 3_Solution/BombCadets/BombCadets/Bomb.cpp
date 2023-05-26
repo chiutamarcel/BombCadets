@@ -10,11 +10,13 @@ Bomb::Bomb(sf::Vector2f position, sf::Vector2f size) :
 
 Bomb::Bomb(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture) :
 	WorldObject(position, size, texture) {
+	bombTexture = texture;
 	planted.restart();
 }
 
 Bomb::Bomb(sf::Vector2f position, float length, sf::Texture* texture) :
 	WorldObject(position, length, texture) {
+	bombTexture = texture;
 	planted.restart();
 }
 
@@ -39,13 +41,16 @@ void Bomb::update(float deltaTime)
 
 void Bomb::explode()
 {
+	sf::Texture* explosionTexture1 = new sf::Texture();
+	explosionTexture->loadFromFile("Textures\\explosion2.png");
+
 	Entities::getInstance().removeBomb(this);
-	
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion(), sf::Vector2f(58.f, 56.f), sf::Color::Yellow));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, 64.f), sf::Vector2f(56.f, 56.f), sf::Color::Yellow));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, -64.f), sf::Vector2f(56.f, 56.f), sf::Color::Yellow));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(64.f, 0.f), sf::Vector2f(56.f, 56.f), sf::Color::Yellow));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(-64.f, 0.f), sf::Vector2f(56.f, 56.f), sf::Color::Yellow));
+
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion(), sf::Vector2f(58.f, 56.f), explosionTexture));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, 64.f), sf::Vector2f(56.f, 56.f), explosionTexture));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, -64.f), sf::Vector2f(56.f, 56.f), explosionTexture));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(64.f, 0.f), sf::Vector2f(56.f, 56.f), explosionTexture));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(-64.f, 0.f), sf::Vector2f(56.f, 56.f), explosionTexture));
 	
 	//Entities::getInstance().getExplosions().push_back(new Explosion());
 	

@@ -8,6 +8,17 @@
 #include "Player.h"
 #include "MapText.h"
 
+static sf::Texture* wallTexture = new sf::Texture();
+static sf::Texture* playerTexture = new sf::Texture();
+static sf::Texture* breakableTexture = new sf::Texture();
+
+void init()
+{
+	wallTexture->loadFromFile("Textures\\breakk.png");
+	playerTexture->loadFromFile("Textures\\aidonow.png");
+	breakableTexture->loadFromFile("Textures\\actually_breakk.png");
+}
+
 using namespace GameConfig;
 
 namespace Map {
@@ -20,6 +31,7 @@ namespace Map {
 
 void Map::spawnCharacter(CharacterType type)
 {
+	init();
 	if (curPlayers >= maxPlayers)
 		return;
 
@@ -32,7 +44,7 @@ void Map::spawnCharacter(CharacterType type)
 		(
 			new Player
 			(
-				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE - 5, playerTexture, PLAYERSPEED
 			)
 		);
 		break;
@@ -41,7 +53,7 @@ void Map::spawnCharacter(CharacterType type)
 		(
 			new Character
 			(
-				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE, sf::Color::Blue, PLAYERSPEED
+				sf::Vector2f(x * ENTITYSIZE, y * ENTITYSIZE), PLAYERSIZE - 5, playerTexture, PLAYERSPEED
 			)
 		);
 		break;
@@ -49,7 +61,6 @@ void Map::spawnCharacter(CharacterType type)
 		// TODO
 		break;
 	}
-
 
 	curPlayers++;
 }
@@ -70,6 +81,7 @@ void Map::spawnMapFromFile(std::string filename)
 void stringToEntities(char** mapMatrix) {
 	int count = 0;
 	// generate the map
+	init();
 	for (int i = 0; i < BLOCKSONSCREENY; i++, std::cout << std::endl)
 		for (int j = 0; j < BLOCKSONSCREENX; j++)
 		{
@@ -78,11 +90,11 @@ void stringToEntities(char** mapMatrix) {
 			{
 			case '1':
 				//create a wall
-				Entities::getInstance().getWalls().push_back(new Block(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Green));
+				Entities::getInstance().getWalls().push_back(new Block(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, wallTexture));
 				break;
 			case '2':
 				//create brakable block
-				Entities::getInstance().getBreakableBlocks().push_back(new BreakableBlock(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, sf::Color::Red));
+				Entities::getInstance().getBreakableBlocks().push_back(new BreakableBlock(sf::Vector2f(j * ENTITYSIZE, i * ENTITYSIZE), ENTITYSIZE, breakableTexture));
 				break;
 			case '3':
 				// add spawnpoint
