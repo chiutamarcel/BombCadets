@@ -18,37 +18,31 @@
 #include "Options.h"
 #include "JoinLobby.h"
 #include "CreateLobby.h"
+#include "LogCreate.h"
+#include "LogIn.h"
+#include "CreateAcc.h"
+#include "InUsername.h"
 
 #include "TextBox.h"
 
+
 class Game
 {
+	string lobbyName;
+	string lobbyPass;
+
 	sf::RenderWindow* window;
 	sf::RenderWindow* MENU;
 
-	RectangleShape background;
-	Texture Maintexture;
-	RectangleShape playBackground;
-	Texture play_texture;
-	RectangleShape aboutBackground;
-	Texture about_texture;
-	RectangleShape highBackground;
-	Texture high_texture;
-	RectangleShape optionsBackground;
-	Texture options_texture;
-	RectangleShape joinBackground;
-	Texture join_texture;
-	RectangleShape createBackground;
-	Texture create_texture;
+	//RectangleShape logCreateBackground;
+	//Texture logCreate_texture;
+	//RectangleShape logBackground;
+	//Texture log_texture;
+	//RectangleShape createAccBackground;
+	//Texture createAcc_texture;
 
-	MainMenu* mainMenu;
-	PlayMode* playMode;
-	AboutMode* about;
-	HighScore* highScore;
-	Options* options;
-	JoinLobby* joinLobby;
-	CreateLobby* createLobby;
-	TextBox testText;
+	RectangleShape skyBacc;
+	Texture sky_texture;
 	
 	//Character character;
 
@@ -56,17 +50,19 @@ class Game
 	sf::Time deltaTime;
 
 	bool focus;
+	float musicVolume = 50.f;
+
+
 
 public:
-
 	Game();
 	~Game();
 
 	// Initializes game variables
 	void start();
 
-	void startSinglePlayer();
-	void startMultiPlayer();
+	static void startSinglePlayer();
+	static void startMultiPlayer();
 
 	// Polls events
 	void pollEvents();

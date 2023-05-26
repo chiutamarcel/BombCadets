@@ -22,7 +22,7 @@ Explosion::Explosion(sf::Vector2f position, float length, sf::Texture* texture) 
 	WorldObject(position, length, texture) {
 	alive = true;
 	growing = true;
-	shape.setScale(05.f, 0.5f);
+	shape.setScale(0.5f, 0.5f);
 }
 
 Explosion::Explosion(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
@@ -43,20 +43,21 @@ void Explosion::update(float deltaTime)
 {
 	//make it with time
 	if (growing) {
-		shape.setScale(shape.getScale().x + 0.005f, shape.getScale().y + 0.005f);
-		shape.setPosition(shape.getPosition().x - 0.15f, shape.getPosition().y - 0.15f);
+		shape.setScale(shape.getScale().x - 0.0005, shape.getScale().y - 0.0005);
+		shape.setPosition(shape.getPosition().x - 0.1f, shape.getPosition().y - 0.1f);
 		checkCollision();
-		if (shape.getScale().x > 1.0f) {
+		if (shape.getScale().x < 0.425f) {
 			growing = false;
-		}
-	}
-	else {
-		shape.setScale(shape.getScale().x - 0.0005f, shape.getScale().y - 0.0005f);
-		shape.setPosition(shape.getPosition().x + 0.015f, shape.getPosition().y + 0.015f);
-		if (shape.getScale().x < 0.65f) {
 			removeExplosion();
 		}
 	}
+	//else {
+	//	shape.setScale(shape.getScale().x - 0.0005f, shape.getScale().y - 0.0005f);
+	//	shape.setPosition(shape.getPosition().x + 0.015f, shape.getPosition().y + 0.015f);
+	//	if (shape.getScale().x < 0.65f) {
+	//		removeExplosion();
+	//	}
+	//}
 }
 
 sf::Vector2f Explosion::getScale()

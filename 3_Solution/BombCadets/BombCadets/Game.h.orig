@@ -6,40 +6,67 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 
-<<<<<<< HEAD
-//#include "Entity.h"
-//#include "Player.h"
-=======
 #include "Entity.h"
 #include "Character.h"
 #include "Block.h"
 #include "Entities.h"
->>>>>>> barar
+
+#include "MainMenu.h"
+#include "PlayMode.h"
+#include "AboutMode.h"
+#include "HighScore.h"
+#include "Options.h"
+#include "JoinLobby.h"
+#include "CreateLobby.h"
+#include "LogCreate.h"
+#include "LogIn.h"
+#include "CreateAcc.h"
+#include "InUsername.h"
+
+#include "TextBox.h"
+
 
 class Game
 {
-	sf::RenderWindow* window;
-<<<<<<< HEAD
+	string lobbyName;
+	string lobbyPass;
 
-	//Player player;
-=======
+	sf::RenderWindow* window;
+	sf::RenderWindow* MENU;
+
+	//RectangleShape logCreateBackground;
+	//Texture logCreate_texture;
+	//RectangleShape logBackground;
+	//Texture log_texture;
+	//RectangleShape createAccBackground;
+	//Texture createAcc_texture;
+
+	RectangleShape skyBacc;
+	Texture sky_texture;
 	
 	//Character character;
->>>>>>> barar
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
 
-public:
+<<<<<<< HEAD
+	bool focus;
+=======
+	float musicVolume = 50.f;
 
+
+	std::string mapFileName;
+>>>>>>> 74d09b0 (- finished refactoring ui code to make it more oop)
+
+public:
 	Game();
 	~Game();
 
 	// Initializes game variables
 	void start();
 
-	// Generates the map
-	void generateMap();
+	static void startSinglePlayer();
+	static void startMultiPlayer();
 
 	// Polls events
 	void pollEvents();

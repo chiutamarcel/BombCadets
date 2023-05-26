@@ -140,35 +140,32 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="CreateAcc.cpp" />
     <ClCompile Include="CreateLobby.cpp" />
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityNode.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InUsername.cpp" />
     <ClCompile Include="JoinLobby.cpp" />
+    <ClCompile Include="LogCreate.cpp" />
+    <ClCompile Include="LogIn.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MapOfNodes.cpp" />
-    <ClCompile Include="NPC.cpp" />
-
     <ClCompile Include="Menu.cpp" />
-
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PlayMode.cpp" />
     <ClCompile Include="Source.cpp" />
-
     <ClCompile Include="src\AStar.cpp" />
-    <ClCompile Include="TextBox.cpp" />
-    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="src\Node.cpp" />
-
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="UIElement.cpp" />
-
+    <ClCompile Include="UIProcessing.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,35 +179,32 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="CreateAcc.h" />
     <ClInclude Include="CreateLobby.h" />
     <ClInclude Include="Entities.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityNode.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="InUsername.h" />
     <ClInclude Include="JoinLobby.h" />
+    <ClInclude Include="LogCreate.h" />
+    <ClInclude Include="LogIn.h" />
     <ClInclude Include="Map.h" />
-<<<<<<< HEAD
     <ClInclude Include="MapOfNodes.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="src\AStar.h" />
     <ClInclude Include="src\Node.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="UIElement.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\PathAlgorithm.h" />
     <ClInclude Include="src\PathFinder.h" />
-
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="TextBox.h" />
-    <ClInclude Include="UIElement.h" />
-
-    <ClInclude Include="GameConfig.h" />
-    <ClInclude Include="JoinLobby.h" />
-
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="TextBox.h" />
-    <ClInclude Include="UIElement.h" />
+=======
+    <ClInclude Include="UIProcessing.h" />
+>>>>>>> 74d09b0 (- finished refactoring ui code to make it more oop)
     <ClInclude Include="WorldObject.h" />
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="MainMenu.h" />
@@ -218,10 +212,7 @@
     <ClInclude Include="PlayMode.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-
-    <None Include="ClassDiagram1.cd" />
->>>>>>> f02bac8 (updated UI (create/join lobby))
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

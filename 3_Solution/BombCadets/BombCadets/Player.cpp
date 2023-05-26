@@ -52,7 +52,8 @@ Player::~Player()
 void Player::update(float deltaTime)
 {
 	Character::update(deltaTime);
-
+	sf::Texture* bombo = new sf::Texture;
+	bombo->loadFromFile("Textures\\bomb.png");
 	movement(deltaTime);
 }
 

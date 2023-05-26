@@ -8,6 +8,8 @@
 class UIElement
 {
 public:
+	virtual void draw(sf::RenderWindow* window) = 0;
+
 	UIElement() {};
 	~UIElement() {};
 };

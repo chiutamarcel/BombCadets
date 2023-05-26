@@ -1,6 +1,7 @@
 #pragma once
 #include "UIElement.h"
 #include <sstream>
+#include <iostream>
 
 #define DELETE_KEY 8
 #define ENTER_KEY 13
@@ -68,9 +69,17 @@ public:
 		return text.str();
 	}
 
-	void draw(sf::RenderWindow& window)
+	void draw(sf::RenderWindow* window)
 	{
-		window.draw(textbox);
+		try {
+			if (window == nullptr)
+				throw std::string("Window is null");
+
+			window->draw(textbox);
+		}
+		catch (std::string e) {
+			std::cout << e << std::endl;
+		}
 	}
 
 	void typedOn(sf::Event input)
@@ -82,14 +91,24 @@ public:
 			{
 				if (hasLimit)
 				{
-					if (text.str().length() <= limit)
+					if (text.str().length() <= limit && charTyped == ENTER_KEY)
 					{
-						inputLogic(charTyped);
+						if (text.str().length() > 0)
+						{
+							text.str().pop_back();
+						}
+						textbox.setString(text.str());
+						//setSelect(false);
 					}
 					else if (text.str().length() > limit && charTyped == DELETE_KEY)
 					{
 						deleteLastChar();
 					}
+					else if (text.str().length() <= limit)
+					{
+						inputLogic(charTyped);
+					}
+						
 				}
 				else
 				{
@@ -99,11 +118,31 @@ public:
 		}
 	}
 
+	void setAsPass()
+	{
+		std::string buffy = "";
+		for (int i = 0; i < text.str().length(); ++i)
+		{
+			buffy += "*";
+		}
+		textbox.setString(buffy);
+	}
+
+	bool getSelection()
+	{
+		return isSelected;
+	}
+
+	void setSelect(bool selection)
+	{
+		isSelected = selection;
+	}
+
 private:
 
 	sf::Text textbox;
 	std::ostringstream text;
-	bool isSelected = false;
+	bool isSelected = true;
 	bool hasLimit = true;
 	int limit = 32;
 	sf::Font font;
@@ -121,6 +160,7 @@ private:
 				deleteLastChar();
 			}
 		}
+
 		textbox.setString(text.str() + "_");
 	}
 	

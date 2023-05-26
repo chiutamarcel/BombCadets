@@ -23,5 +23,6 @@ public:
 private:
 	bool growing = true;
 	bool alive = true;
+
 };
 
