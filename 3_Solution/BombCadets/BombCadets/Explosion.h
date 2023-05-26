@@ -21,6 +21,7 @@ public:
 	virtual ~Explosion();
 	
 private:
+	static sf::Texture explosionTexture;
 	bool growing = true;
 	bool alive = true;
 

@@ -3,31 +3,48 @@
 #include <cmath>
 #include <cassert>
 
-Bomb::Bomb(sf::Vector2f position, sf::Vector2f size) :
-	WorldObject(position, size) {
+sf::Texture Bomb::bombTexture;
+//sf::Texture Bomb::explosionTexture;
+
+Bomb::Bomb(sf::Vector2f position, float size) :
+	WorldObject(position, sf::Vector2f(size, size)) {
 	planted.restart();
+	bombTexture.loadFromFile("Textures\\bomb.png");
+	setTexture(&bombTexture);
+	//explosionTexture.loadFromFile("Textures\\explosion2.png");
+	//start();
 }
 
-Bomb::Bomb(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture) :
-	WorldObject(position, size, texture) {
-	bombTexture = texture;
-	planted.restart();
-}
+//Bomb::Bomb(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture) :
+//	WorldObject(position, size, texture) {
+//	bombTexture = texture;
+//	planted.restart();
+//	start();
+//}
+//
+//Bomb::Bomb(sf::Vector2f position, float length, sf::Texture* texture) :
+//	WorldObject(position, length, texture) {
+//	bombTexture = texture;
+//	planted.restart();
+//	start();
+//}
 
-Bomb::Bomb(sf::Vector2f position, float length, sf::Texture* texture) :
-	WorldObject(position, length, texture) {
-	bombTexture = texture;
-	planted.restart();
-}
+//Bomb::Bomb(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
+//	WorldObject(position, size, color) {
+//	planted.restart();
+//	start();
+//}
+//
+//Bomb::Bomb(sf::Vector2f position, float length, sf::Color color) :
+//	WorldObject(position, length, color) {
+//	planted.restart();
+//	start();
+//}
 
-Bomb::Bomb(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
-	WorldObject(position, size, color) {
-	planted.restart();
-}
-
-Bomb::Bomb(sf::Vector2f position, float length, sf::Color color) :
-	WorldObject(position, length, color) {
-	planted.restart();
+void Bomb::start()
+{
+	//bombTexture = new sf::Texture();
+	//bombTexture->loadFromFile("Textures/bomb.png");
 }
 
 void Bomb::update(float deltaTime)
@@ -41,19 +58,19 @@ void Bomb::update(float deltaTime)
 
 void Bomb::explode()
 {
-	sf::Texture* explosionTexture1 = new sf::Texture();
-	explosionTexture->loadFromFile("Textures\\explosion2.png");
+	//sf::Texture* explosionTexture1 = new sf::Texture();
+	//explosionTexture->loadFromFile("Textures\\explosion2.png");
 
 	Entities::getInstance().removeBomb(this);
 
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion(), sf::Vector2f(58.f, 56.f), explosionTexture));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, 64.f), sf::Vector2f(56.f, 56.f), explosionTexture));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, -64.f), sf::Vector2f(56.f, 56.f), explosionTexture));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(64.f, 0.f), sf::Vector2f(56.f, 56.f), explosionTexture));
-	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(-64.f, 0.f), sf::Vector2f(56.f, 56.f), explosionTexture));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion(), sf::Vector2f(58.f, 56.f)));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, 64.f), sf::Vector2f(56.f, 56.f)));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(0.f, -64.f), sf::Vector2f(56.f, 56.f)));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(64.f, 0.f), sf::Vector2f(56.f, 56.f)));
+	Entities::getInstance().getExplosions().push_back(new Explosion(getPositionExplosion() + sf::Vector2f(-64.f, 0.f), sf::Vector2f(56.f, 56.f)));
 	
 	//Entities::getInstance().getExplosions().push_back(new Explosion());
-	
+	//delete explosionTexture;
 	delete this;
 }
 

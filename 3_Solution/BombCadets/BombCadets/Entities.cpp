@@ -72,7 +72,9 @@ void Entities::spawnBomb(float x, float y)
 
 void Entities::spawnBomb(sf::Vector2f position)
 {
-	getBombs().push_back(new Bomb(position - sf::Vector2f(BOMB_SIZE, BOMB_SIZE) * 0.5f, BOMB_SIZE, sf::Color::Magenta));
+	getBombs().push_back(
+		new Bomb(position - sf::Vector2f(BOMB_SIZE, BOMB_SIZE) * 0.5f, BOMB_SIZE)
+	);
 }
 
 Entities::Entities()

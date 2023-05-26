@@ -55,3 +55,8 @@ const sf::Vector2f& Entity::getPosition() const
 {
 	return shape.getPosition();
 }
+
+void Entity::setTexture(sf::Texture* texture)
+{
+	shape.setTexture(texture);
+}

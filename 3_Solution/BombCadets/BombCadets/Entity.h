@@ -28,6 +28,8 @@ public:
 
 	void setPosition(sf::Vector2f _position);
 	const sf::Vector2f& getPosition() const;
+
+	void setTexture(sf::Texture* texture);
 };
 
 //static std::vector<Entity*> entities;

@@ -4,40 +4,44 @@
 #include "Client.h"
 #include "Player.h"
 
+sf::Texture Explosion::explosionTexture;
+
 Explosion::Explosion(sf::Vector2f position, sf::Vector2f size) :
 	WorldObject(position, size) {
 	alive = true;
 	growing = true;
 	shape.setScale(0.5f, 0.5f);
+	explosionTexture.loadFromFile("Textures\\explosion2.png");
+	setTexture(&explosionTexture);
 }
 
-Explosion::Explosion(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture) :
-	WorldObject(position, size, texture) {
-	alive = true;
-	growing = true;
-	shape.setScale(0.5f, 0.5f);
-}
-
-Explosion::Explosion(sf::Vector2f position, float length, sf::Texture* texture) :
-	WorldObject(position, length, texture) {
-	alive = true;
-	growing = true;
-	shape.setScale(0.5f, 0.5f);
-}
-
-Explosion::Explosion(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
-	WorldObject(position, size, color) {
-	alive = true;
-	growing = true;
-	shape.setScale(0.0f, 0.0f);
-}
-
-Explosion::Explosion(sf::Vector2f position, float length, sf::Color color) :
-	WorldObject(position, length, color) {
-	alive = true;
-	growing = true;
-	shape.setScale(0.5f, 0.5f);
-}
+//Explosion::Explosion(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture) :
+//	WorldObject(position, size, texture) {
+//	alive = true;
+//	growing = true;
+//	shape.setScale(0.5f, 0.5f);
+//}
+//
+//Explosion::Explosion(sf::Vector2f position, float length, sf::Texture* texture) :
+//	WorldObject(position, length, texture) {
+//	alive = true;
+//	growing = true;
+//	shape.setScale(0.5f, 0.5f);
+//}
+//
+//Explosion::Explosion(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
+//	WorldObject(position, size, color) {
+//	alive = true;
+//	growing = true;
+//	shape.setScale(0.0f, 0.0f);
+//}
+//
+//Explosion::Explosion(sf::Vector2f position, float length, sf::Color color) :
+//	WorldObject(position, length, color) {
+//	alive = true;
+//	growing = true;
+//	shape.setScale(0.5f, 0.5f);
+//}
 
 void Explosion::update(float deltaTime)
 {

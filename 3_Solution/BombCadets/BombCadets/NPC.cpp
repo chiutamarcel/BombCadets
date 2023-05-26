@@ -81,7 +81,8 @@ void NPC::movement(float deltaTime)
 		}
 		else if (MapOfNodes::getInstance()->getPath().back()->getType() == EntityType::BREAKABLE_WALL && this->planted.getElapsedTime().asSeconds() > 3.f)
 		{
-			Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
+			Entities::getInstance().spawnBomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f));
+			//Entities::getInstance().getBombs().push_back(new Bomb(this->getShape().getPosition() + sf::Vector2f(16.f, 16.f), 32.f, sf::Color::Magenta));
 			if (this->planted.getElapsedTime().asSeconds() >= 4.f)
 				this->planted.restart();
 		}
