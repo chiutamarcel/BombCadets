@@ -47,7 +47,10 @@ void Map::spawnCharacter(CharacterType type)
 		);
 		break;
 	case CharacterType::BOT:
-		// TODO
+		Entities::getInstance().getCharacters().push_back
+		(
+			new NPC(sf::Vector2f(x * ENTITYSIZE + 4, y * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Cyan, PLAYERSPEED)
+		);
 		break;
 	}
 
@@ -88,10 +91,6 @@ void stringToEntities(char** mapMatrix) {
 			case '3':
 				// add spawnpoint
 				Map::addSpawnPoint(i, j);
-				break;
-			case '4':
-				//generate AI
-				Entities::getInstance().getCharacters().push_back(new NPC(sf::Vector2f(j * ENTITYSIZE + 4, i * ENTITYSIZE + 4), PLAYERSIZE, sf::Color::Cyan, PLAYERSPEED));
 				break;
 			case 'z':
 				//generate menu

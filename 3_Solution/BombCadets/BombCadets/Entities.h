@@ -4,7 +4,7 @@
 #include "BreakableBlock.h"
 #include "Bomb.h"
 #include "Explosion.h"
-#include "Player.h"
+#include "Player.h";
 
 class Entities {
 public:

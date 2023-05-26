@@ -363,6 +363,7 @@ void Game::startSinglePlayer() {
     mapText.putBreakableBlocks(NRBREAKABLEWALLS);
     Map::spawnMap(mapText);
     Map::spawnCharacter(Map::CharacterType::PLAYER);
+    Map::spawnCharacter(Map::CharacterType::BOT);
 }
 
 void Game::startMultiPlayer() {
